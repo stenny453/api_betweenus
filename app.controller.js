@@ -64,7 +64,7 @@ __decorate([
         { name: 'file_verso', maxCount: 1 },
         { name: 'file_cin', maxCount: 1 },
         { name: 'file_soft', maxCount: 1 },
-    ])),
+    ])), 
     __param(0, common_1.UploadedFiles()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
