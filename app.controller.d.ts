@@ -4,7 +4,9 @@ export declare class AppController {
     private readonly appService;
     private configService;
     constructor(appService: AppService, configService: ConfigService);
-    getHello(): string;
+    getHello(): {
+        message: string;
+    };
     uploadFiles(files: any): {
         path_recto: string;
         path_verso: string;
@@ -17,4 +19,10 @@ export declare class AppController {
     updateProfile(file: any): {
         path: string;
     };
+    verifyToken(data: any, user: any): Promise<{
+        role: any;
+    }>;
+    verifyAdminToken(data: any, user: any): Promise<{
+        role: any;
+    }>;
 }

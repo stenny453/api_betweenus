@@ -3,5 +3,8 @@ export declare enum UserStateEnum {
     VALIDATE = "Valide",
     DEACTIVATE = "Desactive",
     DELETED = "Supprime",
-    REJECTED = "Refuse"
+    REJECTED = "Refuse",
+    BLOCKED = "Bloque",
+    DELETING = "Suppression",
+    DEACTIVATING = "Desactivation"
 }

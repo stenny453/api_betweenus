@@ -89,6 +89,74 @@ let MailService = class MailService {
             success: true
         };
     }
+    async acceptInscriptionModel(emailClient, pseudoClient) {
+        await this.mailerService.sendMail({
+            to: emailClient,
+            subject: 'BetweenUs - Création de compte',
+            template: './acceptInscriptionModel',
+            context: {
+                name: pseudoClient
+            }
+        });
+        return {
+            success: true
+        };
+    }
+    async rejectInscriptionModel(emailClient, pseudoClient, motif) {
+        await this.mailerService.sendMail({
+            to: emailClient,
+            subject: 'BetweenUs - Création de compte',
+            template: './rejectInscriptionModel',
+            context: {
+                name: pseudoClient,
+                motif
+            }
+        });
+        return {
+            success: true
+        };
+    }
+    async acceptRequestModel(emailClient, pseudoClient, motif) {
+        await this.mailerService.sendMail({
+            to: emailClient,
+            subject: 'BetweenUs - Création de compte',
+            template: './acceptRequestModel',
+            context: {
+                name: pseudoClient,
+                motif
+            }
+        });
+        return {
+            success: true
+        };
+    }
+    async rejectRequestModel(emailClient, pseudoClient, motif) {
+        await this.mailerService.sendMail({
+            to: emailClient,
+            subject: 'BetweenUs - Création de compte',
+            template: './rejectRequestModel',
+            context: {
+                name: pseudoClient,
+                motif
+            }
+        });
+        return {
+            success: true
+        };
+    }
+    async sendMail(email, objet, message) {
+        await this.mailerService.sendMail({
+            to: email,
+            subject: `BetweenUs - ${objet}`,
+            template: './sendMessage',
+            context: {
+                message: message,
+            }
+        });
+        return {
+            success: true
+        };
+    }
 };
 MailService = __decorate([
     common_1.Injectable(),

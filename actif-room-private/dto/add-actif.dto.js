@@ -30,5 +30,10 @@ __decorate([
     class_validator_1.IsString(),
     __metadata("design:type", String)
 ], AddActifDto.prototype, "type_room", void 0);
+__decorate([
+    class_validator_1.IsOptional(),
+    class_validator_1.IsString(),
+    __metadata("design:type", String)
+], AddActifDto.prototype, "peerId", void 0);
 exports.AddActifDto = AddActifDto;
 //# sourceMappingURL=add-actif.dto.js.map

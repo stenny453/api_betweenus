@@ -30,4 +30,6 @@ export declare class RoomPrivateService {
     updateGain(idRoom: number, gain: number): Promise<false | RoomPrivateEntity>;
     getRoom(id: number): Promise<RoomPrivateEntity>;
     getGain(id: number): Promise<RoomPrivateEntity[]>;
+    countRoom(): Promise<number>;
+    get10LastShow(): Promise<RoomPrivateEntity[]>;
 }

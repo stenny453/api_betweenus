@@ -14,4 +14,15 @@ export declare class ProfileController {
     createProfil(id: any): Promise<ModelEntity>;
     getModelProfil(id: any): Promise<ProfileEntity>;
     updateProfil(profile: AddProfilDto, id: any, model: ModelEntity): Promise<Partial<ProfileEntity>>;
+    requestModel(user: ClientEntity, data: {
+        motif: string;
+    }): Promise<{
+        error: boolean;
+        message: string;
+        success?: undefined;
+    } | {
+        success: boolean;
+        error?: undefined;
+        message?: undefined;
+    }>;
 }

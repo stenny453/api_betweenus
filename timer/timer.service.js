@@ -173,6 +173,15 @@ let TimerService = class TimerService {
         }
         return step;
     }
+    async getAverage() {
+        const qb = await this.timerRepository.createQueryBuilder('timer');
+        return await qb.select('*, clientId, avg(timer.lastUpdated-timer.createdAt) as duree, count(clientId) as vue')
+            .innerJoin('timer.client', 'client')
+            .where('clientId is not null')
+            .groupBy('clientId')
+            .orderBy('duree')
+            .getRawMany();
+    }
 };
 TimerService = __decorate([
     common_1.Injectable(),

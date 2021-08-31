@@ -7,11 +7,13 @@ import { MailService } from '../../mail/mail.service';
 import { ReinitPasswordDto } from './dto/reinitPassword.dto';
 import { ChangePseudoDto } from './dto/changePseudo.dto';
 import { ChangePasswordDto } from './dto/changePassword.dto';
+import { ModelService } from '../model/model.service';
 export declare class ClientService {
     private clientRepository;
     private jwtService;
     private mailService;
-    constructor(clientRepository: Repository<ClientEntity>, jwtService: JwtService, mailService: MailService);
+    private modelService;
+    constructor(clientRepository: Repository<ClientEntity>, jwtService: JwtService, mailService: MailService, modelService: ModelService);
     register(clientData: ClientRegisterDto): Promise<{
         message: string;
         error: boolean;
@@ -113,4 +115,47 @@ export declare class ClientService {
         success: boolean;
         message: string;
     }>;
+    countClients(motif: string): Promise<number>;
+    countClientBlocked(): Promise<number>;
+    getAllClientBlocked(range: number, page: number, filter?: string): Promise<ClientEntity[]>;
+    getAllClients(motif: string, range: number, page: number, filter?: string): Promise<ClientEntity[]>;
+    deleteClient(idClient: number): Promise<{
+        error: boolean;
+        message: string;
+        success?: undefined;
+    } | {
+        success: boolean;
+        message: string;
+        error?: undefined;
+    }>;
+    blockClient(idClient: number, reverse: boolean): Promise<{
+        error: boolean;
+        message: string;
+        success?: undefined;
+    } | {
+        success: boolean;
+        message: string;
+        error?: undefined;
+    }>;
+    deactivateClient(idClient: number): Promise<{
+        error: boolean;
+        message: string;
+        success?: undefined;
+    } | {
+        success: boolean;
+        message: string;
+        error?: undefined;
+    }>;
+    activateClient(idClient: number): Promise<{
+        error: boolean;
+        message: string;
+        success?: undefined;
+    } | {
+        success: boolean;
+        message: string;
+        error?: undefined;
+    }>;
+    statInscriptionClient(): Promise<any[]>;
+    countClientActif(): Promise<number>;
+    newLastClients(): Promise<number>;
 }

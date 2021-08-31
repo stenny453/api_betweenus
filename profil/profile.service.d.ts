@@ -24,4 +24,13 @@ export declare class ProfileService {
         date_last_connection: Date;
         model: ModelEntity;
     }>;
+    requestModel(idClient: number, motif: string): Promise<{
+        error: boolean;
+        message: string;
+        success?: undefined;
+    } | {
+        success: boolean;
+        error?: undefined;
+        message?: undefined;
+    }>;
 }

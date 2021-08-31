@@ -30,7 +30,10 @@ TimerModule = __decorate([
             room_private_module_1.RoomPrivateModule
         ],
         controllers: [timer_controller_1.TimerController],
-        providers: [timer_service_1.TimerService]
+        providers: [timer_service_1.TimerService],
+        exports: [
+            timer_service_1.TimerService
+        ]
     })
 ], TimerModule);
 exports.TimerModule = TimerModule;

@@ -8,5 +8,8 @@ var UserStateEnum;
     UserStateEnum["DEACTIVATE"] = "Desactive";
     UserStateEnum["DELETED"] = "Supprime";
     UserStateEnum["REJECTED"] = "Refuse";
+    UserStateEnum["BLOCKED"] = "Bloque";
+    UserStateEnum["DELETING"] = "Suppression";
+    UserStateEnum["DEACTIVATING"] = "Desactivation";
 })(UserStateEnum = exports.UserStateEnum || (exports.UserStateEnum = {}));
 //# sourceMappingURL=user-state.enum.js.map

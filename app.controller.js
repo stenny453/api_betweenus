@@ -17,6 +17,9 @@ const config_1 = require("@nestjs/config");
 const common_1 = require("@nestjs/common");
 const platform_express_1 = require("@nestjs/platform-express");
 const app_service_1 = require("./app.service");
+const model_auth_guard_1 = require("./users/model/guards/model-auth.guard");
+const user_decorator_1 = require("./decorators/user.decorator");
+const jwt_admin_auth_guard_1 = require("./admin/guards/jwt-admin-auth.guard");
 const path_upload = 'https://143.198.109.141/uploads/';
 let AppController = class AppController {
     constructor(appService, configService) {
@@ -50,12 +53,22 @@ let AppController = class AppController {
             path: path_upload + file.filename
         };
     }
+    async verifyToken(data, user) {
+        return {
+            role: user.role
+        };
+    }
+    async verifyAdminToken(data, user) {
+        return {
+            role: user.role
+        };
+    }
 };
 __decorate([
     common_1.Get(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
+    __metadata("design:returntype", void 0)
 ], AppController.prototype, "getHello", null);
 __decorate([
     common_1.Post('modelsary'),
@@ -64,7 +77,7 @@ __decorate([
         { name: 'file_verso', maxCount: 1 },
         { name: 'file_cin', maxCount: 1 },
         { name: 'file_soft', maxCount: 1 },
-    ])), 
+    ])),
     __param(0, common_1.UploadedFiles()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -86,6 +99,24 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "updateProfile", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Post('verify_token'),
+    __param(0, common_1.Body()),
+    __param(1, user_decorator_1.User()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "verifyToken", null);
+__decorate([
+    common_1.UseGuards(jwt_admin_auth_guard_1.JwtAdminAuthGuard),
+    common_1.Post('verify_admin_token'),
+    __param(0, common_1.Body()),
+    __param(1, user_decorator_1.User()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "verifyAdminToken", null);
 AppController = __decorate([
     common_1.Controller(),
     __metadata("design:paramtypes", [app_service_1.AppService,

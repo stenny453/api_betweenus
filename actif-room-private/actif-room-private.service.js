@@ -48,7 +48,16 @@ let ActifRoomPrivateService = class ActifRoomPrivateService {
             newActif.client = client;
             newActif.roomPrivate = room;
             newActif.type_room = data.type_room;
+            newActif.peerId = data.peerId;
             return await this.actifRoomPrivateRepository.save(newActif);
+        }
+        else if (data.joined && actifRoom) {
+            const id = actifRoom.id;
+            const newClient = await this.actifRoomPrivateRepository.preload({
+                id
+            });
+            newClient.peerId = data.peerId;
+            return await this.actifRoomPrivateRepository.save(newClient);
         }
         else {
             return null;

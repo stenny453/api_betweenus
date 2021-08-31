@@ -33,10 +33,11 @@ const user_payload_interface_1 = require("../../interfaces/user-payload.interfac
 const model_entity_1 = require("../entities/model.entity");
 const dotenv = require("dotenv");
 const client_entity_1 = require("../../client/entities/client.entity");
+const admin_entity_1 = require("../../../admin/entities/admin.entity");
 dotenv.config();
 const MODEL_SECRET = 'modelBetweenUs';
 let JwtModelStrategy = class JwtModelStrategy extends passport_1.PassportStrategy(passport_jwt_1.Strategy) {
-    constructor(modelRepository, clientRepository) {
+    constructor(modelRepository, clientRepository, adminRepository) {
         super({
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
@@ -44,6 +45,7 @@ let JwtModelStrategy = class JwtModelStrategy extends passport_1.PassportStrateg
         });
         this.modelRepository = modelRepository;
         this.clientRepository = clientRepository;
+        this.adminRepository = adminRepository;
     }
     async validate(payload) {
         let user = null;
@@ -52,6 +54,9 @@ let JwtModelStrategy = class JwtModelStrategy extends passport_1.PassportStrateg
         }
         else if (payload.role === 'model') {
             user = await this.modelRepository.findOne({ pseudo: payload.pseudo });
+        }
+        else if (payload.role === 'admin') {
+            user = await this.adminRepository.findOne({ email: payload.email });
         }
         if (user) {
             const { password, salt } = user, result = __rest(user, ["password", "salt"]);
@@ -66,7 +71,9 @@ JwtModelStrategy = __decorate([
     common_1.Injectable(),
     __param(0, typeorm_1.InjectRepository(model_entity_1.ModelEntity)),
     __param(1, typeorm_1.InjectRepository(client_entity_1.ClientEntity)),
+    __param(2, typeorm_1.InjectRepository(admin_entity_1.AdminEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository])
 ], JwtModelStrategy);
 exports.JwtModelStrategy = JwtModelStrategy;

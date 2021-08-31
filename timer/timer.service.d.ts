@@ -23,4 +23,5 @@ export declare class TimerService {
     beginTimerModel(model: ModelEntity, data: AddTimerDto): Promise<TimerEntity>;
     creditTimer(client: ClientEntity, data: CreditTimerDto): Promise<Partial<import("../credit/entities/credit.entity").CreditEntity>>;
     getSteps(created: string, updated: string): number;
+    getAverage(): Promise<any[]>;
 }

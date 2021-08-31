@@ -7,7 +7,8 @@ import { RoomEntity } from '../../../room/entities/room.entity';
 import { RoomPrivateEntity } from '../../../room-private/entities/room-private.entity';
 import { RoomVipEntity } from '../../../room-vip/entities/room-vip.entity';
 import { TimerEntity } from '../../../timer/entities/timer.entity';
-export declare class ModelEntity {
+import { TimestampEntities } from '../../../generics/timestamp.entities';
+export declare class ModelEntity extends TimestampEntities {
     id: number;
     pseudo: string;
     email: string;

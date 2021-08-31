@@ -37,6 +37,12 @@ __decorate([
     __metadata("design:type", String)
 ], ActifRoomPrivateEntity.prototype, "type_room", void 0);
 __decorate([
+    typeorm_1.Column({
+        default: null
+    }),
+    __metadata("design:type", String)
+], ActifRoomPrivateEntity.prototype, "peerId", void 0);
+__decorate([
     typeorm_1.ManyToOne(type => room_private_entity_1.RoomPrivateEntity, (roomPrivate) => roomPrivate.clients),
     __metadata("design:type", room_private_entity_1.RoomPrivateEntity)
 ], ActifRoomPrivateEntity.prototype, "roomPrivate", void 0);

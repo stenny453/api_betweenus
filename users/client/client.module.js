@@ -17,6 +17,7 @@ const passport_client_strategy_1 = require("./strategy/passport-client.strategy"
 const client_entity_1 = require("./entities/client.entity");
 const dotenv = require("dotenv");
 const mail_module_1 = require("../../mail/mail.module");
+const model_module_1 = require("../model/model.module");
 dotenv.config();
 const MODEL_SECRET = 'modelBetweenUs';
 let ClientModule = class ClientModule {
@@ -32,7 +33,8 @@ ClientModule = __decorate([
                 secret: MODEL_SECRET,
                 signOptions: { expiresIn: '86400s' },
             }),
-            mail_module_1.MailModule
+            mail_module_1.MailModule,
+            common_1.forwardRef(() => model_module_1.ModelModule)
         ],
         controllers: [client_controller_1.ClientController],
         providers: [

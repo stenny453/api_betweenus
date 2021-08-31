@@ -17,4 +17,19 @@ export declare class MailService {
     deleteAccount(emailClient: string, pseudoClient: string, token: string): Promise<{
         success: boolean;
     }>;
+    acceptInscriptionModel(emailClient: string, pseudoClient: string): Promise<{
+        success: boolean;
+    }>;
+    rejectInscriptionModel(emailClient: string, pseudoClient: string, motif: string): Promise<{
+        success: boolean;
+    }>;
+    acceptRequestModel(emailClient: string, pseudoClient: string, motif: string): Promise<{
+        success: boolean;
+    }>;
+    rejectRequestModel(emailClient: string, pseudoClient: string, motif: string): Promise<{
+        success: boolean;
+    }>;
+    sendMail(email: string, objet: string, message: string): Promise<{
+        success: boolean;
+    }>;
 }

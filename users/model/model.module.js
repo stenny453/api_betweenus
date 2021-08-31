@@ -18,13 +18,14 @@ const passport_model_strategy_1 = require("./strategy/passport-model.strategy");
 const client_module_1 = require("../client/client.module");
 const client_entity_1 = require("../client/entities/client.entity");
 const mail_module_1 = require("../../mail/mail.module");
+const admin_entity_1 = require("../../admin/entities/admin.entity");
 const MODEL_SECRET = 'modelBetweenUs';
 let ModelModule = class ModelModule {
 };
 ModelModule = __decorate([
     common_1.Module({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([model_entity_1.ModelEntity, client_entity_1.ClientEntity]),
+            typeorm_1.TypeOrmModule.forFeature([model_entity_1.ModelEntity, client_entity_1.ClientEntity, admin_entity_1.AdminEntity]),
             passport_1.PassportModule.register({
                 defaultStrategy: 'jwt'
             }),
@@ -32,7 +33,7 @@ ModelModule = __decorate([
                 secret: MODEL_SECRET,
                 signOptions: { expiresIn: '86400s' },
             }),
-            client_module_1.ClientModule,
+            common_1.forwardRef(() => client_module_1.ClientModule),
             mail_module_1.MailModule
         ],
         controllers: [model_controller_1.ModelController],

@@ -95,6 +95,9 @@ let ProfileService = class ProfileService {
         else
             throw new common_1.UnauthorizedException();
     }
+    async requestModel(idClient, motif) {
+        return await this.modelService.requestModel(idClient, motif);
+    }
 };
 ProfileService = __decorate([
     common_1.Injectable(),

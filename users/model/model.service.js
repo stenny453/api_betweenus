@@ -33,11 +33,17 @@ const model_entity_1 = require("./entities/model.entity");
 const user_role_enum_1 = require("../../enums/user-role.enum");
 const status_model_enum_1 = require("../../enums/status-model.enum");
 const mail_service_1 = require("../../mail/mail.service");
+const client_entity_1 = require("../client/entities/client.entity");
+const user_state_enum_1 = require("../../enums/user-state.enum");
 let ModelService = class ModelService {
-    constructor(modelRepository, jwtService, mailService) {
+    constructor(modelRepository, clientRepository, jwtService, mailService) {
         this.modelRepository = modelRepository;
+        this.clientRepository = clientRepository;
         this.jwtService = jwtService;
         this.mailService = mailService;
+    }
+    async isEmailClientExist(email) {
+        return await this.modelRepository.findOne({ email });
     }
     async register(modelData) {
         const verifyModel = await this.modelRepository.findOne({ pseudo: modelData.pseudo });
@@ -47,10 +53,26 @@ let ModelService = class ModelService {
                 error: true,
                 pseudo: true
             };
+        const verifyEmail = await this.clientRepository.findOne({ email: modelData.email });
+        if (verifyEmail) {
+            return {
+                message: "L'\tadresse email existe déjà",
+                error: true,
+                email: true
+            };
+        }
         const model = await this.modelRepository.create(Object.assign({}, modelData));
         model.salt = await bcrypt.genSalt();
         model.password = await bcrypt.hash(model.password, model.salt);
         try {
+            const payload = {
+                id: model.id,
+                email: model.email,
+                role: model.role,
+                pseudo: model.pseudo
+            };
+            const jwt = await this.jwtService.sign(payload);
+            await this.mailService.confirmRegisterModel(model.email, model.pseudo, jwt);
             await this.modelRepository.save(model);
         }
         catch (error) {
@@ -62,14 +84,6 @@ let ModelService = class ModelService {
                 };
             throw new common_1.InternalServerErrorException('Une erreur s\'est produite');
         }
-        const payload = {
-            id: model.id,
-            email: model.email,
-            role: model.role,
-            pseudo: model.pseudo
-        };
-        const jwt = await this.jwtService.sign(payload);
-        await this.mailService.confirmRegisterModel(model.email, model.pseudo, jwt);
         return {
             id: model.id,
             pseudo: model.pseudo,
@@ -86,6 +100,30 @@ let ModelService = class ModelService {
         if (!model) {
             return {
                 message: "Pseudo ou mot de passe erronée",
+                error: true
+            };
+        }
+        if (model.state === user_state_enum_1.UserStateEnum.WAITING) {
+            return {
+                message: "Votre compte est en cours de validation",
+                error: true
+            };
+        }
+        if (model.state === user_state_enum_1.UserStateEnum.DEACTIVATE) {
+            return {
+                message: "Votre compte a été désactivé",
+                error: true
+            };
+        }
+        if (model.state === user_state_enum_1.UserStateEnum.DELETED) {
+            return {
+                message: "Votre compte a été supprimé",
+                error: true
+            };
+        }
+        if (model.state === user_state_enum_1.UserStateEnum.BLOCKED) {
+            return {
+                message: "Votre compte a été bloqué par l\'administrateur",
                 error: true
             };
         }
@@ -139,11 +177,7 @@ let ModelService = class ModelService {
     async changePassword(credentials, model) {
         const { oldPassword, newPassword } = credentials;
         const newModel = await this.modelRepository.findOne(model);
-        console.log('Old Password ', oldPassword);
-        console.log('New Password ', newPassword);
-        console.log(newModel);
         const hashPassword = await bcrypt.hash(oldPassword, newModel.salt);
-        console.log(hashPassword);
         if (hashPassword === newModel.password) {
             newModel.salt = await bcrypt.genSalt();
             newModel.password = await bcrypt.hash(newPassword, newModel.salt);
@@ -198,7 +232,6 @@ let ModelService = class ModelService {
     }
     async reinitRoom(id) {
         const rooms = await (await this.modelRepository.findOne({ id })).rooms;
-        console.log('Rooms ', rooms);
     }
     async forgot(data) {
         const client = await this.modelRepository.findOne({ email: data.email });
@@ -267,11 +300,330 @@ let ModelService = class ModelService {
         });
         return models;
     }
+    async requestModel(idClient, motif) {
+        const model = await this.modelRepository.findOne({ id: idClient });
+        if (!model) {
+            return {
+                error: true,
+                message: 'Modèle inexistant'
+            };
+        }
+        if (motif === 'Suppression') {
+            await this.modelRepository.update(idClient, { state: user_state_enum_1.UserStateEnum.DELETING });
+        }
+        if (motif === 'Desactivation') {
+            await this.modelRepository.update(idClient, { state: user_state_enum_1.UserStateEnum.DEACTIVATING });
+        }
+        return {
+            success: true
+        };
+    }
+    async countClients(motif) {
+        const qb = this.modelRepository.createQueryBuilder('client');
+        const exclus = 'Bloque';
+        if (motif === 'tous') {
+            return await qb.select()
+                .where("state != :motif", { motif: exclus })
+                .getCount();
+        }
+        return await qb.select()
+            .where("state = :motif", { motif: motif })
+            .getCount();
+    }
+    async countClientBlocked() {
+        const qb = this.modelRepository.createQueryBuilder('client');
+        const motif = 'Bloque';
+        return await qb.select()
+            .where("state = :motif", { motif: motif })
+            .getCount();
+    }
+    async getAllClientBlocked(range, page, filter) {
+        const qb = this.modelRepository.createQueryBuilder('client');
+        const motif = 'Bloque';
+        if (filter) {
+            return await qb.select()
+                .where("(pseudo like :filter or email like :filter) and state = :motif", { filter: '%' + filter + '%', motif: motif })
+                .offset(range * page)
+                .limit(range)
+                .getMany();
+        }
+        return await qb.select()
+            .where("state = :motif", { motif: motif })
+            .offset(range * page)
+            .limit(range)
+            .getMany();
+    }
+    async getAllClients(motif, range, page, filter) {
+        const qb = this.modelRepository.createQueryBuilder('client');
+        if (!filter) {
+            if (motif === 'tous') {
+                const exclus = 'Bloque';
+                return await qb.select()
+                    .leftJoinAndSelect("client.profile", "profile")
+                    .where("state != :motif", { motif: exclus })
+                    .offset(range * page)
+                    .limit(range)
+                    .getMany();
+            }
+            else {
+                return await qb.select()
+                    .leftJoinAndSelect("client.profile", "profile")
+                    .where("state = :motif", { motif: motif })
+                    .offset(range * page)
+                    .limit(range)
+                    .getMany();
+            }
+        }
+        else {
+            if (motif === 'tous') {
+                return await qb.select()
+                    .leftJoinAndSelect("client.profile", "profile")
+                    .where("(pseudo like :filter or email like :filter)", { filter: '%' + filter + '%', motif: motif })
+                    .offset(range * page)
+                    .limit(range)
+                    .getMany();
+            }
+            else {
+                return await qb.select()
+                    .leftJoinAndSelect("client.profile", "profile")
+                    .where("(pseudo like :filter or email like :filter) and state = :motif", { filter: '%' + filter + '%', motif: motif })
+                    .offset(range * page)
+                    .limit(range)
+                    .getMany();
+            }
+        }
+    }
+    async deleteClient(idClient) {
+        const user = await this.modelRepository.findOne({ id: idClient });
+        if (!user) {
+            return {
+                error: true,
+                message: 'modèle inexistant'
+            };
+        }
+        await this.modelRepository.update(idClient, { state: user_state_enum_1.UserStateEnum.DELETED });
+        return {
+            success: true,
+            message: `Compte modèle d\'id ${idClient} a été supprimé`
+        };
+    }
+    async blockClient(idClient, reverse) {
+        const user = await this.modelRepository.findOne({ id: idClient });
+        if (!user) {
+            return {
+                error: true,
+                message: 'modèle inexistant'
+            };
+        }
+        if (reverse) {
+            await this.modelRepository.update(idClient, { state: user_state_enum_1.UserStateEnum.VALIDATE });
+        }
+        else {
+            await this.modelRepository.update(idClient, { state: user_state_enum_1.UserStateEnum.BLOCKED });
+        }
+        return {
+            success: true,
+            message: `Compte modèle d\'id ${idClient} a été bloqué`
+        };
+    }
+    async deactivateClient(idClient) {
+        const user = await this.modelRepository.findOne({ id: idClient });
+        if (!user) {
+            return {
+                error: true,
+                message: 'Modèle inexistant'
+            };
+        }
+        await this.modelRepository.update(idClient, { state: user_state_enum_1.UserStateEnum.DEACTIVATE });
+        return {
+            success: true,
+            message: `Compte modèle d\'id ${idClient} a été désactivé`
+        };
+    }
+    async activateClient(idClient) {
+        const user = await this.modelRepository.findOne({ id: idClient });
+        if (!user) {
+            return {
+                error: true,
+                message: 'Modèle inexistant'
+            };
+        }
+        await this.modelRepository.update(idClient, { state: user_state_enum_1.UserStateEnum.VALIDATE });
+        return {
+            success: true,
+            message: `Compte modèle d\'id ${idClient} a été activé`
+        };
+    }
+    async statInscriptionClient() {
+        const qb = this.modelRepository.createQueryBuilder('client');
+        return await qb.select("date(client.createdAt) as date, count(client.id) as count")
+            .groupBy("date(client.createdAt)")
+            .getRawMany();
+    }
+    async statSuppressionModel() {
+        const qb = this.modelRepository.createQueryBuilder('client');
+        return await qb.select("date(client.createdAt) as date, count(client.id) as count")
+            .where('state = :deleted', { deleted: 'Supprime' })
+            .groupBy("date(client.createdAt)")
+            .getRawMany();
+    }
+    async getModelProfil(status, filter) {
+        const qb = this.modelRepository.createQueryBuilder('client');
+        if (filter) {
+            return await qb.select()
+                .leftJoinAndSelect("client.profile", "profile")
+                .where("pseudo like :filter and profile.status = :status", { filter: '%' + filter + '%', status: status })
+                .getMany();
+        }
+        else {
+            return await qb.select()
+                .leftJoinAndSelect("client.profile", "profile")
+                .where("profile.status = :status", { status: status })
+                .getMany();
+        }
+    }
+    async countRequestsModel() {
+        const waiting = 'En attente';
+        const deleting = 'Suppression';
+        const deactivating = 'Desactivation';
+        const qb = this.modelRepository.createQueryBuilder('client');
+        return await qb.select()
+            .where("state = :waiting or state = :deleting or state = :deactivating", { waiting: waiting, deleting: deleting, deactivating: deactivating })
+            .getCount();
+    }
+    async getAllRequestsModel(motif, range, page, filter) {
+        const waiting = 'En attente';
+        const deleting = 'Suppression';
+        const deactivating = 'Desactivation';
+        const qb = this.modelRepository.createQueryBuilder('client');
+        if (filter) {
+            if (motif == 'tous') {
+                return await qb.select()
+                    .where("pseudo like :filter and (state = :waiting or state = :deleting or state = :deactivating)", { filter: '%' + filter + '%', waiting: waiting, deleting: deleting, deactivating: deactivating })
+                    .offset(range * page)
+                    .limit(range)
+                    .getMany();
+            }
+            return await qb.select()
+                .where("pseudo like :filter and state = :motif", { filter: '%' + filter + '%', motif: motif })
+                .offset(range * page)
+                .limit(range)
+                .getMany();
+        }
+        else {
+            if (motif == 'tous') {
+                return await qb.select()
+                    .where("state = :waiting or state = :deleting or state = :deactivating", { waiting: waiting, deleting: deleting, deactivating: deactivating })
+                    .offset(range * page)
+                    .limit(range)
+                    .getMany();
+            }
+            return await qb.select()
+                .where("state = :motif", { motif: motif })
+                .offset(range * page)
+                .limit(range)
+                .getMany();
+        }
+    }
+    async resultRequestModel(idClient, accepted) {
+        const model = await this.modelRepository.findOne({ id: idClient });
+        if (!model) {
+            return {
+                error: true,
+                message: 'Model inexistant'
+            };
+        }
+        if (accepted) {
+            if (model.state === 'Suppression') {
+                await this.modelRepository.update(idClient, { state: user_state_enum_1.UserStateEnum.DELETED });
+                await this.mailService.acceptRequestModel(model.email, model.pseudo, model.state);
+            }
+            else if (model.state === 'Desactivation') {
+                await this.modelRepository.update(idClient, { state: user_state_enum_1.UserStateEnum.DEACTIVATE });
+                await this.mailService.acceptRequestModel(model.email, model.pseudo, model.state);
+            }
+        }
+        else {
+            if (model.state === 'Suppression') {
+                await this.modelRepository.update(idClient, { state: user_state_enum_1.UserStateEnum.VALIDATE });
+                await this.mailService.rejectRequestModel(model.email, model.pseudo, model.state);
+            }
+            else if (model.state === 'Desactivation') {
+                await this.modelRepository.update(idClient, { state: user_state_enum_1.UserStateEnum.VALIDATE });
+                await this.mailService.rejectRequestModel(model.email, model.pseudo, model.state);
+            }
+        }
+        return {
+            success: true
+        };
+    }
+    async resultInscriptionModel(idClient, accepted, motif) {
+        const model = await this.modelRepository.findOne({ id: idClient });
+        if (model.state !== 'En attente')
+            return { error: true, message: 'Compte opérationnel' };
+        if (accepted) {
+            await this.mailService.acceptInscriptionModel(model.email, model.pseudo);
+            await this.modelRepository.update(idClient, { state: user_state_enum_1.UserStateEnum.VALIDATE });
+        }
+        else {
+            await this.mailService.rejectInscriptionModel(model.email, model.pseudo, motif);
+            await this.modelRepository.delete(idClient);
+        }
+        return {
+            success: true
+        };
+    }
+    async getInfosModel(idClient) {
+        return await this.modelRepository.findOne({ id: idClient });
+    }
+    async countModelActif() {
+        const qb = this.modelRepository.createQueryBuilder('client');
+        const actif = 'Valide';
+        return await qb.select()
+            .where('state = :actif', { actif: actif })
+            .getCount();
+    }
+    async countModelState(state) {
+        const qb = this.modelRepository.createQueryBuilder('client');
+        const actif = 'Valide';
+        return await qb.select()
+            .where('state = :state', { state: state })
+            .getCount();
+    }
+    async newLastModels() {
+        let actual = new Date();
+        let currentMonth = actual.getMonth() + 1;
+        let currentYear = actual.getFullYear();
+        const qb = this.modelRepository.createQueryBuilder('client');
+        const actif = 'Valide';
+        return await qb.select()
+            .where('state = :actif and month(createdAt) = :currentMonth and year(createdAt) = :currentYear', { actif: actif, currentMonth: currentMonth, currentYear: currentYear })
+            .getCount();
+    }
+    async getTop10Model() {
+        const qb = this.modelRepository.createQueryBuilder('client');
+        return await qb.select()
+            .innerJoinAndSelect('client.credit', 'credit')
+            .innerJoinAndSelect('client.privateRooms', 'privateRooms')
+            .innerJoinAndSelect('client.vipRooms', 'vipRooms')
+            .orderBy('credit.credit')
+            .getMany();
+    }
+    async getModelsActif() {
+        const actif = 'Valide';
+        const qb = this.modelRepository.createQueryBuilder('client');
+        return await qb.select()
+            .where('state = :actif', { actif: actif })
+            .innerJoinAndSelect('client.credit', 'credit')
+            .getMany();
+    }
 };
 ModelService = __decorate([
     common_1.Injectable(),
     __param(0, typeorm_1.InjectRepository(model_entity_1.ModelEntity)),
+    __param(1, typeorm_1.InjectRepository(client_entity_1.ClientEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         jwt_1.JwtService,
         mail_service_1.MailService])
 ], ModelService);

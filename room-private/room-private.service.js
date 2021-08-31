@@ -115,6 +115,20 @@ let RoomPrivateService = class RoomPrivateService {
         const model = await this.modelService.getModel(id);
         return await this.roomPrivateRepository.find({ model });
     }
+    async countRoom() {
+        return await this.roomPrivateRepository.count();
+    }
+    async get10LastShow() {
+        const qb = await this.roomPrivateRepository.createQueryBuilder('room');
+        let taille = await this.roomPrivateRepository.count();
+        taille = taille - 10;
+        const debut = taille < 0 ? 0 : taille;
+        return await qb.select()
+            .leftJoinAndSelect('room.model', 'model')
+            .leftJoinAndSelect('room.clients', 'clients')
+            .groupBy('room.id DESC')
+            .getMany();
+    }
 };
 RoomPrivateService = __decorate([
     common_1.Injectable(),

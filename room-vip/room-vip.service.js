@@ -114,6 +114,21 @@ let RoomVipService = class RoomVipService {
         const model = await this.modelService.getModel(id);
         return await this.roomVipRepository.find({ model });
     }
+    async countRoom() {
+        return await this.roomVipRepository.count();
+    }
+    async get10LastShow() {
+        const qb = await this.roomVipRepository.createQueryBuilder('room');
+        let taille = await this.roomVipRepository.count();
+        taille = taille - 10;
+        const debut = taille < 0 ? 0 : taille;
+        return await qb.select('')
+            .leftJoinAndSelect('room.model', 'model')
+            .groupBy('room.id DESC')
+            .offset(debut)
+            .limit(10)
+            .getMany();
+    }
 };
 RoomVipService = __decorate([
     common_1.Injectable(),

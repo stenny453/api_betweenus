@@ -42,6 +42,9 @@ let ProfileController = class ProfileController {
     async updateProfil(profile, id, model) {
         return await this.profileService.updateProfil(model.profile.id, profile, model);
     }
+    async requestModel(user, data) {
+        return await this.profileService.requestModel(user.id, data.motif);
+    }
 };
 __decorate([
     common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
@@ -83,6 +86,15 @@ __decorate([
     __metadata("design:paramtypes", [add_profil_dto_1.AddProfilDto, Object, model_entity_1.ModelEntity]),
     __metadata("design:returntype", Promise)
 ], ProfileController.prototype, "updateProfil", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Post('request-model'),
+    __param(0, user_decorator_1.User()),
+    __param(1, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [client_entity_1.ClientEntity, Object]),
+    __metadata("design:returntype", Promise)
+], ProfileController.prototype, "requestModel", null);
 ProfileController = __decorate([
     common_1.Controller('profile'),
     __metadata("design:paramtypes", [profile_service_1.ProfileService])

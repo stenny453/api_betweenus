@@ -22,7 +22,8 @@ const room_entity_1 = require("../../../room/entities/room.entity");
 const room_private_entity_1 = require("../../../room-private/entities/room-private.entity");
 const room_vip_entity_1 = require("../../../room-vip/entities/room-vip.entity");
 const timer_entity_1 = require("../../../timer/entities/timer.entity");
-let ModelEntity = class ModelEntity {
+const timestamp_entities_1 = require("../../../generics/timestamp.entities");
+let ModelEntity = class ModelEntity extends timestamp_entities_1.TimestampEntities {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),

@@ -32,4 +32,6 @@ export declare class RoomVipService {
     updateGain(idRoom: number, gain: number): Promise<false | RoomVipEntity>;
     getRoom(id: number): Promise<RoomVipEntity>;
     getGain(id: number): Promise<RoomVipEntity[]>;
+    countRoom(): Promise<number>;
+    get10LastShow(): Promise<RoomVipEntity[]>;
 }

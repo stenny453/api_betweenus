@@ -31,6 +31,8 @@ const cost_show_module_1 = require("./cost-show/cost-show.module");
 const timer_module_1 = require("./timer/timer.module");
 const actif_room_private_module_1 = require("./actif-room-private/actif-room-private.module");
 const mail_module_1 = require("./mail/mail.module");
+const admin_module_1 = require("./admin/admin.module");
+const paiement_module_1 = require("./paiement/paiement.module");
 dotenv.config();
 let AppModule = class AppModule {
 };
@@ -49,7 +51,7 @@ AppModule = __decorate([
                 password: 'e7RRyg8FPf',
                 database: 's1z92ztgTD',
                 entities: ['**/*.entity{.ts,.js}'],
-                synchronize: false,
+                synchronize: true,
             }),
             client_module_1.ClientModule,
             model_module_1.ModelModule,
@@ -70,7 +72,9 @@ AppModule = __decorate([
             cost_show_module_1.CostShowModule,
             timer_module_1.TimerModule,
             actif_room_private_module_1.ActifRoomPrivateModule,
-            mail_module_1.MailModule
+            mail_module_1.MailModule,
+            admin_module_1.AdminModule,
+            paiement_module_1.PaiementModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, app_gateway_1.AppGateway],

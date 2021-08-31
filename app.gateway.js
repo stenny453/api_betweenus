@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppGateway = void 0;
 const common_1 = require("@nestjs/common");
@@ -41,7 +42,7 @@ let AppGateway = class AppGateway {
                 await this.joinFree(data.room);
                 break;
             case 'private':
-                await this.joinPrivate(data.room, data.clientId, data.clientPseudo);
+                await this.joinPrivate(data.room, data.clientId, data.clientPseudo, data.clientPeer);
                 break;
             case 'vip':
                 await this.joinVip(data.room);
@@ -57,7 +58,7 @@ let AppGateway = class AppGateway {
                 await this.leaveFree(data.room, data.role);
                 break;
             case 'private':
-                await this.leavePrivate(data.room, data.role);
+                await this.leavePrivate(data.room, data.role, data.clientId);
                 break;
             case 'vip':
                 await this.leaveVip(data.room, data.role);
@@ -85,12 +86,13 @@ let AppGateway = class AppGateway {
             this.server.emit(`joined ${room}`, back);
         });
     }
-    async joinPrivate(room, clientId, clientPseudo) {
+    async joinPrivate(room, clientId, clientPseudo, clientPeer) {
         return await this.roomPrivateService.updateActif(room, true).then((actif) => {
             const data = {
                 actif: actif,
                 id: clientId,
-                pseudo: clientPseudo
+                pseudo: clientPseudo,
+                peerId: clientPeer
             };
             this.server.emit(`joined ${room}`, data);
         });
@@ -108,9 +110,12 @@ let AppGateway = class AppGateway {
             }
         });
     }
-    async leavePrivate(room, role) {
+    async leavePrivate(room, role, clientId) {
         await this.roomPrivateService.updateActif(room, false).then((back) => {
-            this.server.emit(`leaved ${room}`, back);
+            const data = {
+                clientId
+            };
+            this.server.emit(`leaved ${room}`, data);
             if (role === 'model') {
                 this.server.emit(`model leaved ${room}`, back);
             }
@@ -133,67 +138,121 @@ let AppGateway = class AppGateway {
     async handleAnsPeerId(client, data) {
         this.server.emit(`ans peerId ${data.clientId} ${data.room}`, data);
     }
+    async handleNewPeerIdModel(client, data) {
+        this.server.emit(`new model peerId ${data.room}`, data);
+    }
+    async inviteModelToPrivate(client, data) {
+        this.server.emit(`invite model to private ${data.roomId} ${data.modelId}`, data);
+    }
+    async responseInvitationModelToPrivate(client, data) {
+        this.server.emit(`response invitation private ${data.roomId} ${data.clientId}`, data);
+    }
+    async inviteModelToVIP(client, data) {
+        this.server.emit(`invite model to vip ${data.roomId} ${data.modelId}`, data);
+    }
+    async responsePositiveInvitationModelToVIP(client, data) {
+        this.server.emit(`response positive invitation model to vip ${data.roomId} ${data.clientId}`, data);
+    }
+    async responseNegativeInvitationModelToVIP(client, data) {
+        this.server.emit(`response negative invitation model to vip ${data.roomId} ${data.clientId}`, data);
+    }
 };
 __decorate([
     websockets_1.WebSocketServer(),
-    __metadata("design:type", socket_io_1.Server)
+    __metadata("design:type", typeof (_a = typeof socket_io_1.Server !== "undefined" && socket_io_1.Server) === "function" ? _a : Object)
 ], AppGateway.prototype, "server", void 0);
 __decorate([
     websockets_1.SubscribeMessage('join'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
+    __metadata("design:paramtypes", [typeof (_b = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _b : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "handleJoinRoom", null);
 __decorate([
     websockets_1.SubscribeMessage('leave'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
+    __metadata("design:paramtypes", [typeof (_c = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _c : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "handleLeaveRoom", null);
 __decorate([
     websockets_1.SubscribeMessage('message'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
+    __metadata("design:paramtypes", [typeof (_d = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _d : Object, Object]),
     __metadata("design:returntype", void 0)
 ], AppGateway.prototype, "handleMessage", null);
 __decorate([
     websockets_1.SubscribeMessage('Pass to private'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
+    __metadata("design:paramtypes", [typeof (_e = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _e : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "handlePassToPrivate", null);
 __decorate([
     websockets_1.SubscribeMessage('Pass to VIP'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
+    __metadata("design:paramtypes", [typeof (_f = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _f : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "handlePassToVIP", null);
 __decorate([
     websockets_1.SubscribeMessage('Invitation to VIP'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
+    __metadata("design:paramtypes", [typeof (_g = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _g : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "handleInvitationVIP", null);
 __decorate([
     websockets_1.SubscribeMessage('peerId'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
+    __metadata("design:paramtypes", [typeof (_h = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _h : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "handlePeerId", null);
 __decorate([
     websockets_1.SubscribeMessage('ask peerId'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
+    __metadata("design:paramtypes", [typeof (_j = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _j : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "handleAskPeerId", null);
 __decorate([
     websockets_1.SubscribeMessage('ans peerId'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
+    __metadata("design:paramtypes", [typeof (_k = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _k : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "handleAnsPeerId", null);
+__decorate([
+    websockets_1.SubscribeMessage('new model peerId'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_l = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _l : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "handleNewPeerIdModel", null);
+__decorate([
+    websockets_1.SubscribeMessage('invite model to private'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_m = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _m : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "inviteModelToPrivate", null);
+__decorate([
+    websockets_1.SubscribeMessage('response invitation to private'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_o = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _o : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "responseInvitationModelToPrivate", null);
+__decorate([
+    websockets_1.SubscribeMessage('invite model to vip'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_p = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _p : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "inviteModelToVIP", null);
+__decorate([
+    websockets_1.SubscribeMessage('response positive invitation model to vip'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_q = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _q : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "responsePositiveInvitationModelToVIP", null);
+__decorate([
+    websockets_1.SubscribeMessage('response negative invitation model to vip'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_r = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _r : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "responseNegativeInvitationModelToVIP", null);
 AppGateway = __decorate([
-    websockets_1.WebSocketGateway(4000, { path: '/socket' }),
+    websockets_1.WebSocketGateway(4000),
     __metadata("design:paramtypes", [room_service_1.RoomService,
         room_private_service_1.RoomPrivateService,
         room_vip_service_1.RoomVipService,

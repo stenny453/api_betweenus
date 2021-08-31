@@ -8,11 +8,14 @@ import { ModelPasswordDto } from './dto/model-password.dto';
 import { GetModelDto } from './dto/get-model.dto';
 import { MailService } from '../../mail/mail.service';
 import { ReinitPasswordDto } from '../client/dto/reinitPassword.dto';
+import { ClientEntity } from '../client/entities/client.entity';
 export declare class ModelService {
     private modelRepository;
+    private clientRepository;
     private jwtService;
     private mailService;
-    constructor(modelRepository: Repository<ModelEntity>, jwtService: JwtService, mailService: MailService);
+    constructor(modelRepository: Repository<ModelEntity>, clientRepository: Repository<ClientEntity>, jwtService: JwtService, mailService: MailService);
+    isEmailClientExist(email: string): Promise<ModelEntity>;
     register(modelData: ModelRegisterDto): Promise<{
         message: string;
         error: boolean;
@@ -75,4 +78,82 @@ export declare class ModelService {
     }>;
     getLive(): Promise<Partial<ModelEntity>[]>;
     getNotLive(): Promise<Partial<ModelEntity>[]>;
+    requestModel(idClient: number, motif: any): Promise<{
+        error: boolean;
+        message: string;
+        success?: undefined;
+    } | {
+        success: boolean;
+        error?: undefined;
+        message?: undefined;
+    }>;
+    countClients(motif: string): Promise<number>;
+    countClientBlocked(): Promise<number>;
+    getAllClientBlocked(range: number, page: number, filter?: string): Promise<ModelEntity[]>;
+    getAllClients(motif: string, range: number, page: number, filter?: string): Promise<ModelEntity[]>;
+    deleteClient(idClient: number): Promise<{
+        error: boolean;
+        message: string;
+        success?: undefined;
+    } | {
+        success: boolean;
+        message: string;
+        error?: undefined;
+    }>;
+    blockClient(idClient: number, reverse: boolean): Promise<{
+        error: boolean;
+        message: string;
+        success?: undefined;
+    } | {
+        success: boolean;
+        message: string;
+        error?: undefined;
+    }>;
+    deactivateClient(idClient: number): Promise<{
+        error: boolean;
+        message: string;
+        success?: undefined;
+    } | {
+        success: boolean;
+        message: string;
+        error?: undefined;
+    }>;
+    activateClient(idClient: number): Promise<{
+        error: boolean;
+        message: string;
+        success?: undefined;
+    } | {
+        success: boolean;
+        message: string;
+        error?: undefined;
+    }>;
+    statInscriptionClient(): Promise<any[]>;
+    statSuppressionModel(): Promise<any[]>;
+    getModelProfil(status: string, filter?: string): Promise<ModelEntity[]>;
+    countRequestsModel(): Promise<number>;
+    getAllRequestsModel(motif: string, range: number, page: number, filter?: string): Promise<ModelEntity[]>;
+    resultRequestModel(idClient: number, accepted: boolean): Promise<{
+        error: boolean;
+        message: string;
+        success?: undefined;
+    } | {
+        success: boolean;
+        error?: undefined;
+        message?: undefined;
+    }>;
+    resultInscriptionModel(idClient: number, accepted: boolean, motif?: string): Promise<{
+        error: boolean;
+        message: string;
+        success?: undefined;
+    } | {
+        success: boolean;
+        error?: undefined;
+        message?: undefined;
+    }>;
+    getInfosModel(idClient: number): Promise<ModelEntity>;
+    countModelActif(): Promise<number>;
+    countModelState(state: string): Promise<number>;
+    newLastModels(): Promise<number>;
+    getTop10Model(): Promise<ModelEntity[]>;
+    getModelsActif(): Promise<ModelEntity[]>;
 }

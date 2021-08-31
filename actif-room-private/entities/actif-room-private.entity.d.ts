@@ -5,5 +5,6 @@ export declare class ActifRoomPrivateEntity extends TimestampEntities {
     id: number;
     client: Partial<ClientEntity>;
     type_room: string;
+    peerId: string;
     roomPrivate?: RoomPrivateEntity;
 }
