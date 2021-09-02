@@ -51,7 +51,7 @@ export declare class ModelController {
         chat: number;
         offline: number;
     }>;
-    getInfos(model: any): Promise<ModelEntity>;
+    getInfos(model: any): Promise<Partial<ModelEntity>>;
     getLive(): Promise<Partial<ModelEntity>[]>;
     getNotLive(): Promise<Partial<ModelEntity>[]>;
     getInfoModel(id: any): Promise<Partial<ModelEntity>>;

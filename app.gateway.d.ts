@@ -113,5 +113,30 @@ export declare class AppGateway implements OnGatewayInit, OnGatewayConnection, O
         modelId: number;
         modelPseudo: string;
     }): Promise<void>;
+    ToggleAudio(client: Socket, data: {
+        roomId: any;
+        clientId: number;
+        peerId: any;
+        modelId: number;
+        isAudio: boolean;
+    }): Promise<void>;
+    ToggleVideo(client: Socket, data: {
+        roomId: any;
+        clientId: number;
+        peerId: any;
+        modelId: number;
+        isVideo: boolean;
+    }): Promise<void>;
+    AskModelStream(client: Socket, data: {
+        roomId: any;
+        clientId: number;
+        modelId: number;
+    }): Promise<void>;
+    AnswerModelStream(client: Socket, data: {
+        roomId: any;
+        clientId: number;
+        modelId: number;
+        stream: MediaStream;
+    }): Promise<void>;
 }
 export {};

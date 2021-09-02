@@ -101,21 +101,16 @@ let TimerService = class TimerService {
         let creditModelId = null;
         let creditTransaction = 0;
         await this.creditService.getCreditClient(client).then((data) => {
-            console.log("credit client ", data);
             creditClient = data.credit ? data.credit : 0;
             creditClientId = data.id ? data.id : null;
         });
         await this.creditService.getCreditModel(model).then((data) => {
-            console.log("credit model ", data);
             creditModel = data.credit ? data.credit : 0;
             creditModelId = data.id ? data.id : null;
         });
         const dateNow = new Date();
         const datePast = timer.lastUpdated ? timer.lastUpdated : dateNow;
-        console.log(dateNow);
-        console.log(datePast);
         const seconds = this.getSteps(datePast.toString(), dateNow.toString());
-        console.log("Second ", seconds);
         creditTransaction = (data.showCredit * seconds) / data.showSecond;
         creditTransaction = Math.floor(creditTransaction);
         if (data.showType === 'vip') {

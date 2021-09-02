@@ -50,7 +50,7 @@ export declare class ModelService {
     isOwnerOrAdmin(object: any, model: ModelEntity): boolean;
     getModel(id: number): Promise<ModelEntity>;
     getInfoModel(id: number): Promise<Partial<ModelEntity>>;
-    getInfos(model: ModelEntity): Promise<ModelEntity>;
+    getInfos(model: ModelEntity): Promise<Partial<ModelEntity>>;
     updateModel(id: number, model: ModelEntity): Promise<ModelEntity>;
     updatePartialModel(updateCriteria: any, info: UpdateModelDto): Promise<import("typeorm").UpdateResult>;
     changePassword(credentials: ModelPasswordDto, model: ModelEntity): Promise<{

@@ -161,11 +161,12 @@ let ModelService = class ModelService {
         return result;
     }
     async getInfos(model) {
-        const result = await this.modelRepository.findOne(model);
+        const id = model.id;
+        const result = await this.modelRepository.findOne({ id });
         if (!model)
             return null;
         const { password, salt, setting, credit } = result, info = __rest(result, ["password", "salt", "setting", "credit"]);
-        return result;
+        return info;
     }
     async updateModel(id, model) {
         const newModel = await this.modelRepository.preload(Object.assign({ id }, model));

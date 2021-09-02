@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppGateway = void 0;
 const common_1 = require("@nestjs/common");
@@ -156,6 +156,18 @@ let AppGateway = class AppGateway {
     async responseNegativeInvitationModelToVIP(client, data) {
         this.server.emit(`response negative invitation model to vip ${data.roomId} ${data.clientId}`, data);
     }
+    async ToggleAudio(client, data) {
+        this.server.emit(`Toggle audio' ${data.roomId}`, data);
+    }
+    async ToggleVideo(client, data) {
+        this.server.emit(`Toggle video ${data.roomId}`, data);
+    }
+    async AskModelStream(client, data) {
+        this.server.emit(`Ask current model stream ${data.roomId} ${data.modelId}`, data);
+    }
+    async AnswerModelStream(client, data) {
+        this.server.emit(`Answer current model stream ${data.roomId} ${data.clientId}`, data);
+    }
 };
 __decorate([
     websockets_1.WebSocketServer(),
@@ -251,6 +263,30 @@ __decorate([
     __metadata("design:paramtypes", [typeof (_r = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _r : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "responseNegativeInvitationModelToVIP", null);
+__decorate([
+    websockets_1.SubscribeMessage('Toggle audio'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_s = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _s : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "ToggleAudio", null);
+__decorate([
+    websockets_1.SubscribeMessage('Toggle video'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_t = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _t : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "ToggleVideo", null);
+__decorate([
+    websockets_1.SubscribeMessage('Ask current model stream'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_u = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _u : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "AskModelStream", null);
+__decorate([
+    websockets_1.SubscribeMessage('Answer current model stream'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_v = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _v : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "AnswerModelStream", null);
 AppGateway = __decorate([
     websockets_1.WebSocketGateway(4000),
     __metadata("design:paramtypes", [room_service_1.RoomService,
