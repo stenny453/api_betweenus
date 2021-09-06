@@ -56,6 +56,8 @@ let RoomVipService = class RoomVipService {
         };
     }
     async getLastRoom(id) {
+        if (!id)
+            return null;
         const model = await this.modelService.getModel(id);
         if (!model)
             return null;
@@ -83,6 +85,8 @@ let RoomVipService = class RoomVipService {
         };
     }
     async getInfoClient(id) {
+        if (!id)
+            return null;
         return await this.clientService.getInfo(id);
     }
     async updateActif(idRoom, upgrade) {

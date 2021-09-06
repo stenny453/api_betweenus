@@ -280,7 +280,7 @@ let ModelService = class ModelService {
     async getLive() {
         const models = [];
         await (await this.modelRepository.find()).forEach((model) => {
-            if (model.profile) {
+            if (model.profile && model.state === user_state_enum_1.UserStateEnum.VALIDATE) {
                 if ((model.profile.status === status_model_enum_1.StatusModelEnum.LIVE_VIP) || (model.profile.status === status_model_enum_1.StatusModelEnum.LIVE)) {
                     const { password, salt, setting, credit } = model, result = __rest(model, ["password", "salt", "setting", "credit"]);
                     models.push(result);
@@ -292,7 +292,7 @@ let ModelService = class ModelService {
     async getNotLive() {
         const models = [];
         await (await this.modelRepository.find()).forEach((model) => {
-            if (model.profile) {
+            if (model.profile && model.state === user_state_enum_1.UserStateEnum.VALIDATE) {
                 if ((model.profile.status === status_model_enum_1.StatusModelEnum.INLINE) || (model.profile.status === status_model_enum_1.StatusModelEnum.OFFLINE)) {
                     const { password, salt, setting, credit } = model, result = __rest(model, ["password", "salt", "setting", "credit"]);
                     models.push(result);

@@ -63,7 +63,7 @@ let ClientService = class ClientService {
             const payload = {
                 id: client.id,
                 email: client.email,
-                role: client.role,
+                role: 'client',
                 pseudo: client.pseudo
             };
             const jwt = await this.jwtService.sign(payload);

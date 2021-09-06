@@ -157,7 +157,7 @@ let AppGateway = class AppGateway {
         this.server.emit(`response negative invitation model to vip ${data.roomId} ${data.clientId}`, data);
     }
     async ToggleAudio(client, data) {
-        this.server.emit(`Toggle audio' ${data.roomId}`, data);
+        this.server.emit(`Toggle audio ${data.roomId}`, data);
     }
     async ToggleVideo(client, data) {
         this.server.emit(`Toggle video ${data.roomId}`, data);
