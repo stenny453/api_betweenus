@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 06 août 2021 à 12:55
+-- Généré le : mar. 31 août 2021 à 11:45
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -36,10 +36,40 @@ CREATE TABLE IF NOT EXISTS `actif-room-private` (
   `deletedAt` datetime(6) DEFAULT NULL,
   `type_room` enum('private','free','vip') NOT NULL DEFAULT 'free',
   `roomPrivateId` int(11) DEFAULT NULL,
+  `peerId` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_3e788663cdef0d04153794000a4` (`clientId`),
   KEY `FK_76b144c277f10c082a7dedc2479` (`roomPrivateId`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE IF NOT EXISTS `admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `salt` varchar(255) NOT NULL,
+  `role` enum('admin','user','client','model') NOT NULL DEFAULT 'admin',
+  `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  `deletedAt` datetime(6) DEFAULT NULL,
+  `pseudo` varchar(255) NOT NULL DEFAULT 'Admin',
+  `url` varchar(255) NOT NULL DEFAULT './../../../../../assets/images/user_chat.png',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_de87485f6489f5d0995f584195` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `admin`
+--
+
+INSERT INTO `admin` (`id`, `email`, `password`, `salt`, `role`, `createdAt`, `updatedAt`, `deletedAt`, `pseudo`, `url`) VALUES
+(1, 'admin_betweenus@yahoo.fr', '$2b$10$9h5PCxFtMXhjZM/dlHHw/Ot/qW/ANvPzKY3UqrQ1L.AXjeKxniMuG', '$2b$10$9h5PCxFtMXhjZM/dlHHw/O', 'admin', '2021-08-29 19:20:25.470347', '2021-08-31 11:14:04.000000', NULL, 'Admin', 'http://localhost/betweenUs/uploads/fd2a89552edd78156517961361680c26');
 
 -- --------------------------------------------------------
 
@@ -56,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `album` (
   `modelId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_191b9aa7cfba6469fa8f5c6f800` (`modelId`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -77,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `chat` (
   `type_source` enum('admin','user','client','model') NOT NULL DEFAULT 'client',
   `type_chat` enum('private','free','vip') NOT NULL DEFAULT 'free',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=256 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=282 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -92,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `client` (
   `deletedAt` datetime(6) DEFAULT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
-  `state` enum('En attente','Valide','Desactive','Supprime','Refuse') NOT NULL DEFAULT 'En attente',
+  `state` enum('En attente','Valide','Desactive','Supprime','Refuse','Bloque','Suppression','Desactivation') NOT NULL DEFAULT 'En attente',
   `status` int(11) NOT NULL DEFAULT '1',
   `password` varchar(255) NOT NULL,
   `salt` varchar(255) NOT NULL,
@@ -103,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `client` (
   UNIQUE KEY `IDX_6436cc6b79593760b9ef921ef1` (`email`),
   UNIQUE KEY `IDX_aff2f43e15bb4d5c04b2d3e790` (`pseudo`),
   UNIQUE KEY `REL_984b54d48c32e7f77548a36d06` (`creditId`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -143,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `credit` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `credit` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -162,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `log` (
   `modelId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_7e6141e91a5a47d7aef8e1ebec1` (`modelId`)
-) ENGINE=InnoDB AUTO_INCREMENT=194 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=224 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -180,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `model` (
   `month_birth` varchar(255) NOT NULL,
   `year_birth` int(11) NOT NULL,
   `date_birth` varchar(255) NOT NULL,
-  `state` enum('En attente','Valide','Desactive','Supprime','Refuse') NOT NULL DEFAULT 'En attente',
+  `state` enum('En attente','Valide','Desactive','Supprime','Refuse','Bloque','Suppression','Desactivation') NOT NULL DEFAULT 'En attente',
   `path_recto` varchar(255) NOT NULL,
   `path_verso` varchar(255) NOT NULL,
   `path_soft` varchar(255) NOT NULL,
@@ -193,13 +223,38 @@ CREATE TABLE IF NOT EXISTS `model` (
   `profileId` int(11) DEFAULT NULL,
   `settingId` int(11) DEFAULT NULL,
   `creditId` int(11) DEFAULT NULL,
+  `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  `deletedAt` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `IDX_211d5e5988e797d9b238da987b` (`pseudo`),
   UNIQUE KEY `IDX_0049b8eed7227e82c98220525f` (`email`),
   UNIQUE KEY `REL_6b100f496048d7517738cf69b2` (`profileId`),
   UNIQUE KEY `REL_0d2bdb57d8d1eb453ad2420078` (`settingId`),
   UNIQUE KEY `REL_b9e353f30dd59b7ad6cdce2c59` (`creditId`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `paiement`
+--
+
+DROP TABLE IF EXISTS `paiement`;
+CREATE TABLE IF NOT EXISTS `paiement` (
+  `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  `deletedAt` datetime(6) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type_source` varchar(255) NOT NULL,
+  `id_source` int(11) NOT NULL,
+  `credit` int(11) NOT NULL,
+  `montant` int(11) DEFAULT NULL,
+  `pseudo` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `flux` enum('in','out') NOT NULL DEFAULT 'in',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -221,7 +276,7 @@ CREATE TABLE IF NOT EXISTS `profile` (
   `status` enum('Hors ligne','En ligne','En live','En vip') NOT NULL DEFAULT 'Hors ligne',
   `date_last_connection` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -239,7 +294,7 @@ CREATE TABLE IF NOT EXISTS `room` (
   `deletedAt` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_dae356e011e5183abb359fb4222` (`modelId`)
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -258,7 +313,7 @@ CREATE TABLE IF NOT EXISTS `room-private` (
   `gain` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `FK_03fcdacee567965f8bba065f691` (`modelId`)
-) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -278,7 +333,7 @@ CREATE TABLE IF NOT EXISTS `room-vip` (
   `gain` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `FK_a63a3acb64c20c5ec9a5b66ef6c` (`modelId`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -293,7 +348,7 @@ CREATE TABLE IF NOT EXISTS `setting` (
   `mail_notification` int(11) NOT NULL,
   `sound_message` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -306,7 +361,7 @@ CREATE TABLE IF NOT EXISTS `taboo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `word` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `taboo`
@@ -314,8 +369,8 @@ CREATE TABLE IF NOT EXISTS `taboo` (
 
 INSERT INTO `taboo` (`id`, `word`) VALUES
 (1, 'fuck'),
-(2, 'petasse'),
-(3, 'enfoiré');
+(3, 'enfoiré'),
+(4, 'petasse');
 
 -- --------------------------------------------------------
 
@@ -338,7 +393,7 @@ CREATE TABLE IF NOT EXISTS `timer` (
   PRIMARY KEY (`id`),
   KEY `FK_8a6e15eb0f790e7b50b88e82e8f` (`clientId`),
   KEY `FK_ada883c69676e5bcd11a5a22b8b` (`modelId`)
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Contraintes pour les tables déchargées
