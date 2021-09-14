@@ -48,7 +48,6 @@ let JwtModelStrategy = class JwtModelStrategy extends passport_1.PassportStrateg
         this.adminRepository = adminRepository;
     }
     async validate(payload) {
-        console.log(payload);
         let user = null;
         if (payload.role === 'client') {
             user = await this.clientRepository.findOne({ pseudo: payload.pseudo });

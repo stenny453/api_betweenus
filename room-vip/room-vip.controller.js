@@ -35,8 +35,6 @@ let RoomVipController = class RoomVipController {
         if (data.clientId) {
             id = parseInt(data.clientId);
         }
-        console.log(model);
-        console.log(id);
         return this.roomVipService.createRoom(model, id);
     }
     async getGain(id) {

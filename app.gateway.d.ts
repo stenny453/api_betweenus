@@ -34,6 +34,7 @@ export declare class AppGateway implements OnGatewayInit, OnGatewayConnection, O
         role: string;
         show?: string;
         clientId?: number;
+        clientPseudo?: string;
     }): Promise<void>;
     handleMessage(client: Socket, data: ChatSocket): void;
     handlePassToPrivate(client: Socket, data: {
@@ -57,10 +58,10 @@ export declare class AppGateway implements OnGatewayInit, OnGatewayConnection, O
         message: string;
         roomVIP: string;
     }): Promise<void>;
-    joinFree(room: string): Promise<void>;
+    joinFree(room: string, clientPseudo?: string, clientId?: number): Promise<void>;
     joinPrivate(room: string, clientId: number, clientPseudo: string, clientPeer: string): Promise<void>;
     joinVip(room: string): Promise<void>;
-    leaveFree(room: string, role: string): Promise<void>;
+    leaveFree(room: string, role: string, clientPseudo?: string, clientId?: number): Promise<void>;
     leavePrivate(room: string, role: string, clientId: number): Promise<void>;
     leaveVip(room: string, role: string): Promise<void>;
     handlePeerId(client: Socket, data: {
@@ -137,6 +138,10 @@ export declare class AppGateway implements OnGatewayInit, OnGatewayConnection, O
         clientId: number;
         modelId: number;
         stream: MediaStream;
+    }): Promise<void>;
+    BanishClient(client: Socket, data: {
+        roomId: any;
+        clientId: number;
     }): Promise<void>;
 }
 export {};

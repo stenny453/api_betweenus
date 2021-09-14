@@ -4,6 +4,7 @@ import { ModelEntity } from './entities/model.entity';
 import { ModelLoginDto } from './dto/model-login.dto';
 import { GetModelDto } from './dto/get-model.dto';
 import { ReinitPasswordDto } from '../client/dto/reinitPassword.dto';
+import { ChangePseudoDto } from '../client/dto/changePseudo.dto';
 export declare class ModelController {
     private modelService;
     constructor(modelService: ModelService);
@@ -55,4 +56,8 @@ export declare class ModelController {
     getLive(): Promise<Partial<ModelEntity>[]>;
     getNotLive(): Promise<Partial<ModelEntity>[]>;
     getInfoModel(id: any): Promise<Partial<ModelEntity>>;
+    changePseudo(model: ModelEntity, data: ChangePseudoDto): Promise<{
+        access_token: string;
+        id: number;
+    }>;
 }

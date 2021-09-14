@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppGateway = void 0;
 const common_1 = require("@nestjs/common");
@@ -39,7 +39,7 @@ let AppGateway = class AppGateway {
         client.join(data.room);
         switch (data.show) {
             case 'free':
-                await this.joinFree(data.room);
+                await this.joinFree(data.room, data.clientPseudo, data.clientId);
                 break;
             case 'private':
                 await this.joinPrivate(data.room, data.clientId, data.clientPseudo, data.clientPeer);
@@ -55,7 +55,7 @@ let AppGateway = class AppGateway {
         client.leave(data.room);
         switch (data.show) {
             case 'free':
-                await this.leaveFree(data.room, data.role);
+                await this.leaveFree(data.room, data.role, data.clientPseudo, data.clientId);
                 break;
             case 'private':
                 await this.leavePrivate(data.room, data.role, data.clientId);
@@ -81,9 +81,15 @@ let AppGateway = class AppGateway {
     async handleInvitationVIP(client, data) {
         this.server.emit(`pass VIP ${data.clientId} ${data.room}`, data);
     }
-    async joinFree(room) {
+    async joinFree(room, clientPseudo, clientId) {
         return await this.roomService.updateActif(room, true).then((back) => {
-            this.server.emit(`joined ${room}`, back);
+            const data = {
+                room,
+                clientPseudo,
+                clientId,
+                count: back
+            };
+            this.server.emit(`joined ${room}`, data);
         });
     }
     async joinPrivate(room, clientId, clientPseudo, clientPeer) {
@@ -102,9 +108,15 @@ let AppGateway = class AppGateway {
             this.server.emit(`joined ${room}`, actif);
         });
     }
-    async leaveFree(room, role) {
+    async leaveFree(room, role, clientPseudo, clientId) {
         await this.roomService.updateActif(room, false).then((back) => {
-            this.server.emit(`leaved ${room}`, back);
+            const data = {
+                room,
+                clientPseudo,
+                clientId,
+                count: back
+            };
+            this.server.emit(`leaved ${room}`, data);
             if (role === 'model') {
                 this.server.emit(`model leaved ${room}`, back);
             }
@@ -167,6 +179,9 @@ let AppGateway = class AppGateway {
     }
     async AnswerModelStream(client, data) {
         this.server.emit(`Answer current model stream ${data.roomId} ${data.clientId}`, data);
+    }
+    async BanishClient(client, data) {
+        this.server.emit(`Banish client ${data.roomId} ${data.clientId}`, data);
     }
 };
 __decorate([
@@ -287,6 +302,12 @@ __decorate([
     __metadata("design:paramtypes", [typeof (_v = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _v : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "AnswerModelStream", null);
+__decorate([
+    websockets_1.SubscribeMessage('Banish client'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_w = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _w : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "BanishClient", null);
 AppGateway = __decorate([
     websockets_1.WebSocketGateway(4000),
     __metadata("design:paramtypes", [room_service_1.RoomService,

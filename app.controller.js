@@ -38,7 +38,6 @@ let AppController = class AppController {
         };
     }
     uploadAlbums(files) {
-        console.log('Files ', files);
         const paths = [];
         for (let index = 0; index < files.length; index++) {
             paths.push(path_upload + files[index].filename);
@@ -48,7 +47,6 @@ let AppController = class AppController {
         };
     }
     updateProfile(file) {
-        console.log('File ', file);
         return {
             path: path_upload + file.filename
         };

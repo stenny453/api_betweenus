@@ -147,6 +147,21 @@ let ModelService = class ModelService {
             };
         }
     }
+    async changePseudo(model, data) {
+        const id = model.id;
+        await this.modelRepository.update(id, { pseudo: data.pseudo });
+        const payload = {
+            id: model.id,
+            pseudo: data.pseudo,
+            email: model.email,
+            role: model.role
+        };
+        const jwt = await this.jwtService.sign(payload);
+        return {
+            "access_token": jwt,
+            id: model.id
+        };
+    }
     isOwnerOrAdmin(object, model) {
         return (model.role === user_role_enum_1.UserRoleEnum.ADMIN || (object.model && object.model.id === model.id));
     }

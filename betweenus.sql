@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 31 août 2021 à 11:45
+-- Généré le : lun. 13 sep. 2021 à 22:48
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `actif-room-private` (
   PRIMARY KEY (`id`),
   KEY `FK_3e788663cdef0d04153794000a4` (`clientId`),
   KEY `FK_76b144c277f10c082a7dedc2479` (`roomPrivateId`)
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -86,7 +86,25 @@ CREATE TABLE IF NOT EXISTS `album` (
   `modelId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_191b9aa7cfba6469fa8f5c6f800` (`modelId`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `banish`
+--
+
+DROP TABLE IF EXISTS `banish`;
+CREATE TABLE IF NOT EXISTS `banish` (
+  `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  `deletedAt` datetime(6) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `modelId` int(11) NOT NULL,
+  `clientId` int(11) NOT NULL,
+  `isBanished` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -107,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `chat` (
   `type_source` enum('admin','user','client','model') NOT NULL DEFAULT 'client',
   `type_chat` enum('private','free','vip') NOT NULL DEFAULT 'free',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=282 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=297 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -133,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `client` (
   UNIQUE KEY `IDX_6436cc6b79593760b9ef921ef1` (`email`),
   UNIQUE KEY `IDX_aff2f43e15bb4d5c04b2d3e790` (`pseudo`),
   UNIQUE KEY `REL_984b54d48c32e7f77548a36d06` (`creditId`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -173,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `credit` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `credit` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -192,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `log` (
   `modelId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_7e6141e91a5a47d7aef8e1ebec1` (`modelId`)
-) ENGINE=InnoDB AUTO_INCREMENT=224 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=239 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -232,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `model` (
   UNIQUE KEY `REL_6b100f496048d7517738cf69b2` (`profileId`),
   UNIQUE KEY `REL_0d2bdb57d8d1eb453ad2420078` (`settingId`),
   UNIQUE KEY `REL_b9e353f30dd59b7ad6cdce2c59` (`creditId`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -254,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `paiement` (
   `email` varchar(255) NOT NULL,
   `flux` enum('in','out') NOT NULL DEFAULT 'in',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -276,7 +294,7 @@ CREATE TABLE IF NOT EXISTS `profile` (
   `status` enum('Hors ligne','En ligne','En live','En vip') NOT NULL DEFAULT 'Hors ligne',
   `date_last_connection` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -294,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `room` (
   `deletedAt` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_dae356e011e5183abb359fb4222` (`modelId`)
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -313,7 +331,7 @@ CREATE TABLE IF NOT EXISTS `room-private` (
   `gain` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `FK_03fcdacee567965f8bba065f691` (`modelId`)
-) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -333,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `room-vip` (
   `gain` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `FK_a63a3acb64c20c5ec9a5b66ef6c` (`modelId`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -348,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `setting` (
   `mail_notification` int(11) NOT NULL,
   `sound_message` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -393,7 +411,7 @@ CREATE TABLE IF NOT EXISTS `timer` (
   PRIMARY KEY (`id`),
   KEY `FK_8a6e15eb0f790e7b50b88e82e8f` (`clientId`),
   KEY `FK_ada883c69676e5bcd11a5a22b8b` (`modelId`)
-) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Contraintes pour les tables déchargées

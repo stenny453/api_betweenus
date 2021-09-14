@@ -16,11 +16,13 @@ exports.ModelController = void 0;
 const common_1 = require("@nestjs/common");
 const model_service_1 = require("./model.service");
 const model_register_dto_1 = require("./dto/model-register.dto");
+const model_entity_1 = require("./entities/model.entity");
 const model_login_dto_1 = require("./dto/model-login.dto");
 const get_model_dto_1 = require("./dto/get-model.dto");
 const user_decorator_1 = require("../../decorators/user.decorator");
 const model_auth_guard_1 = require("./guards/model-auth.guard");
 const reinitPassword_dto_1 = require("../client/dto/reinitPassword.dto");
+const changePseudo_dto_1 = require("../client/dto/changePseudo.dto");
 let ModelController = class ModelController {
     constructor(modelService) {
         this.modelService = modelService;
@@ -54,6 +56,9 @@ let ModelController = class ModelController {
     }
     async getInfoModel(id) {
         return await this.modelService.getInfoModel(id);
+    }
+    async changePseudo(model, data) {
+        return await this.modelService.changePseudo(model, data);
     }
 };
 __decorate([
@@ -124,6 +129,16 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ModelController.prototype, "getInfoModel", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Post('changePseudo'),
+    __param(0, user_decorator_1.User()),
+    __param(1, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [model_entity_1.ModelEntity,
+        changePseudo_dto_1.ChangePseudoDto]),
+    __metadata("design:returntype", Promise)
+], ModelController.prototype, "changePseudo", null);
 ModelController = __decorate([
     common_1.Controller('model'),
     __metadata("design:paramtypes", [model_service_1.ModelService])

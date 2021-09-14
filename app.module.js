@@ -33,6 +33,7 @@ const actif_room_private_module_1 = require("./actif-room-private/actif-room-pri
 const mail_module_1 = require("./mail/mail.module");
 const admin_module_1 = require("./admin/admin.module");
 const paiement_module_1 = require("./paiement/paiement.module");
+const banish_module_1 = require("./banish/banish.module");
 dotenv.config();
 let AppModule = class AppModule {
 };
@@ -74,7 +75,8 @@ AppModule = __decorate([
             actif_room_private_module_1.ActifRoomPrivateModule,
             mail_module_1.MailModule,
             admin_module_1.AdminModule,
-            paiement_module_1.PaiementModule
+            paiement_module_1.PaiementModule,
+            banish_module_1.BanishModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, app_gateway_1.AppGateway],

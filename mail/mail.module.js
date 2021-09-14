@@ -25,12 +25,12 @@ MailModule = __decorate([
                         host: 'smtp.gmail.com',
                         secure: false,
                         auth: {
-                            user: 'stennygabrielrmr@gmail.com',
-                            pass: 'ccfhuxtbsaqdaxui',
+                            user: 'betweenuslive20@gmail.com',
+                            pass: '2021betweenus@live',
                         },
                     },
                     defaults: {
-                        from: `"BetweenUs" <betweenUs@gmail.com>`,
+                        from: `"BetweenUs" <betweenUslive@gmail.com>`,
                     },
                     template: {
                         dir: path_1.join(__dirname, 'templates'),

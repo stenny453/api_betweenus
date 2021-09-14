@@ -30,7 +30,6 @@ let TimerController = class TimerController {
         return await this.timerService.beginTimerModel(model, data);
     }
     async updateTimer(client, data) {
-        console.log('Update ', data);
         return await this.timerService.updateTimer(data);
     }
     async creditTimer(client, data) {

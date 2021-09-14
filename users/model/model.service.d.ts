@@ -9,6 +9,7 @@ import { GetModelDto } from './dto/get-model.dto';
 import { MailService } from '../../mail/mail.service';
 import { ReinitPasswordDto } from '../client/dto/reinitPassword.dto';
 import { ClientEntity } from '../client/entities/client.entity';
+import { ChangePseudoDto } from '../client/dto/changePseudo.dto';
 export declare class ModelService {
     private modelRepository;
     private clientRepository;
@@ -46,6 +47,10 @@ export declare class ModelService {
         access_token: string;
         message?: undefined;
         error?: undefined;
+    }>;
+    changePseudo(model: ModelEntity, data: ChangePseudoDto): Promise<{
+        access_token: string;
+        id: number;
     }>;
     isOwnerOrAdmin(object: any, model: ModelEntity): boolean;
     getModel(id: number): Promise<ModelEntity>;
