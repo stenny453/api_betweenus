@@ -36,7 +36,7 @@ let MailService = class MailService {
         const url = `${URL}/reinitialisation?token=${token}`;
         await this.mailerService.sendMail({
             to: emailClient,
-            subject: 'BetweenUs - Mot de passe oublié',
+            subject: 'BetweenUs - Confirmation',
             template: './forgot',
             context: {
                 name: pseudoClient,
