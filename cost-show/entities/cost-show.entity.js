@@ -24,7 +24,6 @@ __decorate([
         enum: show_enum_1.ShowEnum,
         default: show_enum_1.ShowEnum.FREE
     }),
-    typeorm_1.Column(),
     __metadata("design:type", String)
 ], CostShowEntity.prototype, "type", void 0);
 __decorate([

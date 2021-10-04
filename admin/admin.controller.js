@@ -199,12 +199,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "login", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('stat-inscription-client'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "statInscriptionClient", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('count-clients/:motif'),
     __param(0, common_1.Param('motif')),
     __metadata("design:type", Function),
@@ -212,12 +214,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "countClient", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('count-client-blocked'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "countBlocked", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('list-clients/:motif/:range/:page/'),
     __param(0, common_1.Param('motif')),
     __param(1, common_1.Param('range', common_1.ParseIntPipe)),
@@ -227,6 +231,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "listAllClients", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('list-clients/:motif/:range/:page/:filter'),
     __param(0, common_1.Param('motif')),
     __param(1, common_1.Param('range', common_1.ParseIntPipe)),
@@ -237,6 +242,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "listClients", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('list-client-blocked/:range/:page/'),
     __param(0, common_1.Param('range', common_1.ParseIntPipe)),
     __param(1, common_1.Param('page', common_1.ParseIntPipe)),
@@ -245,6 +251,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "listAllClientsBlocked", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('list-client-blocked/:range/:page/:filter'),
     __param(0, common_1.Param('range', common_1.ParseIntPipe)),
     __param(1, common_1.Param('page', common_1.ParseIntPipe)),
@@ -254,6 +261,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "listClientsBlocked", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Delete('client/:id'),
     __param(0, common_1.Param('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
@@ -261,6 +269,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "deleteClient", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Post('block-client'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
@@ -268,6 +277,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "blockClient", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Post('deactivate-client'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
@@ -275,6 +285,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "deactivateClient", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Post('activate-client'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
@@ -282,18 +293,21 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "activateClient", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('stat-inscription-model'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "statInscriptionModel", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('stat-suppression-model'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "statSuppressionModel", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('count-models/:motif'),
     __param(0, common_1.Param('motif')),
     __metadata("design:type", Function),
@@ -301,12 +315,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "countModel", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('count-model-blocked'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "countModelBlocked", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('list-models/:motif/:range/:page/'),
     __param(0, common_1.Param('motif')),
     __param(1, common_1.Param('range', common_1.ParseIntPipe)),
@@ -316,6 +332,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "listAllModels", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('list-models/:motif/:range/:page/:filter'),
     __param(0, common_1.Param('motif')),
     __param(1, common_1.Param('range', common_1.ParseIntPipe)),
@@ -326,6 +343,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "listModels", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('list-model-blocked/:range/:page/'),
     __param(0, common_1.Param('range', common_1.ParseIntPipe)),
     __param(1, common_1.Param('page', common_1.ParseIntPipe)),
@@ -334,6 +352,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "listAllModelsBlocked", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('list-model-blocked/:range/:page/:filter'),
     __param(0, common_1.Param('range', common_1.ParseIntPipe)),
     __param(1, common_1.Param('page', common_1.ParseIntPipe)),
@@ -343,6 +362,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "listModelsBlocked", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Delete('model/:id'),
     __param(0, common_1.Param('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
@@ -350,6 +370,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "deleteModel", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Post('block-model'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
@@ -357,6 +378,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "blockModel", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Post('deactivate-model'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
@@ -364,6 +386,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "deactivateModel", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Post('activate-model'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
@@ -371,6 +394,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "activateModel", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('model-status/:status'),
     __param(0, common_1.Param('status')),
     __metadata("design:type", Function),
@@ -378,6 +402,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "getModelProfil", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('model-status/:status/:filter'),
     __param(0, common_1.Param('status')),
     __param(1, common_1.Param('filter')),
@@ -386,12 +411,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "getModelProfilFilter", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('count-requests-models'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "countRequestsModel", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('model-requests/:status/:range/:page'),
     __param(0, common_1.Param('status')),
     __param(1, common_1.Param('range', common_1.ParseIntPipe)),
@@ -401,6 +428,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "getRequestsModel", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('model-requests/:status/:range/:page/:filter'),
     __param(0, common_1.Param('status')),
     __param(1, common_1.Param('range', common_1.ParseIntPipe)),
@@ -411,6 +439,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "getAllRequestsModel", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Post('result-request-model'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
@@ -418,6 +447,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "ResultRequestModel", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Post('result-inscription-model'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
@@ -425,6 +455,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "ResultInscriptionModel", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('getInfosModel/:idClient'),
     __param(0, common_1.Param('idClient', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
@@ -432,18 +463,21 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "getInfosModel", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('countModelActif'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "countModelActif", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('countClientActif'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "countClientActif", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('countModelState/:state'),
     __param(0, common_1.Param('state')),
     __metadata("design:type", Function),
@@ -451,18 +485,21 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "countModelState", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('newLastClients'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "newLastClients", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('newLastModels'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "newLastModels", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('countRoom/:type'),
     __param(0, common_1.Param('type')),
     __metadata("design:type", Function),
@@ -470,12 +507,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "countRoom", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('getChiffreAffaire'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "getChiffreAffaire", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Post('pay-model'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
@@ -483,36 +522,42 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "payModel", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('getAverageClient'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "getAverageClient", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('get10LastShowPrivate'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "get10LastShowPrivate", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('get10LastShowVIP'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "get10LastShowVIP", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('getTop10Model'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "getTop10Model", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('countPay'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "countPay", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('getListPaiement/:flux/:range/:page/'),
     __param(0, common_1.Param('flux')),
     __param(1, common_1.Param('range', common_1.ParseIntPipe)),
@@ -522,6 +567,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "getListPaiement", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('getListPaiement/:flux/:range/:page/:filter'),
     __param(0, common_1.Param('flux')),
     __param(1, common_1.Param('filter')),
@@ -532,6 +578,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "getListPaiementWithFilter", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Post('deletePaiement'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
@@ -539,12 +586,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "deletePaiement", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('getModelsActif'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "getModelsActif", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Post('sendMail'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
@@ -552,12 +601,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "sendMail", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('list-taboo'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "getTaboo", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Post('add-taboo'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
@@ -565,6 +616,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "addTaboo", null);
 __decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Delete('delete-taboo/:id'),
     __param(0, common_1.Param('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),

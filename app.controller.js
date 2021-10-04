@@ -20,7 +20,7 @@ const app_service_1 = require("./app.service");
 const model_auth_guard_1 = require("./users/model/guards/model-auth.guard");
 const user_decorator_1 = require("./decorators/user.decorator");
 const jwt_admin_auth_guard_1 = require("./admin/guards/jwt-admin-auth.guard");
-const path_upload = 'https://143.198.109.141/uploads/';
+const path_upload = 'https://betweenus-live.com/uploads/';
 let AppController = class AppController {
     constructor(appService, configService) {
         this.appService = appService;

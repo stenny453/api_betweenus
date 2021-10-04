@@ -16,6 +16,7 @@ export declare class JwtClientStrategy extends JwtClientStrategy_base {
         credit: import("../../../credit/entities/credit.entity").CreditEntity;
         timer: import("../../../timer/entities/timer.entity").TimerEntity;
         rooms: import("../../../actif-room-private/entities/actif-room-private.entity").ActifRoomPrivateEntity;
+        buyPacks: import("../../../buy-pack/entities/buy-pack.entity").BuyPackEntity;
         createdAt: Date;
         updatedAt: Date;
         deletedAt: Date;

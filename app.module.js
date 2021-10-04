@@ -34,6 +34,7 @@ const mail_module_1 = require("./mail/mail.module");
 const admin_module_1 = require("./admin/admin.module");
 const paiement_module_1 = require("./paiement/paiement.module");
 const banish_module_1 = require("./banish/banish.module");
+const buy_pack_module_1 = require("./buy-pack/buy-pack.module");
 dotenv.config();
 let AppModule = class AppModule {
 };
@@ -49,7 +50,7 @@ AppModule = __decorate([
                 host: 'localhost',
                 port: 3306,
                 username: 'root',
-                password: 'password',
+                password: 'passwordWei!',
                 database: 'betweenus',
                 entities: ['**/*.entity{.ts,.js}'],
                 synchronize: true,
@@ -57,7 +58,7 @@ AppModule = __decorate([
             client_module_1.ClientModule,
             model_module_1.ModelModule,
             platform_express_1.MulterModule.register({
-                dest: '/var/www/html/uploads/',
+                dest: '/var/www/betweenus-live.com/html/uploads/',
                 preservePath: true
             }),
             album_module_1.AlbumModule,
@@ -76,7 +77,8 @@ AppModule = __decorate([
             mail_module_1.MailModule,
             admin_module_1.AdminModule,
             paiement_module_1.PaiementModule,
-            banish_module_1.BanishModule
+            banish_module_1.BanishModule,
+            buy_pack_module_1.BuyPackModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, app_gateway_1.AppGateway],

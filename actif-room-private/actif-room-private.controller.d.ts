@@ -5,4 +5,7 @@ export declare class ActifRoomPrivateController {
     private readonly actifRoomPrivateService;
     constructor(actifRoomPrivateService: ActifRoomPrivateService);
     updateActif(user: ClientEntity, data: AddActifDto): Promise<import("./entities/actif-room-private.entity").ActifRoomPrivateEntity | import("typeorm").DeleteResult>;
+    getActifsRoom(user: ClientEntity, data: {
+        roomId: any;
+    }): Promise<import("./entities/actif-room-private.entity").ActifRoomPrivateEntity[]>;
 }

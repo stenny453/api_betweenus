@@ -89,12 +89,12 @@ let ClientService = class ClientService {
     async login(credentials) {
         const { pseudo, password } = credentials;
         const client = await this.clientRepository.createQueryBuilder("client")
-            .where("client.pseudo = :pseudo or client.email = :pseudo", {
+            .where("client.email = :pseudo", {
             pseudo
         }).getOne();
         if (!client) {
             return {
-                message: "Pseudo ou mot de passe erronée",
+                message: "Email ou mot de passe erronée",
                 error: true
             };
         }

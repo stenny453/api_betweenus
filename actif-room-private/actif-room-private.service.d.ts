@@ -10,4 +10,5 @@ export declare class ActifRoomPrivateService {
     private clientService;
     constructor(actifRoomPrivateRepository: Repository<ActifRoomPrivateEntity>, roomPrivateService: RoomPrivateService, clientService: ClientService);
     updateActif(user: ClientEntity, data: AddActifDto): Promise<ActifRoomPrivateEntity | import("typeorm").DeleteResult>;
+    getActifsRoom(user: ClientEntity, roomId: number): Promise<ActifRoomPrivateEntity[]>;
 }

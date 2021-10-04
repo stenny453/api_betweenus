@@ -94,12 +94,12 @@ let ModelService = class ModelService {
     async login(credentials) {
         const { pseudo, password } = credentials;
         const model = await this.modelRepository.createQueryBuilder("model")
-            .where("model.pseudo = :pseudo or model.email = :pseudo", {
+            .where("model.email = :pseudo", {
             pseudo
         }).getOne();
         if (!model) {
             return {
-                message: "Pseudo ou mot de passe erronée",
+                message: "Email ou mot de passe erronée",
                 error: true
             };
         }

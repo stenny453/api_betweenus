@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MailService = void 0;
 const mailer_1 = require("@nestjs-modules/mailer");
 const common_1 = require("@nestjs/common");
-const URL = 'https://143.198.109.141/tech';
+const URL = 'https://betweenus-live.com';
 let MailService = class MailService {
     constructor(mailerService) {
         this.mailerService = mailerService;

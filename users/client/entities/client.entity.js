@@ -17,6 +17,7 @@ const user_role_enum_1 = require("../../../enums/user-role.enum");
 const credit_entity_1 = require("../../../credit/entities/credit.entity");
 const timer_entity_1 = require("../../../timer/entities/timer.entity");
 const actif_room_private_entity_1 = require("../../../actif-room-private/entities/actif-room-private.entity");
+const buy_pack_entity_1 = require("../../../buy-pack/entities/buy-pack.entity");
 let ClientEntity = class ClientEntity extends timestamp_entities_1.TimestampEntities {
 };
 __decorate([
@@ -81,10 +82,18 @@ __decorate([
 __decorate([
     typeorm_1.OneToMany(type => actif_room_private_entity_1.ActifRoomPrivateEntity, (actifRoomPrivate) => actifRoomPrivate.client, {
         nullable: true,
-        cascade: true
+        cascade: true,
     }),
     __metadata("design:type", actif_room_private_entity_1.ActifRoomPrivateEntity)
 ], ClientEntity.prototype, "rooms", void 0);
+__decorate([
+    typeorm_1.OneToMany(type => buy_pack_entity_1.BuyPackEntity, (buyPack) => buyPack.client, {
+        nullable: true,
+        cascade: true,
+        eager: true
+    }),
+    __metadata("design:type", buy_pack_entity_1.BuyPackEntity)
+], ClientEntity.prototype, "buyPacks", void 0);
 ClientEntity = __decorate([
     typeorm_1.Entity('client')
 ], ClientEntity);

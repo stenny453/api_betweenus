@@ -12,46 +12,45 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ActifRoomPrivateController = void 0;
+exports.BuyPackController = void 0;
 const common_1 = require("@nestjs/common");
 const user_decorator_1 = require("../decorators/user.decorator");
-const actif_room_private_service_1 = require("./actif-room-private.service");
-const client_entity_1 = require("../users/client/entities/client.entity");
-const add_actif_dto_1 = require("./dto/add-actif.dto");
 const model_auth_guard_1 = require("../users/model/guards/model-auth.guard");
-let ActifRoomPrivateController = class ActifRoomPrivateController {
-    constructor(actifRoomPrivateService) {
-        this.actifRoomPrivateService = actifRoomPrivateService;
+const buy_pack_service_1 = require("./buy-pack.service");
+const add_buy_pack_dto_1 = require("./dto/add-buy-pack.dto");
+const client_entity_1 = require("../users/client/entities/client.entity");
+let BuyPackController = class BuyPackController {
+    constructor(buyPackService) {
+        this.buyPackService = buyPackService;
     }
-    async updateActif(user, data) {
-        return await this.actifRoomPrivateService.updateActif(user, data);
+    async buyPack(data, client) {
+        return await this.buyPackService.addBuyPack(client, data);
     }
-    async getActifsRoom(user, data) {
-        return await this.actifRoomPrivateService.getActifsRoom(user, data.roomId);
+    async verifyPack(client) {
+        return await this.buyPackService.verifyPack(client);
     }
 };
 __decorate([
     common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Post(),
-    __param(0, user_decorator_1.User()),
-    __param(1, common_1.Body()),
+    __param(0, common_1.Body()),
+    __param(1, user_decorator_1.User()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [client_entity_1.ClientEntity,
-        add_actif_dto_1.AddActifDto]),
+    __metadata("design:paramtypes", [add_buy_pack_dto_1.AddBuyPackDto,
+        client_entity_1.ClientEntity]),
     __metadata("design:returntype", Promise)
-], ActifRoomPrivateController.prototype, "updateActif", null);
+], BuyPackController.prototype, "buyPack", null);
 __decorate([
     common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
-    common_1.Post('actifs'),
+    common_1.Post('verifyPack'),
     __param(0, user_decorator_1.User()),
-    __param(1, common_1.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [client_entity_1.ClientEntity, Object]),
+    __metadata("design:paramtypes", [client_entity_1.ClientEntity]),
     __metadata("design:returntype", Promise)
-], ActifRoomPrivateController.prototype, "getActifsRoom", null);
-ActifRoomPrivateController = __decorate([
-    common_1.Controller('actif-room-private'),
-    __metadata("design:paramtypes", [actif_room_private_service_1.ActifRoomPrivateService])
-], ActifRoomPrivateController);
-exports.ActifRoomPrivateController = ActifRoomPrivateController;
-//# sourceMappingURL=actif-room-private.controller.js.map
+], BuyPackController.prototype, "verifyPack", null);
+BuyPackController = __decorate([
+    common_1.Controller('buy-pack'),
+    __metadata("design:paramtypes", [buy_pack_service_1.BuyPackService])
+], BuyPackController);
+exports.BuyPackController = BuyPackController;
+//# sourceMappingURL=buy-pack.controller.js.map

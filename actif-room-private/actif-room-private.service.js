@@ -63,6 +63,14 @@ let ActifRoomPrivateService = class ActifRoomPrivateService {
             return null;
         }
     }
+    async getActifsRoom(user, roomId) {
+        if (!user.id)
+            return null;
+        const qb = await this.actifRoomPrivateRepository.createQueryBuilder('actif');
+        return await qb.select()
+            .where("clientId != :id and roomPrivateId = :roomId", { id: user.id, roomId: roomId })
+            .getMany();
+    }
 };
 ActifRoomPrivateService = __decorate([
     common_1.Injectable(),
