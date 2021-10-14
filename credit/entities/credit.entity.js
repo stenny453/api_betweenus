@@ -25,6 +25,12 @@ __decorate([
     __metadata("design:type", Number)
 ], CreditEntity.prototype, "credit", void 0);
 __decorate([
+    typeorm_1.Column({
+        default: null
+    }),
+    __metadata("design:type", String)
+], CreditEntity.prototype, "lastPayment", void 0);
+__decorate([
     typeorm_1.OneToOne(() => model_entity_1.ModelEntity, model => model.credit),
     __metadata("design:type", model_entity_1.ModelEntity)
 ], CreditEntity.prototype, "model", void 0);

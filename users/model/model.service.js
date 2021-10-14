@@ -633,6 +633,9 @@ let ModelService = class ModelService {
             .innerJoinAndSelect('client.credit', 'credit')
             .getMany();
     }
+    async getCreditActifsModels() {
+        return await this.modelRepository.find({ state: 'Valide' });
+    }
 };
 ModelService = __decorate([
     common_1.Injectable(),

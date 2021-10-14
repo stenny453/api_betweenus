@@ -143,5 +143,13 @@ export declare class AppGateway implements OnGatewayInit, OnGatewayConnection, O
         roomId: any;
         clientId: number;
     }): Promise<void>;
+    askCurrentSaloon(client: Socket, data: {
+        idRoom: any;
+        modelId: number;
+    }): Promise<void>;
+    sendCurrentSaloon(client: Socket, data: {
+        idRoom: any;
+        currentSaloon: number;
+    }): Promise<void>;
 }
 export {};

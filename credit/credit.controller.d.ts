@@ -8,6 +8,14 @@ export declare class CreditController {
     getCredit(model: any): Promise<CreditEntity>;
     getCreditClient(client: any): Promise<CreditEntity>;
     createCredit(id: any): Promise<any>;
+    buyGift(data: {
+        clientId: number;
+        modelId: number;
+        credit: number;
+    }): Promise<{
+        success: boolean;
+        creditClient: number;
+    }>;
     createCreditClient(id: any): Promise<any>;
     buyCreditClient(data: AddCreditClientDto): Promise<Partial<CreditEntity>>;
     updateCredit(credit: CreditDto, id: any, model: any): Promise<Partial<CreditEntity>>;

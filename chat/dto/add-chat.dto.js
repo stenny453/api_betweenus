@@ -46,5 +46,20 @@ __decorate([
     class_validator_1.IsString(),
     __metadata("design:type", String)
 ], AddChatDto.prototype, "code_couleur", void 0);
+__decorate([
+    class_validator_1.IsOptional(),
+    class_validator_1.IsString(),
+    __metadata("design:type", String)
+], AddChatDto.prototype, "giftSymbol", void 0);
+__decorate([
+    class_validator_1.IsOptional(),
+    class_validator_1.IsString(),
+    __metadata("design:type", String)
+], AddChatDto.prototype, "giftDesign", void 0);
+__decorate([
+    class_validator_1.IsOptional(),
+    class_validator_1.IsString(),
+    __metadata("design:type", String)
+], AddChatDto.prototype, "giftSource", void 0);
 exports.AddChatDto = AddChatDto;
 //# sourceMappingURL=add-chat.dto.js.map

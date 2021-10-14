@@ -157,8 +157,12 @@ export declare class AdminService {
     get10LastShowPrivate(): Promise<import("../room-private/entities/room-private.entity").RoomPrivateEntity[]>;
     get10LastShowVIP(): Promise<import("../room-vip/entities/room-vip.entity").RoomVipEntity[]>;
     getTop10Model(): Promise<import("../users/model/entities/model.entity").ModelEntity[]>;
+    getCreditActifsModels(): Promise<import("../users/model/entities/model.entity").ModelEntity[]>;
     countPay(): Promise<number>;
     getListPaiement(flux: string, range: number, page: number, filter?: string): Promise<import("../paiement/entities/paiement.entity").PaiementEntity[]>;
+    payCreditModel(idModel: number, pseudoModel: string, emailModel: string, credit: number, lastPayement: string): Promise<{
+        success: boolean;
+    }>;
     payModel(idModel: number, pseudoModel: string, emailModel: string, credit: number): Promise<{
         success: boolean;
     }>;

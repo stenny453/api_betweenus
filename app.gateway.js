@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppGateway = void 0;
 const common_1 = require("@nestjs/common");
@@ -183,6 +183,12 @@ let AppGateway = class AppGateway {
     async BanishClient(client, data) {
         this.server.emit(`Banish client ${data.roomId} ${data.clientId}`, data);
     }
+    async askCurrentSaloon(client, data) {
+        this.server.emit(`ask currentSaloon ${data.idRoom} ${data.modelId}`, data);
+    }
+    async sendCurrentSaloon(client, data) {
+        this.server.emit(`currentSaloon ${data.idRoom}`, data);
+    }
 };
 __decorate([
     websockets_1.WebSocketServer(),
@@ -308,6 +314,18 @@ __decorate([
     __metadata("design:paramtypes", [typeof (_w = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _w : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "BanishClient", null);
+__decorate([
+    websockets_1.SubscribeMessage('ask currentSaloon'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_x = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _x : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "askCurrentSaloon", null);
+__decorate([
+    websockets_1.SubscribeMessage('currentSaloon'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_y = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _y : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "sendCurrentSaloon", null);
 AppGateway = __decorate([
     websockets_1.WebSocketGateway(4000),
     __metadata("design:paramtypes", [room_service_1.RoomService,

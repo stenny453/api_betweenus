@@ -5,4 +5,7 @@ export declare class AddChatDto {
     type_chat: string;
     id_source: number;
     code_couleur: string;
+    giftSymbol: string;
+    giftDesign: string;
+    giftSource: string;
 }

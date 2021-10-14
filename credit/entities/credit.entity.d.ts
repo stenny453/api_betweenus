@@ -4,6 +4,7 @@ import { ClientEntity } from '../../users/client/entities/client.entity';
 export declare class CreditEntity extends TimestampEntities {
     id: number;
     credit: number;
+    lastPayment: string;
     model: ModelEntity;
     client: ClientEntity;
 }

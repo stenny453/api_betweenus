@@ -158,6 +158,15 @@ export declare class AdminController {
         credit: number;
         montant: string;
     }>;
+    payCreditModel(data: {
+        idModel: number;
+        pseudoModel: string;
+        emailModel: string;
+        credit: number;
+        lastPayement: string;
+    }): Promise<{
+        success: boolean;
+    }>;
     payModel(data: {
         idModel: number;
         pseudoModel: string;
@@ -170,6 +179,7 @@ export declare class AdminController {
     get10LastShowPrivate(): Promise<import("../room-private/entities/room-private.entity").RoomPrivateEntity[]>;
     get10LastShowVIP(): Promise<import("../room-vip/entities/room-vip.entity").RoomVipEntity[]>;
     getTop10Model(): Promise<import("../users/model/entities/model.entity").ModelEntity[]>;
+    getCreditActifsModels(): Promise<import("../users/model/entities/model.entity").ModelEntity[]>;
     countPay(): Promise<number>;
     getListPaiement(flux: any, range: any, page: any): Promise<import("../paiement/entities/paiement.entity").PaiementEntity[]>;
     getListPaiementWithFilter(flux: any, filter: any, range: any, page: any): Promise<import("../paiement/entities/paiement.entity").PaiementEntity[]>;

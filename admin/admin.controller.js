@@ -139,6 +139,9 @@ let AdminController = class AdminController {
     async getChiffreAffaire() {
         return await this.adminService.getChiffreAffaire();
     }
+    async payCreditModel(data) {
+        return await this.adminService.payCreditModel(data.idModel, data.pseudoModel, data.emailModel, data.credit, data.lastPayement);
+    }
     async payModel(data) {
         return await this.adminService.payModel(data.idModel, data.pseudoModel, data.emailModel, data.credit);
     }
@@ -153,6 +156,9 @@ let AdminController = class AdminController {
     }
     async getTop10Model() {
         return await this.adminService.getTop10Model();
+    }
+    async getCreditActifsModels() {
+        return await this.adminService.getCreditActifsModels();
     }
     async countPay() {
         return await this.adminService.countPay();
@@ -515,6 +521,14 @@ __decorate([
 ], AdminController.prototype, "getChiffreAffaire", null);
 __decorate([
     common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Post('pay-credit-model'),
+    __param(0, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "payCreditModel", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Post('pay-model'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
@@ -549,6 +563,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "getTop10Model", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Get('getCreditActifsModels'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "getCreditActifsModels", null);
 __decorate([
     common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('countPay'),

@@ -52,6 +52,24 @@ __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
 ], ChatEntity.prototype, "code_couleur", void 0);
+__decorate([
+    typeorm_1.Column({
+        default: null
+    }),
+    __metadata("design:type", String)
+], ChatEntity.prototype, "giftSymbol", void 0);
+__decorate([
+    typeorm_1.Column({
+        default: null
+    }),
+    __metadata("design:type", String)
+], ChatEntity.prototype, "giftDesign", void 0);
+__decorate([
+    typeorm_1.Column({
+        default: null
+    }),
+    __metadata("design:type", String)
+], ChatEntity.prototype, "giftSource", void 0);
 ChatEntity = __decorate([
     typeorm_1.Entity('chat')
 ], ChatEntity);

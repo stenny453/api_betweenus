@@ -195,11 +195,20 @@ let AdminService = class AdminService {
     async getTop10Model() {
         return await this.modelService.getTop10Model();
     }
+    async getCreditActifsModels() {
+        return await this.modelService.getCreditActifsModels();
+    }
     async countPay() {
         return await this.paiementService.countPay();
     }
     async getListPaiement(flux, range, page, filter) {
         return await this.paiementService.getListPaiement(flux, range, page, filter);
+    }
+    async payCreditModel(idModel, pseudoModel, emailModel, credit, lastPayement) {
+        const model = await this.modelService.getInfosModel(idModel);
+        const creditModelId = model.credit.id;
+        await this.creditService.saveLastPayment(creditModelId, lastPayement, model);
+        return await this.payModel(idModel, pseudoModel, emailModel, credit);
     }
     async payModel(idModel, pseudoModel, emailModel, credit) {
         const model = await this.modelService.getInfosModel(idModel);

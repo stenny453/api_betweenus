@@ -76,7 +76,7 @@ let CreditService = class CreditService {
         const newCredit = await this.creditRepository.preload(Object.assign({ id }, credit));
         if (client.credit.id === newCredit.id) {
             if (!newCredit) {
-                throw new common_1.NotFoundException(`Le cv d'id ${id} n'existe pas`);
+                throw new common_1.NotFoundException(`Le credit d'id ${id} n'existe pas`);
             }
             const newP = await this.creditRepository.save(newCredit);
             return newP;
@@ -103,6 +103,38 @@ let CreditService = class CreditService {
         }
         else
             throw new common_1.UnauthorizedException();
+    }
+    async saveLastPayment(id, lastPayment, client) {
+        const data = {
+            lastPayment
+        };
+        const newCredit = await this.creditRepository.preload(Object.assign({ id }, data));
+        if (client.credit.id === newCredit.id) {
+            if (!newCredit) {
+                throw new common_1.NotFoundException(`Le credit d'id ${id} n'existe pas`);
+            }
+            const newP = await this.creditRepository.save(newCredit);
+            return newP;
+        }
+        else
+            throw new common_1.UnauthorizedException();
+    }
+    async buyGift(clientId, modelId, credit) {
+        const client = await this.clientService.getClient(clientId);
+        const creditClient = await this.creditRepository.findOne({ id: client.credit.id });
+        const model = await this.modelService.getModel(modelId);
+        const creditModel = await this.creditRepository.findOne({ id: model.credit.id });
+        const newCreditClient = await this.creditRepository.preload(Object.assign({ id: creditClient.id }, creditClient));
+        const newCreditModel = await this.creditRepository.preload(Object.assign({ id: creditModel.id }, creditModel));
+        newCreditClient.credit = newCreditClient.credit - credit;
+        newCreditClient.credit = newCreditClient.credit < 0 ? 0 : newCreditClient.credit;
+        newCreditModel.credit = newCreditModel.credit + credit;
+        await this.creditRepository.save(newCreditClient);
+        await this.creditRepository.save(newCreditModel);
+        return {
+            success: true,
+            creditClient: newCreditClient.credit
+        };
     }
 };
 CreditService = __decorate([

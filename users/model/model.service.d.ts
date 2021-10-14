@@ -161,4 +161,5 @@ export declare class ModelService {
     newLastModels(): Promise<number>;
     getTop10Model(): Promise<ModelEntity[]>;
     getModelsActif(): Promise<ModelEntity[]>;
+    getCreditActifsModels(): Promise<ModelEntity[]>;
 }

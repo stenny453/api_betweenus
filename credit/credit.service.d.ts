@@ -17,4 +17,9 @@ export declare class CreditService {
     createCreditClient(id: number): Promise<any>;
     updateCredit(id: number, credit: CreditDto, client: any): Promise<Partial<CreditEntity>>;
     buyCreditClient(credit: AddCreditClientDto): Promise<Partial<CreditEntity>>;
+    saveLastPayment(id: number, lastPayment: string, client: any): Promise<CreditEntity>;
+    buyGift(clientId: number, modelId: number, credit: number): Promise<{
+        success: boolean;
+        creditClient: number;
+    }>;
 }

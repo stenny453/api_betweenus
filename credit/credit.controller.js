@@ -32,6 +32,9 @@ let CreditController = class CreditController {
     async createCredit(id) {
         return await this.creditService.createCredit(id);
     }
+    async buyGift(data) {
+        return await this.creditService.buyGift(data.clientId, data.modelId, data.credit);
+    }
     async createCreditClient(id) {
         return await this.creditService.createCreditClient(id);
     }
@@ -65,6 +68,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], CreditController.prototype, "createCredit", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Post('buyGift'),
+    __param(0, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], CreditController.prototype, "buyGift", null);
 __decorate([
     common_1.Post('create/client/:id'),
     __param(0, common_1.Param('id', common_1.ParseIntPipe)),
