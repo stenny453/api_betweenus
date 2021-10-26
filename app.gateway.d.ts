@@ -101,18 +101,21 @@ export declare class AppGateway implements OnGatewayInit, OnGatewayConnection, O
         clientId: number;
         clientPseudo: string;
         modelId: number;
+        special?: string;
     }): Promise<void>;
     responsePositiveInvitationModelToVIP(client: Socket, data: {
         roomId: any;
         clientId: number;
         modelId: number;
         modelPseudo: string;
+        special?: string;
     }): Promise<void>;
     responseNegativeInvitationModelToVIP(client: Socket, data: {
         roomId: any;
         clientId: number;
         modelId: number;
         modelPseudo: string;
+        special?: string;
     }): Promise<void>;
     ToggleAudio(client: Socket, data: {
         roomId: any;
@@ -150,6 +153,25 @@ export declare class AppGateway implements OnGatewayInit, OnGatewayConnection, O
     sendCurrentSaloon(client: Socket, data: {
         idRoom: any;
         currentSaloon: number;
+    }): Promise<void>;
+    updatePalier(client: Socket, data: {
+        roomId: any;
+        mini: number;
+        bronze: number;
+        argent: number;
+        or: number;
+    }): Promise<void>;
+    updateChoiceUs(client: Socket, data: {
+        roomId: any;
+        title: string;
+        description: string;
+        tarif: number;
+    }): Promise<void>;
+    newTips(client: Socket, data: {
+        roomId: any;
+        symbole: string;
+        credit: number;
+        designation: string;
     }): Promise<void>;
 }
 export {};

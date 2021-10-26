@@ -37,6 +37,15 @@ let RoomVipController = class RoomVipController {
         }
         return this.roomVipService.createRoom(model, id);
     }
+    updatePalier(model, data) {
+        return this.roomVipService.updatePalier(data);
+    }
+    updateChoiceUs(model, data) {
+        return this.roomVipService.updateChoiceUs(data);
+    }
+    updateGain(client, data) {
+        return this.roomVipService.updateGain(data.roomId, data.gain);
+    }
     async getGain(id) {
         return await this.roomVipService.getGain(id);
     }
@@ -73,6 +82,33 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], RoomVipController.prototype, "createRoom", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Post('updatePalier'),
+    __param(0, user_decorator_1.User()),
+    __param(1, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], RoomVipController.prototype, "updatePalier", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Post('updateChoiceUs'),
+    __param(0, user_decorator_1.User()),
+    __param(1, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], RoomVipController.prototype, "updateChoiceUs", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Post('updateGain'),
+    __param(0, user_decorator_1.User()),
+    __param(1, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], RoomVipController.prototype, "updateGain", null);
 __decorate([
     common_1.Get('gain/:id'),
     __param(0, common_1.Param('id', common_1.ParseIntPipe)),

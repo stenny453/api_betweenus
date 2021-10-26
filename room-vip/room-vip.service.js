@@ -81,7 +81,14 @@ let RoomVipService = class RoomVipService {
             idRoom: result.id,
             actif: result.actif,
             clientId: result.clientId,
-            gain: result.gain
+            gain: result.gain,
+            mini: result.mini,
+            bronze: result.bronze,
+            argent: result.argent,
+            or: result.or,
+            free: result.free,
+            title: result.title,
+            description: result.description
         };
     }
     async getInfoClient(id) {
@@ -132,6 +139,22 @@ let RoomVipService = class RoomVipService {
             .offset(debut)
             .limit(10)
             .getMany();
+    }
+    async updatePalier(data) {
+        const room = await this.roomVipRepository.findOne({ id: data.roomId });
+        room.mini = data.mini;
+        room.bronze = data.bronze;
+        room.argent = data.argent;
+        room.or = data.or;
+        return await this.roomVipRepository.save(room);
+    }
+    async updateChoiceUs(data) {
+        const room = await this.roomVipRepository.findOne({ id: data.roomId });
+        console.log(data);
+        room.free = parseInt(data.tarif);
+        room.title = data.title;
+        room.description = data.description;
+        return await this.roomVipRepository.save(room);
     }
 };
 RoomVipService = __decorate([

@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppGateway = void 0;
 const common_1 = require("@nestjs/common");
@@ -189,6 +189,15 @@ let AppGateway = class AppGateway {
     async sendCurrentSaloon(client, data) {
         this.server.emit(`currentSaloon ${data.idRoom}`, data);
     }
+    async updatePalier(client, data) {
+        this.server.emit(`updatePalier ${data.roomId}`, data);
+    }
+    async updateChoiceUs(client, data) {
+        this.server.emit(`updateChoiceUs ${data.roomId}`, data);
+    }
+    async newTips(client, data) {
+        this.server.emit(`new tips ${data.roomId}`, data);
+    }
 };
 __decorate([
     websockets_1.WebSocketServer(),
@@ -326,6 +335,24 @@ __decorate([
     __metadata("design:paramtypes", [typeof (_y = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _y : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "sendCurrentSaloon", null);
+__decorate([
+    websockets_1.SubscribeMessage('updatePalier'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_z = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _z : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "updatePalier", null);
+__decorate([
+    websockets_1.SubscribeMessage('updateChoiceUs'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_0 = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _0 : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "updateChoiceUs", null);
+__decorate([
+    websockets_1.SubscribeMessage('new tips'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_1 = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _1 : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "newTips", null);
 AppGateway = __decorate([
     websockets_1.WebSocketGateway(4000),
     __metadata("design:paramtypes", [room_service_1.RoomService,

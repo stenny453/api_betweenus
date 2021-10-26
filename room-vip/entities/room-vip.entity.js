@@ -37,6 +37,48 @@ __decorate([
         default: 0
     }),
     __metadata("design:type", Number)
+], RoomVipEntity.prototype, "mini", void 0);
+__decorate([
+    typeorm_1.Column({
+        default: 0
+    }),
+    __metadata("design:type", Number)
+], RoomVipEntity.prototype, "bronze", void 0);
+__decorate([
+    typeorm_1.Column({
+        default: 0
+    }),
+    __metadata("design:type", Number)
+], RoomVipEntity.prototype, "argent", void 0);
+__decorate([
+    typeorm_1.Column({
+        default: 0
+    }),
+    __metadata("design:type", Number)
+], RoomVipEntity.prototype, "or", void 0);
+__decorate([
+    typeorm_1.Column({
+        default: null
+    }),
+    __metadata("design:type", Number)
+], RoomVipEntity.prototype, "free", void 0);
+__decorate([
+    typeorm_1.Column({
+        default: null
+    }),
+    __metadata("design:type", String)
+], RoomVipEntity.prototype, "title", void 0);
+__decorate([
+    typeorm_1.Column({
+        default: null
+    }),
+    __metadata("design:type", String)
+], RoomVipEntity.prototype, "description", void 0);
+__decorate([
+    typeorm_1.Column({
+        default: 0
+    }),
+    __metadata("design:type", Number)
 ], RoomVipEntity.prototype, "clientId", void 0);
 __decorate([
     typeorm_1.ManyToOne(type => model_entity_1.ModelEntity, (model) => model.vipRooms, {

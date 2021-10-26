@@ -113,7 +113,7 @@ let TimerService = class TimerService {
         const seconds = this.getSteps(datePast.toString(), dateNow.toString());
         creditTransaction = (data.showCredit * seconds) / data.showSecond;
         creditTransaction = Math.floor(creditTransaction);
-        if (data.showType === 'vip') {
+        if (data.showType === 'vip' || data.showType === 'CHOICE US') {
             await this.roomVipService.updateGain(data.roomId, creditTransaction);
         }
         else if (data.showType === 'private') {
