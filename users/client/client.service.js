@@ -93,10 +93,8 @@ let ClientService = class ClientService {
             pseudo
         }).getOne();
         if (!client) {
-            return {
-                message: "Email ou mot de passe erronée",
-                error: true
-            };
+            const result = await this.modelService.login(credentials);
+            return result;
         }
         if (client.state === user_state_enum_1.UserStateEnum.WAITING) {
             return {

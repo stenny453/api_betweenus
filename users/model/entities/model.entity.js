@@ -23,6 +23,7 @@ const room_private_entity_1 = require("../../../room-private/entities/room-priva
 const room_vip_entity_1 = require("../../../room-vip/entities/room-vip.entity");
 const timer_entity_1 = require("../../../timer/entities/timer.entity");
 const timestamp_entities_1 = require("../../../generics/timestamp.entities");
+const room_tips_entity_1 = require("../../../room-tips/entities/room-tips.entity");
 let ModelEntity = class ModelEntity extends timestamp_entities_1.TimestampEntities {
 };
 __decorate([
@@ -167,6 +168,13 @@ __decorate([
     }),
     __metadata("design:type", room_vip_entity_1.RoomVipEntity)
 ], ModelEntity.prototype, "vipRooms", void 0);
+__decorate([
+    typeorm_1.OneToMany(type => room_tips_entity_1.RoomTipsEntity, (tipsRoom) => tipsRoom.model, {
+        nullable: true,
+        cascade: true
+    }),
+    __metadata("design:type", room_private_entity_1.RoomPrivateEntity)
+], ModelEntity.prototype, "tipsRooms", void 0);
 __decorate([
     typeorm_1.OneToMany(type => timer_entity_1.TimerEntity, (timer) => timer.model, {
         nullable: true,

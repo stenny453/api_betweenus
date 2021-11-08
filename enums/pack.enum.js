@@ -7,5 +7,6 @@ var PackEnum;
     PackEnum["BRONZE"] = "bronze";
     PackEnum["ARGENT"] = "argent";
     PackEnum["OR"] = "or";
+    PackEnum["SUBSCRIBE"] = "abonnement";
 })(PackEnum = exports.PackEnum || (exports.PackEnum = {}));
 //# sourceMappingURL=pack.enum.js.map

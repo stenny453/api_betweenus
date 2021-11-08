@@ -24,17 +24,20 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreditService = void 0;
+const subscribe_service_1 = require("./../subscribe/subscribe.service");
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const model_service_1 = require("../users/model/model.service");
 const typeorm_2 = require("typeorm");
 const credit_entity_1 = require("./entities/credit.entity");
 const client_service_1 = require("../users/client/client.service");
+const creditVIP = require("./creditVIP.json");
 let CreditService = class CreditService {
-    constructor(creditRepository, modelService, clientService) {
+    constructor(creditRepository, modelService, clientService, subscribeService) {
         this.creditRepository = creditRepository;
         this.modelService = modelService;
         this.clientService = clientService;
+        this.subscribeService = subscribeService;
     }
     async getCreditModel(model) {
         const newModel = await this.modelService.getModel(model.id);
@@ -92,6 +95,17 @@ let CreditService = class CreditService {
             oldCredit = newCreditClient.credit;
         }
         oldCredit.credit = oldCredit.credit + credit.credit;
+        const { subscribed, expired } = await this.subscribeService.isSubscribed(oldCredit.client.id);
+        let pointVIP = 0;
+        await creditVIP.points.forEach((value) => {
+            if (value.credit === credit.credit) {
+                if (subscribed && !expired)
+                    pointVIP = value.subscribe;
+                else
+                    pointVIP = value.unsubscribe;
+            }
+        });
+        oldCredit.vip = oldCredit.vip + pointVIP;
         const newCredit = await this.creditRepository.preload(Object.assign({ id }, oldCredit));
         const client = await this.clientService.getClient(credit.clientId);
         if (client.credit.id === newCredit.id) {
@@ -136,13 +150,45 @@ let CreditService = class CreditService {
             creditClient: newCreditClient.credit
         };
     }
+    async payItemVIP(clientId, creditVIP) {
+        const client = await this.clientService.getClient(clientId);
+        const creditClient = await this.creditRepository.findOne({ id: client.credit.id });
+        const newCreditClient = await this.creditRepository.preload(Object.assign({ id: creditClient.id }, creditClient));
+        newCreditClient.vip = newCreditClient.vip - creditVIP;
+        newCreditClient.vip = newCreditClient.vip < 0 ? 0 : newCreditClient.vip;
+        return await this.creditRepository.save(newCreditClient);
+    }
+    async buyCreditShopVIP(clientId, creditId, montantVIP, creditGain) {
+        const creditClient = await this.creditRepository.findOne({ id: creditId });
+        if (!creditClient) {
+            return null;
+        }
+        const newCreditClient = await this.creditRepository.preload(Object.assign({ id: creditClient.id }, creditClient));
+        newCreditClient.vip = newCreditClient.vip - montantVIP;
+        newCreditClient.vip = newCreditClient.vip < 0 ? 0 : newCreditClient.vip;
+        newCreditClient.credit = newCreditClient.credit + creditGain;
+        return await this.creditRepository.save(newCreditClient);
+    }
+    async debiterCredit(creditId, credit) {
+        const creditClient = await this.creditRepository.findOne({ id: creditId });
+        if (!creditClient) {
+            return null;
+        }
+        const newCreditClient = await this.creditRepository.preload(Object.assign({ id: creditClient.id }, creditClient));
+        newCreditClient.credit = newCreditClient.credit - credit;
+        await this.creditRepository.save(newCreditClient);
+        return {
+            success: true
+        };
+    }
 };
 CreditService = __decorate([
     common_1.Injectable(),
     __param(0, typeorm_1.InjectRepository(credit_entity_1.CreditEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         model_service_1.ModelService,
-        client_service_1.ClientService])
+        client_service_1.ClientService,
+        subscribe_service_1.SubscribeService])
 ], CreditService);
 exports.CreditService = CreditService;
 //# sourceMappingURL=credit.service.js.map

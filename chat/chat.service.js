@@ -34,7 +34,6 @@ let ChatService = class ChatService {
         return await this.chatRepository.save(newChat);
     }
     async getChat(idRoom, type_chat = 'free') {
-        console.log('idRoom ', idRoom);
         return await this.chatRepository.find({ idRoom, type_chat });
     }
 };

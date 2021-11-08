@@ -26,6 +26,12 @@ __decorate([
 ], CreditEntity.prototype, "credit", void 0);
 __decorate([
     typeorm_1.Column({
+        default: 0
+    }),
+    __metadata("design:type", Number)
+], CreditEntity.prototype, "vip", void 0);
+__decorate([
+    typeorm_1.Column({
         default: null
     }),
     __metadata("design:type", String)

@@ -6,5 +6,7 @@ var ShowEnum;
     ShowEnum["PRIVATE"] = "private";
     ShowEnum["FREE"] = "free";
     ShowEnum["VIP"] = "vip";
+    ShowEnum["TIPS"] = "tips";
+    ShowEnum["CHOICE"] = "choice";
 })(ShowEnum = exports.ShowEnum || (exports.ShowEnum = {}));
 //# sourceMappingURL=show.enum.js.map

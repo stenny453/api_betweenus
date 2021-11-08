@@ -1,0 +1,20 @@
+{
+    "points": [
+        { "credit": 25, "subscribe": 0, "unsubscribe": 0 },
+        { "credit": 30, "subscribe": 0, "unsubscribe": 0 },
+        { "credit": 40, "subscribe": 5, "unsubscribe": 3 },
+        { "credit": 82, "subscribe": 12, "unsubscribe": 6 },
+        { "credit": 123, "subscribe": 21, "unsubscribe": 11 },
+        { "credit": 164, "subscribe": 28, "unsubscribe": 14 },
+        { "credit": 225, "subscribe": 50, "unsubscribe": 25 },
+        { "credit": 360, "subscribe": 80, "unsubscribe": 40 },
+        { "credit": 470, "subscribe": 100, "unsubscribe": 50 },
+        { "credit": 564, "subscribe": 120, "unsubscribe": 60 },
+        { "credit": 720, "subscribe": 165, "unsubscribe": 83 },
+        { "credit": 864, "subscribe": 198, "unsubscribe": 99 },
+        { "credit": 1000, "subscribe": 220, "unsubscribe": 110 },
+        { "credit": 1500, "subscribe": 330, "unsubscribe": 165 },
+        { "credit": 2000, "subscribe": 440, "unsubscribe": 220 },
+        { "credit": 2500, "subscribe": 550, "unsubscribe": 275 }
+    ]
+}

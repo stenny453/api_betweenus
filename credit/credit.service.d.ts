@@ -1,3 +1,4 @@
+import { SubscribeService } from './../subscribe/subscribe.service';
 import { ModelService } from 'src/users/model/model.service';
 import { Repository } from 'typeorm';
 import { CreditEntity } from './entities/credit.entity';
@@ -10,7 +11,8 @@ export declare class CreditService {
     private creditRepository;
     private modelService;
     private clientService;
-    constructor(creditRepository: Repository<CreditEntity>, modelService: ModelService, clientService: ClientService);
+    private subscribeService;
+    constructor(creditRepository: Repository<CreditEntity>, modelService: ModelService, clientService: ClientService, subscribeService: SubscribeService);
     getCreditModel(model: ModelEntity): Promise<any>;
     getCreditClient(client: ClientEntity): Promise<any>;
     createCredit(id: number): Promise<any>;
@@ -21,5 +23,10 @@ export declare class CreditService {
     buyGift(clientId: number, modelId: number, credit: number): Promise<{
         success: boolean;
         creditClient: number;
+    }>;
+    payItemVIP(clientId: number, creditVIP: number): Promise<CreditEntity>;
+    buyCreditShopVIP(clientId: number, creditId: number, montantVIP: number, creditGain: number): Promise<CreditEntity>;
+    debiterCredit(creditId: number, credit: number): Promise<{
+        success: boolean;
     }>;
 }

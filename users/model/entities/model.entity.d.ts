@@ -35,5 +35,6 @@ export declare class ModelEntity extends TimestampEntities {
     rooms: RoomEntity;
     privateRooms: RoomPrivateEntity;
     vipRooms: RoomVipEntity;
+    tipsRooms: RoomPrivateEntity;
     timer: TimerEntity;
 }

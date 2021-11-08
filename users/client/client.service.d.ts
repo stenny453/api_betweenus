@@ -40,18 +40,16 @@ export declare class ClientService {
         message: string;
         error: boolean;
         access_token?: undefined;
-        id?: undefined;
-        pseudo?: undefined;
-        email?: undefined;
-        role?: undefined;
+    } | {
+        access_token: string;
+        message?: undefined;
+        error?: undefined;
     } | {
         access_token: string;
         id: number;
         pseudo: string;
         email: string;
         role: string;
-        message?: undefined;
-        error?: undefined;
     }>;
     confirmEmail(client: ClientEntity): Promise<any>;
     getInfo(id: number): Promise<Partial<ClientEntity>>;

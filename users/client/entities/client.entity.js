@@ -18,6 +18,7 @@ const credit_entity_1 = require("../../../credit/entities/credit.entity");
 const timer_entity_1 = require("../../../timer/entities/timer.entity");
 const actif_room_private_entity_1 = require("../../../actif-room-private/entities/actif-room-private.entity");
 const buy_pack_entity_1 = require("../../../buy-pack/entities/buy-pack.entity");
+const subscribe_entity_1 = require("../../../subscribe/entities/subscribe.entity");
 let ClientEntity = class ClientEntity extends timestamp_entities_1.TimestampEntities {
 };
 __decorate([
@@ -94,6 +95,10 @@ __decorate([
     }),
     __metadata("design:type", buy_pack_entity_1.BuyPackEntity)
 ], ClientEntity.prototype, "buyPacks", void 0);
+__decorate([
+    typeorm_1.OneToOne(() => subscribe_entity_1.SubscribeEntity, subscribe => subscribe.client),
+    __metadata("design:type", subscribe_entity_1.SubscribeEntity)
+], ClientEntity.prototype, "subscribe", void 0);
 ClientEntity = __decorate([
     typeorm_1.Entity('client')
 ], ClientEntity);

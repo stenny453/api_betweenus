@@ -3,6 +3,7 @@ import { CreditEntity } from 'src/credit/entities/credit.entity';
 import { TimerEntity } from '../../../timer/entities/timer.entity';
 import { ActifRoomPrivateEntity } from 'src/actif-room-private/entities/actif-room-private.entity';
 import { BuyPackEntity } from '../../../buy-pack/entities/buy-pack.entity';
+import { SubscribeEntity } from '../../../subscribe/entities/subscribe.entity';
 export declare class ClientEntity extends TimestampEntities {
     id: number;
     pseudo: string;
@@ -16,4 +17,5 @@ export declare class ClientEntity extends TimestampEntities {
     timer: TimerEntity;
     rooms: ActifRoomPrivateEntity;
     buyPacks: BuyPackEntity;
+    subscribe: SubscribeEntity;
 }

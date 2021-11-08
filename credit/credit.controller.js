@@ -19,6 +19,7 @@ const model_auth_guard_1 = require("../users/model/guards/model-auth.guard");
 const credit_service_1 = require("./credit.service");
 const credit_dto_1 = require("./dto/credit.dto");
 const add_credit_client_dto_1 = require("./dto/add-credit-client.dto");
+const client_entity_1 = require("../users/client/entities/client.entity");
 let CreditController = class CreditController {
     constructor(creditService) {
         this.creditService = creditService;
@@ -43,6 +44,9 @@ let CreditController = class CreditController {
     }
     async updateCredit(credit, id, model) {
         return await this.creditService.updateCredit(id, credit, model);
+    }
+    async buyCreditShopVIP(client, data) {
+        return await this.creditService.buyCreditShopVIP(client.id, data.creditId, data.montantVIP, data.creditGain);
     }
 };
 __decorate([
@@ -100,6 +104,15 @@ __decorate([
     __metadata("design:paramtypes", [credit_dto_1.CreditDto, Object, Object]),
     __metadata("design:returntype", Promise)
 ], CreditController.prototype, "updateCredit", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Post('buyCreditShopVIP'),
+    __param(0, user_decorator_1.User()),
+    __param(1, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [client_entity_1.ClientEntity, Object]),
+    __metadata("design:returntype", Promise)
+], CreditController.prototype, "buyCreditShopVIP", null);
 CreditController = __decorate([
     common_1.Controller('credit'),
     __metadata("design:paramtypes", [credit_service_1.CreditService])

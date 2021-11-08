@@ -152,7 +152,7 @@ export declare class AppGateway implements OnGatewayInit, OnGatewayConnection, O
     }): Promise<void>;
     sendCurrentSaloon(client: Socket, data: {
         idRoom: any;
-        currentSaloon: number;
+        live_selected: string;
     }): Promise<void>;
     updatePalier(client: Socket, data: {
         roomId: any;

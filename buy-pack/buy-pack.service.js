@@ -26,8 +26,6 @@ let BuyPackService = class BuyPackService {
         this.clientService = clientService;
     }
     async addBuyPack(client, data) {
-        console.log(client);
-        console.log(data);
         const old_client = await this.clientService.getClient(client.id);
         if (!old_client)
             return null;
