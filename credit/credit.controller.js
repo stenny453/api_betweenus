@@ -39,8 +39,8 @@ let CreditController = class CreditController {
     async createCreditClient(id) {
         return await this.creditService.createCreditClient(id);
     }
-    async buyCreditClient(data) {
-        return await this.creditService.buyCreditClient(data);
+    async buyCreditClient(client, data) {
+        return await this.creditService.buyCreditClient(data, client.id);
     }
     async updateCredit(credit, id, model) {
         return await this.creditService.updateCredit(id, credit, model);
@@ -88,10 +88,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CreditController.prototype, "createCreditClient", null);
 __decorate([
-    common_1.Patch('client'),
-    __param(0, common_1.Body()),
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Post('client'),
+    __param(0, user_decorator_1.User()),
+    __param(1, common_1.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [add_credit_client_dto_1.AddCreditClientDto]),
+    __metadata("design:paramtypes", [client_entity_1.ClientEntity,
+        add_credit_client_dto_1.AddCreditClientDto]),
     __metadata("design:returntype", Promise)
 ], CreditController.prototype, "buyCreditClient", null);
 __decorate([

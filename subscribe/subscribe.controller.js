@@ -42,7 +42,7 @@ __decorate([
 ], SubscribeController.prototype, "newSubscribe", null);
 __decorate([
     common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
-    common_1.Post('verify'),
+    common_1.Get('verify'),
     __param(0, user_decorator_1.User()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [client_entity_1.ClientEntity]),

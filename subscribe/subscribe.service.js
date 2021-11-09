@@ -62,6 +62,14 @@ let SubscribeService = class SubscribeService {
     async isSubscribed(clientId) {
         const user = await this.clientService.getClient(clientId);
         const subscribe = await this.subscribeRepository.findOne({ client: user });
+        if (!subscribe) {
+            return {
+                subscribed: false,
+                expired: false,
+                subscribe: null,
+                rest: 0
+            };
+        }
         let startDate = subscribe.lastDate.toISOString().toString().substring(0, 10);
         let date1 = new Date();
         let date2 = new Date(startDate);

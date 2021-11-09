@@ -214,9 +214,13 @@ let ModelService = class ModelService {
         const models = [];
         await (await this.modelRepository.find()).forEach((model) => {
             if (model.profile) {
-                if ((model.profile.status === status_model_enum_1.StatusModelEnum.LIVE_VIP) && (data.context === status_model_enum_1.StatusModelEnum.LIVE)) {
-                    const { password, salt, setting, credit } = model, result = __rest(model, ["password", "salt", "setting", "credit"]);
-                    models.push(result);
+                if (data.context === status_model_enum_1.StatusModelEnum.LIVE) {
+                    if ((model.profile.status === status_model_enum_1.StatusModelEnum.LIVE_VIP) ||
+                        (model.profile.status === status_model_enum_1.StatusModelEnum.LIVE_TIPS) ||
+                        (model.profile.status === status_model_enum_1.StatusModelEnum.LIVE_CHOICE)) {
+                        const { password, salt, setting, credit } = model, result = __rest(model, ["password", "salt", "setting", "credit"]);
+                        models.push(result);
+                    }
                 }
                 if (model.profile.status === data.context) {
                     const { password, salt, setting, credit } = model, result = __rest(model, ["password", "salt", "setting", "credit"]);
@@ -232,7 +236,8 @@ let ModelService = class ModelService {
         let offline = 0;
         await (await this.modelRepository.find()).forEach((model) => {
             if (model.profile) {
-                if ((model.profile.status === status_model_enum_1.StatusModelEnum.LIVE) || (model.profile.status === status_model_enum_1.StatusModelEnum.LIVE_VIP))
+                if ((model.profile.status === status_model_enum_1.StatusModelEnum.LIVE) || (model.profile.status === status_model_enum_1.StatusModelEnum.LIVE_VIP)
+                    || (model.profile.status === status_model_enum_1.StatusModelEnum.LIVE_TIPS) || (model.profile.status === status_model_enum_1.StatusModelEnum.LIVE_CHOICE))
                     live++;
                 if (model.profile.status === status_model_enum_1.StatusModelEnum.INLINE)
                     chat++;
@@ -296,7 +301,8 @@ let ModelService = class ModelService {
         const models = [];
         await (await this.modelRepository.find()).forEach((model) => {
             if (model.profile && model.state === user_state_enum_1.UserStateEnum.VALIDATE) {
-                if ((model.profile.status === status_model_enum_1.StatusModelEnum.LIVE_VIP) || (model.profile.status === status_model_enum_1.StatusModelEnum.LIVE)) {
+                if ((model.profile.status === status_model_enum_1.StatusModelEnum.LIVE_VIP) || (model.profile.status === status_model_enum_1.StatusModelEnum.LIVE)
+                    || (model.profile.status === status_model_enum_1.StatusModelEnum.LIVE_TIPS) || (model.profile.status === status_model_enum_1.StatusModelEnum.LIVE_CHOICE)) {
                     const { password, salt, setting, credit } = model, result = __rest(model, ["password", "salt", "setting", "credit"]);
                     models.push(result);
                 }

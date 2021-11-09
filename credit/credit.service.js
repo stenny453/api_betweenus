@@ -87,7 +87,7 @@ let CreditService = class CreditService {
         else
             throw new common_1.UnauthorizedException();
     }
-    async buyCreditClient(credit) {
+    async buyCreditClient(credit, clientId) {
         const id = credit.creditId;
         let oldCredit = await this.creditRepository.findOne({ id: credit.creditId });
         if (!oldCredit) {
@@ -95,7 +95,7 @@ let CreditService = class CreditService {
             oldCredit = newCreditClient.credit;
         }
         oldCredit.credit = oldCredit.credit + credit.credit;
-        const { subscribed, expired } = await this.subscribeService.isSubscribed(oldCredit.client.id);
+        const { subscribed, expired } = await this.subscribeService.isSubscribed(clientId);
         let pointVIP = 0;
         await creditVIP.points.forEach((value) => {
             if (value.credit === credit.credit) {

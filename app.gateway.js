@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppGateway = void 0;
 const common_1 = require("@nestjs/common");
@@ -72,6 +72,10 @@ let AppGateway = class AppGateway {
     }
     async handlePassToPrivate(client, data) {
         this.server.emit(`Pass to private ${data.room}`, data);
+        this.leaveFree(data.room, '');
+    }
+    async handlePassToTips(client, data) {
+        this.server.emit(`Pass to tips ${data.room}`, data);
         this.leaveFree(data.room, '');
     }
     async handlePassToVIP(client, data) {
@@ -228,129 +232,135 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "handlePassToPrivate", null);
 __decorate([
-    websockets_1.SubscribeMessage('Pass to VIP'),
+    websockets_1.SubscribeMessage('Pass to tips'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [typeof (_f = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _f : Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "handlePassToTips", null);
+__decorate([
+    websockets_1.SubscribeMessage('Pass to VIP'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_g = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _g : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "handlePassToVIP", null);
 __decorate([
     websockets_1.SubscribeMessage('Invitation to VIP'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_g = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _g : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_h = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _h : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "handleInvitationVIP", null);
 __decorate([
     websockets_1.SubscribeMessage('peerId'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_h = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _h : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_j = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _j : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "handlePeerId", null);
 __decorate([
     websockets_1.SubscribeMessage('ask peerId'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_j = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _j : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_k = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _k : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "handleAskPeerId", null);
 __decorate([
     websockets_1.SubscribeMessage('ans peerId'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_k = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _k : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_l = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _l : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "handleAnsPeerId", null);
 __decorate([
     websockets_1.SubscribeMessage('new model peerId'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_l = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _l : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_m = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _m : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "handleNewPeerIdModel", null);
 __decorate([
     websockets_1.SubscribeMessage('invite model to private'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_m = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _m : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_o = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _o : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "inviteModelToPrivate", null);
 __decorate([
     websockets_1.SubscribeMessage('response invitation to private'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_o = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _o : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_p = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _p : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "responseInvitationModelToPrivate", null);
 __decorate([
     websockets_1.SubscribeMessage('invite model to vip'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_p = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _p : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_q = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _q : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "inviteModelToVIP", null);
 __decorate([
     websockets_1.SubscribeMessage('response positive invitation model to vip'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_q = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _q : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_r = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _r : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "responsePositiveInvitationModelToVIP", null);
 __decorate([
     websockets_1.SubscribeMessage('response negative invitation model to vip'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_r = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _r : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_s = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _s : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "responseNegativeInvitationModelToVIP", null);
 __decorate([
     websockets_1.SubscribeMessage('Toggle audio'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_s = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _s : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_t = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _t : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "ToggleAudio", null);
 __decorate([
     websockets_1.SubscribeMessage('Toggle video'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_t = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _t : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_u = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _u : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "ToggleVideo", null);
 __decorate([
     websockets_1.SubscribeMessage('Ask current model stream'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_u = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _u : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_v = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _v : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "AskModelStream", null);
 __decorate([
     websockets_1.SubscribeMessage('Answer current model stream'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_v = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _v : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_w = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _w : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "AnswerModelStream", null);
 __decorate([
     websockets_1.SubscribeMessage('Banish client'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_w = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _w : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_x = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _x : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "BanishClient", null);
 __decorate([
     websockets_1.SubscribeMessage('ask currentSaloon'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_x = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _x : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_y = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _y : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "askCurrentSaloon", null);
 __decorate([
     websockets_1.SubscribeMessage('currentSaloon'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_y = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _y : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_z = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _z : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "sendCurrentSaloon", null);
 __decorate([
     websockets_1.SubscribeMessage('updatePalier'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_z = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _z : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_0 = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _0 : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "updatePalier", null);
 __decorate([
     websockets_1.SubscribeMessage('updateChoiceUs'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_0 = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _0 : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_1 = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _1 : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "updateChoiceUs", null);
 __decorate([
     websockets_1.SubscribeMessage('new tips'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_1 = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _1 : Object, Object]),
+    __metadata("design:paramtypes", [typeof (_2 = typeof socket_io_1.Socket !== "undefined" && socket_io_1.Socket) === "function" ? _2 : Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "newTips", null);
 AppGateway = __decorate([

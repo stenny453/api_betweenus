@@ -44,6 +44,13 @@ export declare class AppGateway implements OnGatewayInit, OnGatewayConnection, O
         pseudo: string;
         message: string;
     }): Promise<void>;
+    handlePassToTips(client: Socket, data: {
+        room: string;
+        role: string;
+        id: number;
+        pseudo: string;
+        message: string;
+    }): Promise<void>;
     handlePassToVIP(client: Socket, data: {
         room: string;
         role: string;

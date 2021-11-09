@@ -18,7 +18,7 @@ export declare class CreditController {
         creditClient: number;
     }>;
     createCreditClient(id: any): Promise<any>;
-    buyCreditClient(data: AddCreditClientDto): Promise<Partial<CreditEntity>>;
+    buyCreditClient(client: ClientEntity, data: AddCreditClientDto): Promise<Partial<CreditEntity>>;
     updateCredit(credit: CreditDto, id: any, model: any): Promise<Partial<CreditEntity>>;
     buyCreditShopVIP(client: ClientEntity, data: {
         creditId: number;
