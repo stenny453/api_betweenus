@@ -18,6 +18,10 @@ export declare class RoomTipsController {
         idRoom: any;
         actif: number;
     }>;
+    getStatRoom(id: any): Promise<{
+        gain: number;
+        actif: number;
+    }>;
     updateActif(client: ClientEntity, data: {
         roomId: number;
         joined: boolean;
@@ -25,4 +29,8 @@ export declare class RoomTipsController {
         peerId?: string;
         role?: string;
     }): Promise<import("./entities/room-tips.entity").RoomTipsEntity>;
+    updateGain(client: any, data: {
+        roomId: number;
+        gain: number;
+    }): Promise<false | import("./entities/room-tips.entity").RoomTipsEntity>;
 }

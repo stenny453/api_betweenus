@@ -44,6 +44,9 @@ let AppGateway = class AppGateway {
             case 'private':
                 await this.joinPrivate(data.room, data.clientId, data.clientPseudo, data.clientPeer);
                 break;
+            case 'tips':
+                await this.joinTips(data.room, data.clientId, data.clientPseudo, data.clientPeer);
+                break;
             case 'vip':
                 await this.joinVip(data.room);
                 break;
@@ -59,6 +62,9 @@ let AppGateway = class AppGateway {
                 break;
             case 'private':
                 await this.leavePrivate(data.room, data.role, data.clientId);
+                break;
+            case 'tips':
+                await this.leaveTips(data.room, data.role, data.clientId);
                 break;
             case 'vip':
                 await this.leaveVip(data.room, data.role);
@@ -107,6 +113,15 @@ let AppGateway = class AppGateway {
             this.server.emit(`joined ${room}`, data);
         });
     }
+    async joinTips(room, clientId, clientPseudo, clientPeer) {
+        const data = {
+            actif: 0,
+            id: clientId,
+            pseudo: clientPseudo,
+            peerId: clientPeer
+        };
+        this.server.emit(`joined ${room}`, data);
+    }
     async joinVip(room) {
         return await this.roomVipService.updateActif(room, true).then((actif) => {
             this.server.emit(`joined ${room}`, actif);
@@ -136,6 +151,15 @@ let AppGateway = class AppGateway {
                 this.server.emit(`model leaved ${room}`, back);
             }
         });
+    }
+    async leaveTips(room, role, clientId) {
+        const data = {
+            clientId
+        };
+        this.server.emit(`leaved ${room}`, data);
+        if (role === 'model') {
+            this.server.emit(`model leaved ${room}`, data);
+        }
     }
     async leaveVip(room, role) {
         await this.roomVipService.updateActif(room, false).then((back) => {

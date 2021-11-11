@@ -67,9 +67,11 @@ export declare class AppGateway implements OnGatewayInit, OnGatewayConnection, O
     }): Promise<void>;
     joinFree(room: string, clientPseudo?: string, clientId?: number): Promise<void>;
     joinPrivate(room: string, clientId: number, clientPseudo: string, clientPeer: string): Promise<void>;
+    joinTips(room: string, clientId: number, clientPseudo: string, clientPeer: string): Promise<void>;
     joinVip(room: string): Promise<void>;
     leaveFree(room: string, role: string, clientPseudo?: string, clientId?: number): Promise<void>;
     leavePrivate(room: string, role: string, clientId: number): Promise<void>;
+    leaveTips(room: string, role: string, clientId: number): Promise<void>;
     leaveVip(room: string, role: string): Promise<void>;
     handlePeerId(client: Socket, data: {
         peerId: any;
@@ -179,6 +181,7 @@ export declare class AppGateway implements OnGatewayInit, OnGatewayConnection, O
         symbole: string;
         credit: number;
         designation: string;
+        vip: boolean;
     }): Promise<void>;
 }
 export {};

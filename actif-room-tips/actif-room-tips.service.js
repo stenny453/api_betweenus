@@ -1,0 +1,85 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ActifRoomTipsService = void 0;
+const actif_room_tips_entity_1 = require("./entities/actif-room-tips.entity");
+const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
+const room_private_service_1 = require("../room-private/room-private.service");
+const client_service_1 = require("../users/client/client.service");
+const client_entity_1 = require("../users/client/entities/client.entity");
+const typeorm_2 = require("typeorm");
+const room_tips_service_1 = require("../room-tips/room-tips.service");
+const album_model_enum_1 = require("../enums/album-model.enum");
+let ActifRoomTipsService = class ActifRoomTipsService {
+    constructor(actifRoomTipsRepository, roomTipsService, clientService) {
+        this.actifRoomTipsRepository = actifRoomTipsRepository;
+        this.roomTipsService = roomTipsService;
+        this.clientService = clientService;
+    }
+    async updateActif(user, data) {
+        let room = null;
+        const client = await this.clientService.getInfos(user);
+        if (data.type_room === album_model_enum_1.AlbumModelEnum.TIPS) {
+            room = await this.roomTipsService.getRoom(data.roomId);
+        }
+        const actifRoom = await this.actifRoomTipsRepository.findOne({
+            client: client,
+            roomTips: room,
+            type_room: data.type_room
+        });
+        if (!data.joined && actifRoom) {
+            return await this.actifRoomTipsRepository.delete({
+                client: client, roomTips: room, type_room: data.type_room
+            });
+        }
+        else if (data.joined && !actifRoom) {
+            const newActif = await this.actifRoomTipsRepository.create();
+            newActif.client = client;
+            newActif.roomTips = room;
+            newActif.type_room = data.type_room;
+            newActif.peerId = data.peerId;
+            return await this.actifRoomTipsRepository.save(newActif);
+        }
+        else if (data.joined && actifRoom) {
+            const id = actifRoom.id;
+            const newClient = await this.actifRoomTipsRepository.preload({
+                id
+            });
+            newClient.peerId = data.peerId;
+            return await this.actifRoomTipsRepository.save(newClient);
+        }
+        else {
+            return null;
+        }
+    }
+    async getAll() {
+        return await this.actifRoomTipsRepository.find();
+    }
+    async getActifsRoom(roomId) {
+        const qb = await this.actifRoomTipsRepository.createQueryBuilder('actif');
+        return await qb.select()
+            .where("roomTipsId = :roomId", { roomId: roomId })
+            .getMany();
+    }
+};
+ActifRoomTipsService = __decorate([
+    common_1.Injectable(),
+    __param(0, typeorm_1.InjectRepository(actif_room_tips_entity_1.ActifRoomTipsEntity)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        room_tips_service_1.RoomTipsService,
+        client_service_1.ClientService])
+], ActifRoomTipsService);
+exports.ActifRoomTipsService = ActifRoomTipsService;
+//# sourceMappingURL=actif-room-tips.service.js.map

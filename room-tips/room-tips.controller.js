@@ -33,8 +33,14 @@ let RoomTipsController = class RoomTipsController {
     getRoomModel(id) {
         return this.roomTipsService.getLastRoom(id);
     }
+    getStatRoom(id) {
+        return this.roomTipsService.getStatRoom(id);
+    }
     updateActif(client, data) {
         return this.roomTipsService.updateActif(client, data);
+    }
+    updateGain(client, data) {
+        return this.roomTipsService.updateGain(data.roomId, data.gain);
     }
 };
 __decorate([
@@ -64,6 +70,13 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], RoomTipsController.prototype, "getRoomModel", null);
 __decorate([
+    common_1.Get('stat/:id'),
+    __param(0, common_1.Param('id', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], RoomTipsController.prototype, "getStatRoom", null);
+__decorate([
     common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Post('updateActif'),
     __param(0, user_decorator_1.User()),
@@ -72,6 +85,15 @@ __decorate([
     __metadata("design:paramtypes", [client_entity_1.ClientEntity, Object]),
     __metadata("design:returntype", void 0)
 ], RoomTipsController.prototype, "updateActif", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Post('updateGain'),
+    __param(0, user_decorator_1.User()),
+    __param(1, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], RoomTipsController.prototype, "updateGain", null);
 RoomTipsController = __decorate([
     common_1.Controller('room-tips'),
     __metadata("design:paramtypes", [room_tips_service_1.RoomTipsService])

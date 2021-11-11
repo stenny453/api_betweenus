@@ -38,6 +38,7 @@ const buy_pack_module_1 = require("./buy-pack/buy-pack.module");
 const subscribe_module_1 = require("./subscribe/subscribe.module");
 const between_shop_module_1 = require("./between-shop/between-shop.module");
 const room_tips_module_1 = require("./room-tips/room-tips.module");
+const actif_room_tips_module_1 = require("./actif-room-tips/actif-room-tips.module");
 dotenv.config();
 let AppModule = class AppModule {
 };
@@ -61,7 +62,7 @@ AppModule = __decorate([
             client_module_1.ClientModule,
             model_module_1.ModelModule,
             platform_express_1.MulterModule.register({
-                dest: 'c:/wamp64/www/betweenus/uploads/',
+                dest: '/var/www/betweenus-live.com/html/uploads/',
                 preservePath: true
             }),
             album_module_1.AlbumModule,
@@ -84,7 +85,8 @@ AppModule = __decorate([
             buy_pack_module_1.BuyPackModule,
             subscribe_module_1.SubscribeModule,
             between_shop_module_1.BetweenShopModule,
-            room_tips_module_1.RoomTipsModule
+            room_tips_module_1.RoomTipsModule,
+            actif_room_tips_module_1.ActifRoomTipsModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, app_gateway_1.AppGateway],

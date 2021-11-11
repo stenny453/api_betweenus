@@ -31,7 +31,10 @@ export declare class RoomVipController {
         title: string;
         description: string;
     }>;
-    createRoom(model: any, data: any): Promise<{
+    createRoom(model: any, data: {
+        clientId: number;
+        special?: string;
+    }): Promise<{
         room: number;
     }>;
     updatePalier(model: any, data: {

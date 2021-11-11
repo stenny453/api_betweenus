@@ -13,7 +13,10 @@ export declare class RoomVipService {
     getColorCode(): {
         color: string;
     };
-    createRoom(model: ModelEntity, clientId?: number): Promise<{
+    createRoom(model: ModelEntity, data: {
+        clientId: number;
+        special?: string;
+    }): Promise<{
         room: number;
     }>;
     getLastRoom(id: number): Promise<{

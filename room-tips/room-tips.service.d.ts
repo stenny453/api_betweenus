@@ -29,4 +29,10 @@ export declare class RoomTipsService {
         peerId?: string;
         role?: string;
     }): Promise<RoomTipsEntity>;
+    getStatRoom(idRoom: number): Promise<{
+        gain: number;
+        actif: number;
+    }>;
+    updateGain(idRoom: number, gain: number): Promise<false | RoomTipsEntity>;
+    getRoom(id: number): Promise<RoomTipsEntity>;
 }

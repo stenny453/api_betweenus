@@ -38,8 +38,11 @@ let RoomVipService = class RoomVipService {
             color
         };
     }
-    async createRoom(model, clientId = 0) {
-        const newRoom = await this.roomVipRepository.create({ actif: 0, clientId: clientId });
+    async createRoom(model, data) {
+        const newRoom = await this.roomVipRepository.create({ actif: 0, clientId: data.clientId });
+        const theModel = await this.modelService.getModel(model.id);
+        if (!theModel)
+            return null;
         newRoom.model = model;
         const room = await this.roomVipRepository.save(newRoom);
         await (await this.roomVipRepository.find({ model })).forEach(async (room) => {
@@ -50,7 +53,12 @@ let RoomVipService = class RoomVipService {
                 await this.roomVipRepository.save(newRoom);
             }
         });
-        await this.profilService.updateProfil(model.profile.id, { status: status_model_enum_1.StatusModelEnum.LIVE_VIP }, model);
+        if (data.special && data.special === 'live choice') {
+            await this.profilService.updateProfil(model.profile.id, { status: status_model_enum_1.StatusModelEnum.LIVE_CHOICE }, model);
+        }
+        else {
+            await this.profilService.updateProfil(model.profile.id, { status: status_model_enum_1.StatusModelEnum.LIVE_VIP }, model);
+        }
         return {
             room: room.id
         };

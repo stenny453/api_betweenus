@@ -57,7 +57,7 @@ let RoomTipsService = class RoomTipsService {
             }
             return 0;
         });
-        if (rooms.length < 1) {
+        if (rooms.length <= 0) {
             return {
                 idRoom: null,
                 actif: 0
@@ -72,12 +72,36 @@ let RoomTipsService = class RoomTipsService {
         });
         if (!room)
             return null;
+        console.log('Joined from ');
         room.actif = data.joined ? room.actif + 1 : room.actif - 1;
         if (room.actif < 0)
             room.actif = 0;
         if (data.role === 'model')
             room.status = 'close';
         return await this.roomTipsRepository.save(room);
+    }
+    async getStatRoom(idRoom) {
+        const room = await this.roomTipsRepository.findOne({ id: idRoom });
+        if (!room)
+            return null;
+        return {
+            gain: room.gain,
+            actif: room.actif
+        };
+    }
+    async updateGain(idRoom, gain) {
+        const id = idRoom;
+        const room = await this.roomTipsRepository.findOne({ id });
+        if (!room)
+            return false;
+        const updateRoom = {
+            gain: room.gain + gain
+        };
+        const newRoom = await this.roomTipsRepository.preload(Object.assign({ id }, updateRoom));
+        return await this.roomTipsRepository.save(newRoom);
+    }
+    async getRoom(id) {
+        return await this.roomTipsRepository.findOne({ id });
     }
 };
 RoomTipsService = __decorate([

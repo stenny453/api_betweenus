@@ -19,6 +19,7 @@ const timer_entity_1 = require("../../../timer/entities/timer.entity");
 const actif_room_private_entity_1 = require("../../../actif-room-private/entities/actif-room-private.entity");
 const buy_pack_entity_1 = require("../../../buy-pack/entities/buy-pack.entity");
 const subscribe_entity_1 = require("../../../subscribe/entities/subscribe.entity");
+const actif_room_tips_entity_1 = require("../../../actif-room-tips/entities/actif-room-tips.entity");
 let ClientEntity = class ClientEntity extends timestamp_entities_1.TimestampEntities {
 };
 __decorate([
@@ -87,6 +88,13 @@ __decorate([
     }),
     __metadata("design:type", actif_room_private_entity_1.ActifRoomPrivateEntity)
 ], ClientEntity.prototype, "rooms", void 0);
+__decorate([
+    typeorm_1.OneToMany(type => actif_room_tips_entity_1.ActifRoomTipsEntity, (actifRoomTips) => actifRoomTips.client, {
+        nullable: true,
+        cascade: true,
+    }),
+    __metadata("design:type", actif_room_tips_entity_1.ActifRoomTipsEntity)
+], ClientEntity.prototype, "roomsTips", void 0);
 __decorate([
     typeorm_1.OneToMany(type => buy_pack_entity_1.BuyPackEntity, (buyPack) => buyPack.client, {
         nullable: true,

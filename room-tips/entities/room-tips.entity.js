@@ -13,6 +13,7 @@ exports.RoomTipsEntity = void 0;
 const model_entity_1 = require("../../users/model/entities/model.entity");
 const typeorm_1 = require("typeorm");
 const timestamp_entities_1 = require("../../generics/timestamp.entities");
+const actif_room_tips_entity_1 = require("../../actif-room-tips/entities/actif-room-tips.entity");
 let RoomTipsEntity = class RoomTipsEntity extends timestamp_entities_1.TimestampEntities {
 };
 __decorate([
@@ -55,6 +56,14 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], RoomTipsEntity.prototype, "descriptions", void 0);
+__decorate([
+    typeorm_1.OneToMany(type => actif_room_tips_entity_1.ActifRoomTipsEntity, (actifRoomTips) => actifRoomTips.roomTips, {
+        nullable: true,
+        cascade: true,
+        eager: true
+    }),
+    __metadata("design:type", actif_room_tips_entity_1.ActifRoomTipsEntity)
+], RoomTipsEntity.prototype, "clients", void 0);
 RoomTipsEntity = __decorate([
     typeorm_1.Entity('room-tips')
 ], RoomTipsEntity);

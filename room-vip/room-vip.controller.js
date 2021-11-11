@@ -31,11 +31,9 @@ let RoomVipController = class RoomVipController {
         return this.roomVipService.getLastRoom(id);
     }
     createRoom(model, data) {
-        let id = 0;
-        if (data.clientId) {
-            id = parseInt(data.clientId);
-        }
-        return this.roomVipService.createRoom(model, id);
+        console.log(model);
+        console.log('Create room VIP', data);
+        return this.roomVipService.createRoom(model, data);
     }
     updatePalier(model, data) {
         return this.roomVipService.updatePalier(data);

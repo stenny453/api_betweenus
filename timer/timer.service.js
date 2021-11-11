@@ -53,12 +53,12 @@ let TimerService = class TimerService {
     }
     async getTimer(client, data) {
         const timers = await this.timerRepository.find({ client });
+        const model = await this.modelService.getModel(data.modelId);
         if (!timers || timers.length == 0) {
             return await this.createTimer(client, data);
         }
         const timer = timers[timers.length - 1];
-        if (timer.client.id == client.id && timer.leaved == false
-            && timer.model && timer.model.id == data.modelId && timer.type === data.type) {
+        if (timer.client.id == client.id && timer.leaved == false && timer.model && timer.model.id == data.modelId && timer.type === data.type) {
             const up = {
                 id: timer.id,
                 type: timer.type,
