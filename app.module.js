@@ -62,7 +62,7 @@ AppModule = __decorate([
             client_module_1.ClientModule,
             model_module_1.ModelModule,
             platform_express_1.MulterModule.register({
-                dest: '/var/www/betweenus-live.com/html/uploads/',
+                dest: 'c:/wamp64/www/betweenus/uploads/',
                 preservePath: true
             }),
             album_module_1.AlbumModule,
