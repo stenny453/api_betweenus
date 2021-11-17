@@ -90,10 +90,6 @@ let RoomVipService = class RoomVipService {
             actif: result.actif,
             clientId: result.clientId,
             gain: result.gain,
-            mini: result.mini,
-            bronze: result.bronze,
-            argent: result.argent,
-            or: result.or,
             free: result.free,
             title: result.title,
             description: result.description
@@ -144,17 +140,19 @@ let RoomVipService = class RoomVipService {
         return await qb.select('')
             .leftJoinAndSelect('room.model', 'model')
             .groupBy('room.id DESC')
-            .offset(debut)
-            .limit(10)
+            .getMany();
+    }
+    async get10LastShowChoiceUS() {
+        const qb = await this.roomVipRepository.createQueryBuilder('room');
+        let taille = await this.roomVipRepository.count();
+        taille = taille - 10;
+        const debut = taille < 0 ? 0 : taille;
+        return await qb.select('')
+            .leftJoinAndSelect('room.model', 'model')
+            .groupBy('room.id DESC')
             .getMany();
     }
     async updatePalier(data) {
-        const room = await this.roomVipRepository.findOne({ id: data.roomId });
-        room.mini = data.mini;
-        room.bronze = data.bronze;
-        room.argent = data.argent;
-        room.or = data.or;
-        return await this.roomVipRepository.save(room);
     }
     async updateChoiceUs(data) {
         const room = await this.roomVipRepository.findOne({ id: data.roomId });

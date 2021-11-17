@@ -42,9 +42,21 @@ __decorate([
 ], PaiementEntity.prototype, "credit", void 0);
 __decorate([
     typeorm_1.Column({
-        default: null
+        default: 0
     }),
     __metadata("design:type", Number)
+], PaiementEntity.prototype, "oldCredit", void 0);
+__decorate([
+    typeorm_1.Column({
+        default: 0
+    }),
+    __metadata("design:type", Number)
+], PaiementEntity.prototype, "newCredit", void 0);
+__decorate([
+    typeorm_1.Column({
+        default: null
+    }),
+    __metadata("design:type", String)
 ], PaiementEntity.prototype, "montant", void 0);
 __decorate([
     typeorm_1.Column({

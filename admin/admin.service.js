@@ -28,14 +28,16 @@ const timer_service_1 = require("../timer/timer.service");
 const credit_service_1 = require("../credit/credit.service");
 const mail_service_1 = require("../mail/mail.service");
 const taboo_service_1 = require("../taboo/taboo.service");
+const room_tips_service_1 = require("../room-tips/room-tips.service");
 let AdminService = class AdminService {
-    constructor(adminRepository, jwtService, clientService, modelService, roomPrivateService, roomVipService, paiementService, timerService, creditService, mailService, tabooService) {
+    constructor(adminRepository, jwtService, clientService, modelService, roomPrivateService, roomVipService, roomTipsService, paiementService, timerService, creditService, mailService, tabooService) {
         this.adminRepository = adminRepository;
         this.jwtService = jwtService;
         this.clientService = clientService;
         this.modelService = modelService;
         this.roomPrivateService = roomPrivateService;
         this.roomVipService = roomVipService;
+        this.roomTipsService = roomTipsService;
         this.paiementService = paiementService;
         this.timerService = timerService;
         this.creditService = creditService;
@@ -189,8 +191,14 @@ let AdminService = class AdminService {
     async get10LastShowPrivate() {
         return await this.roomPrivateService.get10LastShow();
     }
+    async get10LastShowTips() {
+        return await this.roomTipsService.get10LastShow();
+    }
     async get10LastShowVIP() {
         return await this.roomVipService.get10LastShow();
+    }
+    async get10LastShowChoiceUS() {
+        return await this.roomVipService.get10LastShowChoiceUS();
     }
     async getTop10Model() {
         return await this.modelService.getTop10Model();
@@ -216,7 +224,7 @@ let AdminService = class AdminService {
         let actualCreditModel = model.credit.credit;
         let nowCreditModel = actualCreditModel - credit;
         await this.creditService.updateCredit(creditModelId, { credit: nowCreditModel }, model);
-        return await this.paiementService.payModel(idModel, pseudoModel, emailModel, credit);
+        return await this.paiementService.payModel(idModel, pseudoModel, emailModel, credit, actualCreditModel, nowCreditModel);
     }
     async deletePaiement(idPay) {
         return await this.paiementService.deletePaiement(idPay);
@@ -292,6 +300,7 @@ AdminService = __decorate([
         model_service_1.ModelService,
         room_private_service_1.RoomPrivateService,
         room_vip_service_1.RoomVipService,
+        room_tips_service_1.RoomTipsService,
         paiement_service_1.PaiementService,
         timer_service_1.TimerService,
         credit_service_1.CreditService,

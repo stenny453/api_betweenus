@@ -6,4 +6,5 @@ export declare class PaiementController {
     buyPack(client: ClientEntity, data: {
         credit: number;
     }): Promise<any>;
+    getSuiviPay(client: ClientEntity, id: any): Promise<import("./entities/paiement.entity").PaiementEntity[]>;
 }

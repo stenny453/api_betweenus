@@ -24,10 +24,6 @@ export declare class RoomVipService {
         actif: number;
         clientId?: undefined;
         gain?: undefined;
-        mini?: undefined;
-        bronze?: undefined;
-        argent?: undefined;
-        or?: undefined;
         free?: undefined;
         title?: undefined;
         description?: undefined;
@@ -36,10 +32,6 @@ export declare class RoomVipService {
         actif: number;
         clientId: number;
         gain: number;
-        mini: number;
-        bronze: number;
-        argent: number;
-        or: number;
         free: number;
         title: string;
         description: string;
@@ -51,13 +43,14 @@ export declare class RoomVipService {
     getGain(id: number): Promise<RoomVipEntity[]>;
     countRoom(): Promise<number>;
     get10LastShow(): Promise<RoomVipEntity[]>;
+    get10LastShowChoiceUS(): Promise<RoomVipEntity[]>;
     updatePalier(data: {
         roomId: number;
         mini: number;
         bronze: number;
         argent: number;
         or: number;
-    }): Promise<RoomVipEntity>;
+    }): Promise<void>;
     updateChoiceUs(data: {
         roomId: number;
         title: string;

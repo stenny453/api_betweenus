@@ -19,6 +19,7 @@ export declare class JwtClientStrategy extends JwtClientStrategy_base {
         roomsTips: import("../../../actif-room-tips/entities/actif-room-tips.entity").ActifRoomTipsEntity;
         buyPacks: import("../../../buy-pack/entities/buy-pack.entity").BuyPackEntity;
         subscribe: import("../../../subscribe/entities/subscribe.entity").SubscribeEntity;
+        setting: import("../../../setting/entities/setting.entity").SettingEntity;
         createdAt: Date;
         updatedAt: Date;
         deletedAt: Date;

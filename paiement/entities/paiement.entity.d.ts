@@ -7,6 +7,8 @@ export declare class PaiementEntity extends TimestampEntities {
     pseudo: string;
     email: string;
     credit: number;
-    montant: number;
+    oldCredit: number;
+    newCredit: number;
+    montant: string;
     flux: string;
 }

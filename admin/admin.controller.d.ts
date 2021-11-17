@@ -177,7 +177,9 @@ export declare class AdminController {
     }>;
     getAverageClient(): Promise<any[]>;
     get10LastShowPrivate(): Promise<import("../room-private/entities/room-private.entity").RoomPrivateEntity[]>;
+    get10LastShowTips(): Promise<import("../room-tips/entities/room-tips.entity").RoomTipsEntity[]>;
     get10LastShowVIP(): Promise<import("../room-vip/entities/room-vip.entity").RoomVipEntity[]>;
+    get10LastShowChoiceUS(): Promise<import("../room-vip/entities/room-vip.entity").RoomVipEntity[]>;
     getTop10Model(): Promise<import("../users/model/entities/model.entity").ModelEntity[]>;
     getCreditActifsModels(): Promise<import("../users/model/entities/model.entity").ModelEntity[]>;
     countPay(): Promise<number>;

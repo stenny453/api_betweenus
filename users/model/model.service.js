@@ -628,6 +628,7 @@ let ModelService = class ModelService {
             .innerJoinAndSelect('client.credit', 'credit')
             .innerJoinAndSelect('client.privateRooms', 'privateRooms')
             .innerJoinAndSelect('client.vipRooms', 'vipRooms')
+            .innerJoinAndSelect('client.tipsRooms', 'tipsRooms')
             .orderBy('credit.credit')
             .getMany();
     }

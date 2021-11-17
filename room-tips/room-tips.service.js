@@ -103,6 +103,17 @@ let RoomTipsService = class RoomTipsService {
     async getRoom(id) {
         return await this.roomTipsRepository.findOne({ id });
     }
+    async get10LastShow() {
+        const qb = await this.roomTipsRepository.createQueryBuilder('room');
+        let taille = await this.roomTipsRepository.count();
+        taille = taille - 10;
+        const debut = taille < 0 ? 0 : taille;
+        return await qb.select()
+            .leftJoinAndSelect('room.model', 'model')
+            .leftJoinAndSelect('room.clients', 'clients')
+            .groupBy('room.id DESC')
+            .getMany();
+    }
 };
 RoomTipsService = __decorate([
     common_1.Injectable(),

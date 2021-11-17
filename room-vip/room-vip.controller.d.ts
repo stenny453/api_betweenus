@@ -11,10 +11,6 @@ export declare class RoomVipController {
         actif: number;
         clientId?: undefined;
         gain?: undefined;
-        mini?: undefined;
-        bronze?: undefined;
-        argent?: undefined;
-        or?: undefined;
         free?: undefined;
         title?: undefined;
         description?: undefined;
@@ -23,10 +19,6 @@ export declare class RoomVipController {
         actif: number;
         clientId: number;
         gain: number;
-        mini: number;
-        bronze: number;
-        argent: number;
-        or: number;
         free: number;
         title: string;
         description: string;
@@ -43,7 +35,7 @@ export declare class RoomVipController {
         bronze: number;
         argent: number;
         or: number;
-    }): Promise<import("./entities/room-vip.entity").RoomVipEntity>;
+    }): Promise<void>;
     updateChoiceUs(model: any, data: {
         roomId: number;
         title: string;

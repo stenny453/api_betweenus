@@ -24,6 +24,7 @@ const timer_module_1 = require("../timer/timer.module");
 const credit_module_1 = require("../credit/credit.module");
 const mail_module_1 = require("../mail/mail.module");
 const taboo_module_1 = require("../taboo/taboo.module");
+const room_tips_module_1 = require("../room-tips/room-tips.module");
 const SECRET = 'adminbetweenus@@';
 const MODEL_SECRET = 'modelBetweenUs';
 let AdminModule = class AdminModule {
@@ -37,12 +38,13 @@ AdminModule = __decorate([
             }),
             jwt_1.JwtModule.register({
                 secret: MODEL_SECRET,
-                signOptions: { expiresIn: '3600s' },
+                signOptions: { expiresIn: '86400s' },
             }),
             client_module_1.ClientModule,
             model_module_1.ModelModule,
             room_private_module_1.RoomPrivateModule,
             room_vip_module_1.RoomVipModule,
+            room_tips_module_1.RoomTipsModule,
             paiement_module_1.PaiementModule,
             timer_module_1.TimerModule,
             credit_module_1.CreditModule,

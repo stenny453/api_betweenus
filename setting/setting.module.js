@@ -13,13 +13,15 @@ const model_module_1 = require("../users/model/model.module");
 const setting_entity_1 = require("./entities/setting.entity");
 const setting_controller_1 = require("./setting.controller");
 const setting_service_1 = require("./setting.service");
+const client_module_1 = require("../users/client/client.module");
 let SettingModule = class SettingModule {
 };
 SettingModule = __decorate([
     common_1.Module({
         imports: [
             typeorm_1.TypeOrmModule.forFeature([setting_entity_1.SettingEntity]),
-            model_module_1.ModelModule
+            model_module_1.ModelModule,
+            client_module_1.ClientModule
         ],
         controllers: [setting_controller_1.SettingController],
         providers: [setting_service_1.SettingService]

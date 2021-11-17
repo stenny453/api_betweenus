@@ -34,30 +34,6 @@ __decorate([
 ], RoomVipEntity.prototype, "gain", void 0);
 __decorate([
     typeorm_1.Column({
-        default: 0
-    }),
-    __metadata("design:type", Number)
-], RoomVipEntity.prototype, "mini", void 0);
-__decorate([
-    typeorm_1.Column({
-        default: 0
-    }),
-    __metadata("design:type", Number)
-], RoomVipEntity.prototype, "bronze", void 0);
-__decorate([
-    typeorm_1.Column({
-        default: 0
-    }),
-    __metadata("design:type", Number)
-], RoomVipEntity.prototype, "argent", void 0);
-__decorate([
-    typeorm_1.Column({
-        default: 0
-    }),
-    __metadata("design:type", Number)
-], RoomVipEntity.prototype, "or", void 0);
-__decorate([
-    typeorm_1.Column({
         default: null
     }),
     __metadata("design:type", Number)

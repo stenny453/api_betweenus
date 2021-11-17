@@ -4,11 +4,13 @@ import { SettingDto } from './dto/setting.dto';
 import { ModelService } from '../users/model/model.service';
 import { ModelEntity } from '../users/model/entities/model.entity';
 import { ModelPasswordDto } from '../users/model/dto/model-password.dto';
+import { ClientEntity } from '../users/client/entities/client.entity';
 export declare class SettingController {
     private readonly settingService;
     private modelService;
     constructor(settingService: SettingService, modelService: ModelService);
     getSetting(model: any): Promise<SettingEntity>;
+    getSettingClient(client: any): Promise<SettingEntity>;
     getProfil(model: any): Promise<SettingEntity>;
     updateInfo(updateObject: any, model: ModelEntity): Promise<import("typeorm").UpdateResult>;
     login(model: ModelEntity, credentials: ModelPasswordDto): Promise<{
@@ -20,6 +22,7 @@ export declare class SettingController {
         error: boolean;
         success?: undefined;
     }>;
+    createSettingClient(client: ClientEntity): Promise<SettingEntity>;
     createProfil(id: any): Promise<ModelEntity>;
     updateProfil(setting: SettingDto, id: any, model: any): Promise<Partial<SettingEntity>>;
 }

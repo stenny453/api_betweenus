@@ -6,7 +6,7 @@ export declare class PaiementService {
     countPay(): Promise<number>;
     getListPaiement(flux: string, range: number, page: number, filter?: string): Promise<PaiementEntity[]>;
     buyPack(idClient: number, pseudoClient: string, emailClient: string, credit: number): Promise<PaiementEntity[]>;
-    payModel(idModel: number, pseudo: string, email: string, credit: number): Promise<{
+    payModel(idModel: number, pseudo: string, email: string, credit: number, oldCredit: number, newCredit: number): Promise<{
         success: boolean;
     }>;
     deletePaiement(idPay: number): Promise<{
@@ -22,5 +22,6 @@ export declare class PaiementService {
         credit: number;
         montant: string;
     }>;
-    convertCreditToMoney(credit: number): number;
+    convertCreditToMoney(credit: number): string;
+    getSuiviPay(modelId: number): Promise<PaiementEntity[]>;
 }

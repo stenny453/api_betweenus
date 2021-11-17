@@ -18,6 +18,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const paiement_entity_1 = require("./entities/paiement.entity");
 const flux_enum_1 = require("../enums/flux.enum");
+const user_role_enum_1 = require("../enums/user-role.enum");
 let PaiementService = class PaiementService {
     constructor(paiementRepository) {
         this.paiementRepository = paiementRepository;
@@ -30,6 +31,7 @@ let PaiementService = class PaiementService {
         if (!filter) {
             if (flux === 'tous') {
                 return await qb.select()
+                    .groupBy('pay.id DESC')
                     .offset(range * page)
                     .limit(range)
                     .getMany();
@@ -37,6 +39,7 @@ let PaiementService = class PaiementService {
             else {
                 return await qb.select()
                     .where('flux = :flux', { flux: flux })
+                    .groupBy('pay.id DESC')
                     .offset(range * page)
                     .limit(range)
                     .getMany();
@@ -46,12 +49,14 @@ let PaiementService = class PaiementService {
             if (flux === 'tous') {
                 return await qb.select()
                     .where('pseudo like :motif or email like :motif or createdAt like :motif', { motif: '%' + filter + '%' })
+                    .groupBy('pay.id DESC')
                     .offset(range * page)
                     .limit(range)
                     .getMany();
             }
             return await qb.select()
                 .where('(pseudo like :motif or email like :motif or createdAt like :motif) and flux = :flux', { motif: '%' + filter + '%', flux: flux })
+                .groupBy('pay.id DESC')
                 .offset(range * page)
                 .limit(range)
                 .getMany();
@@ -70,7 +75,7 @@ let PaiementService = class PaiementService {
         const newPay = await this.paiementRepository.create(pay);
         return await this.paiementRepository.save(newPay);
     }
-    async payModel(idModel, pseudo, email, credit) {
+    async payModel(idModel, pseudo, email, credit, oldCredit, newCredit) {
         const pay = {
             type_source: 'model',
             id_source: idModel,
@@ -78,7 +83,9 @@ let PaiementService = class PaiementService {
             email,
             credit,
             montant: this.convertCreditToMoney(credit),
-            flux: flux_enum_1.FluxEnum.OUT
+            flux: flux_enum_1.FluxEnum.OUT,
+            oldCredit,
+            newCredit
         };
         const newPay = await this.paiementRepository.create(pay);
         await this.paiementRepository.save(newPay);
@@ -109,12 +116,22 @@ let PaiementService = class PaiementService {
         let flowOut = parseInt(sortant.totalSortant ? sortant.totalSortant : 0);
         return {
             credit: flowIn - flowOut,
-            montant: this.convertCreditToMoney(flowIn - flowOut) + ' Eur'
+            montant: this.convertCreditToMoney(flowIn - flowOut) + ' €'
         };
     }
     convertCreditToMoney(credit) {
-        const money = credit;
-        return money;
+        const money = credit * 0.147;
+        return money.toFixed(3);
+    }
+    async getSuiviPay(modelId) {
+        const qb = await this.paiementRepository.createQueryBuilder('pay');
+        return await qb.select()
+            .groupBy('pay.id DESC')
+            .where('type_source')
+            .where('type_source = :source', { source: user_role_enum_1.UserRoleEnum.MODEL })
+            .where('id_source = :idSource', { idSource: modelId })
+            .where('flux = :flux', { flux: flux_enum_1.FluxEnum.OUT })
+            .getMany();
     }
 };
 PaiementService = __decorate([

@@ -151,8 +151,14 @@ let AdminController = class AdminController {
     async get10LastShowPrivate() {
         return await this.adminService.get10LastShowPrivate();
     }
+    async get10LastShowTips() {
+        return await this.adminService.get10LastShowTips();
+    }
     async get10LastShowVIP() {
         return await this.adminService.get10LastShowVIP();
+    }
+    async get10LastShowChoiceUS() {
+        return await this.adminService.get10LastShowChoiceUS();
     }
     async getTop10Model() {
         return await this.adminService.getTop10Model();
@@ -551,11 +557,25 @@ __decorate([
 ], AdminController.prototype, "get10LastShowPrivate", null);
 __decorate([
     common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Get('get10LastShowTips'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "get10LastShowTips", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('get10LastShowVIP'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "get10LastShowVIP", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Get('get10LastShowChoiceUS'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "get10LastShowChoiceUS", null);
 __decorate([
     common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('getTop10Model'),

@@ -4,6 +4,6 @@ export declare class TransactionDto {
     pseudo: string;
     email: string;
     credit: number;
-    montant: number;
+    montant: string;
     flux: string;
 }

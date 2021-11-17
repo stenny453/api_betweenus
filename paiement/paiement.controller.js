@@ -27,6 +27,10 @@ let PaiementController = class PaiementController {
             return null;
         this.paiementService.buyPack(client.id, client.pseudo, client.email, data.credit);
     }
+    async getSuiviPay(client, id) {
+        console.log('Id model ', id);
+        return await this.paiementService.getSuiviPay(id);
+    }
 };
 __decorate([
     common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
@@ -37,6 +41,15 @@ __decorate([
     __metadata("design:paramtypes", [client_entity_1.ClientEntity, Object]),
     __metadata("design:returntype", Promise)
 ], PaiementController.prototype, "buyPack", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Get('getSuiviPay/:id'),
+    __param(0, user_decorator_1.User()),
+    __param(1, common_1.Param('id', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [client_entity_1.ClientEntity, Object]),
+    __metadata("design:returntype", Promise)
+], PaiementController.prototype, "getSuiviPay", null);
 PaiementController = __decorate([
     common_1.Controller('paiement'),
     __metadata("design:paramtypes", [paiement_service_1.PaiementService])

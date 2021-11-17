@@ -21,6 +21,7 @@ const setting_dto_1 = require("./dto/setting.dto");
 const model_service_1 = require("../users/model/model.service");
 const model_entity_1 = require("../users/model/entities/model.entity");
 const model_password_dto_1 = require("../users/model/dto/model-password.dto");
+const client_entity_1 = require("../users/client/entities/client.entity");
 let SettingController = class SettingController {
     constructor(settingService, modelService) {
         this.settingService = settingService;
@@ -28,6 +29,9 @@ let SettingController = class SettingController {
     }
     async getSetting(model) {
         return await this.settingService.getSettingInfo(model);
+    }
+    async getSettingClient(client) {
+        return await this.settingService.getSettingClient(client);
     }
     async getProfil(model) {
         return await this.settingService.getModelInfo(model);
@@ -40,6 +44,9 @@ let SettingController = class SettingController {
     }
     async login(model, credentials) {
         return await this.modelService.changePassword(credentials, model);
+    }
+    async createSettingClient(client) {
+        return await this.settingService.createSettingClient(client.id);
     }
     async createProfil(id) {
         return await this.settingService.createSetting(id);
@@ -56,6 +63,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], SettingController.prototype, "getSetting", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Get('client'),
+    __param(0, user_decorator_1.User()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], SettingController.prototype, "getSettingClient", null);
 __decorate([
     common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
     common_1.Get('info'),
@@ -83,6 +98,14 @@ __decorate([
         model_password_dto_1.ModelPasswordDto]),
     __metadata("design:returntype", Promise)
 ], SettingController.prototype, "login", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Post('create-setting-client'),
+    __param(0, user_decorator_1.User()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [client_entity_1.ClientEntity]),
+    __metadata("design:returntype", Promise)
+], SettingController.prototype, "createSettingClient", null);
 __decorate([
     common_1.Post('create/:id'),
     __param(0, common_1.Param('id', common_1.ParseIntPipe)),

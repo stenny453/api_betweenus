@@ -4,10 +4,6 @@ export declare class RoomVipEntity extends TimestampEntities {
     id: number;
     actif: number;
     gain: number;
-    mini: number;
-    bronze: number;
-    argent: number;
-    or: number;
     free: number;
     title: string;
     description: string;

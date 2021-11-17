@@ -35,4 +35,5 @@ export declare class RoomTipsService {
     }>;
     updateGain(idRoom: number, gain: number): Promise<false | RoomTipsEntity>;
     getRoom(id: number): Promise<RoomTipsEntity>;
+    get10LastShow(): Promise<RoomTipsEntity[]>;
 }

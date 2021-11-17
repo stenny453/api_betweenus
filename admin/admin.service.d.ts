@@ -12,6 +12,7 @@ import { TimerService } from '../timer/timer.service';
 import { CreditService } from '../credit/credit.service';
 import { MailService } from '../mail/mail.service';
 import { TabooService } from '../taboo/taboo.service';
+import { RoomTipsService } from '../room-tips/room-tips.service';
 export declare class AdminService {
     private adminRepository;
     private jwtService;
@@ -19,12 +20,13 @@ export declare class AdminService {
     private modelService;
     private roomPrivateService;
     private roomVipService;
+    private roomTipsService;
     private paiementService;
     private timerService;
     private creditService;
     private mailService;
     private tabooService;
-    constructor(adminRepository: Repository<AdminEntity>, jwtService: JwtService, clientService: ClientService, modelService: ModelService, roomPrivateService: RoomPrivateService, roomVipService: RoomVipService, paiementService: PaiementService, timerService: TimerService, creditService: CreditService, mailService: MailService, tabooService: TabooService);
+    constructor(adminRepository: Repository<AdminEntity>, jwtService: JwtService, clientService: ClientService, modelService: ModelService, roomPrivateService: RoomPrivateService, roomVipService: RoomVipService, roomTipsService: RoomTipsService, paiementService: PaiementService, timerService: TimerService, creditService: CreditService, mailService: MailService, tabooService: TabooService);
     login(credentials: LoginAdminDto): Promise<{
         error: boolean;
         message: string;
@@ -155,7 +157,9 @@ export declare class AdminService {
     }>;
     getAverageClient(): Promise<any[]>;
     get10LastShowPrivate(): Promise<import("../room-private/entities/room-private.entity").RoomPrivateEntity[]>;
+    get10LastShowTips(): Promise<import("../room-tips/entities/room-tips.entity").RoomTipsEntity[]>;
     get10LastShowVIP(): Promise<import("../room-vip/entities/room-vip.entity").RoomVipEntity[]>;
+    get10LastShowChoiceUS(): Promise<import("../room-vip/entities/room-vip.entity").RoomVipEntity[]>;
     getTop10Model(): Promise<import("../users/model/entities/model.entity").ModelEntity[]>;
     getCreditActifsModels(): Promise<import("../users/model/entities/model.entity").ModelEntity[]>;
     countPay(): Promise<number>;

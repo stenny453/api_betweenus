@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SettingEntity = void 0;
 const model_entity_1 = require("../../users/model/entities/model.entity");
 const typeorm_1 = require("typeorm");
+const client_entity_1 = require("../../users/client/entities/client.entity");
 let SettingEntity = class SettingEntity {
 };
 __decorate([
@@ -34,6 +35,10 @@ __decorate([
     typeorm_1.OneToOne(() => model_entity_1.ModelEntity, model => model.setting),
     __metadata("design:type", model_entity_1.ModelEntity)
 ], SettingEntity.prototype, "model", void 0);
+__decorate([
+    typeorm_1.OneToOne(() => client_entity_1.ClientEntity, client => client.setting),
+    __metadata("design:type", client_entity_1.ClientEntity)
+], SettingEntity.prototype, "client", void 0);
 SettingEntity = __decorate([
     typeorm_1.Entity('setting')
 ], SettingEntity);

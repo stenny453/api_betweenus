@@ -43,9 +43,7 @@ __decorate([
 ], TransactionDto.prototype, "credit", void 0);
 __decorate([
     class_validator_1.IsOptional(),
-    class_transformer_1.Type(() => Number),
-    class_validator_1.IsNumber(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], TransactionDto.prototype, "montant", void 0);
 __decorate([
     class_validator_1.IsNotEmpty(),
