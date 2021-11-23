@@ -18,6 +18,7 @@ PaiementModule = __decorate([
     common_1.Module({
         imports: [
             typeorm_1.TypeOrmModule.forFeature([paiement_entity_1.PaiementEntity]),
+            common_1.HttpModule
         ],
         controllers: [paiement_controller_1.PaiementController],
         providers: [paiement_service_1.PaiementService],

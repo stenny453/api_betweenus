@@ -20,8 +20,9 @@ const paiement_entity_1 = require("./entities/paiement.entity");
 const flux_enum_1 = require("../enums/flux.enum");
 const user_role_enum_1 = require("../enums/user-role.enum");
 let PaiementService = class PaiementService {
-    constructor(paiementRepository) {
+    constructor(paiementRepository, httpService) {
         this.paiementRepository = paiementRepository;
+        this.httpService = httpService;
     }
     async countPay() {
         return await this.paiementRepository.count();
@@ -126,18 +127,40 @@ let PaiementService = class PaiementService {
     async getSuiviPay(modelId) {
         const qb = await this.paiementRepository.createQueryBuilder('pay');
         return await qb.select()
-            .groupBy('pay.id DESC')
-            .where('type_source')
+            .orderBy('pay.id', 'DESC')
             .where('type_source = :source', { source: user_role_enum_1.UserRoleEnum.MODEL })
-            .where('id_source = :idSource', { idSource: modelId })
-            .where('flux = :flux', { flux: flux_enum_1.FluxEnum.OUT })
+            .andWhere('id_source = :idSource', { idSource: modelId })
+            .andWhere('flux = :flux', { flux: flux_enum_1.FluxEnum.OUT })
             .getMany();
+    }
+    async OpenCentralPay(amount, client) {
+        console.log('azo centralPay ', amount, ' => ', client.email);
+        const url = `http://localhost/centralPay/centralPay.php?amount=${amount}&email=${client.email}`;
+        const { data } = await this.httpService.get(url).toPromise();
+        return data;
+    }
+    async goToCentralPay(client, data) {
+        console.log('Data to central Pay ', data);
+        const url = `http://localhost/centralPay/index.php?holderEmail=${data.holderEmail}
+        &lastname=${data.lastname}&firstname=${data.firstname}
+        &number=${data.number}&cvc=${data.cvc}
+        &expirationMonth=${data.expirationMonth}
+        &expirationYear=${data.expirationYear}`;
+        await this.httpService.get(url).subscribe((data) => {
+            console.log(data.data);
+        }, (error) => {
+            console.log(error);
+        });
+    }
+    async listenPaiementCentralPay(data) {
+        console.log('Listen Paiement Central Pay ', data);
     }
 };
 PaiementService = __decorate([
     common_1.Injectable(),
     __param(0, typeorm_1.InjectRepository(paiement_entity_1.PaiementEntity)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        common_1.HttpService])
 ], PaiementService);
 exports.PaiementService = PaiementService;
 //# sourceMappingURL=paiement.service.js.map

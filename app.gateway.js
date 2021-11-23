@@ -226,6 +226,9 @@ let AppGateway = class AppGateway {
     async newTips(client, data) {
         this.server.emit(`new tips ${data.roomId}`, data);
     }
+    async responseCentralPay(paymentRequestId, data) {
+        this.server.emit(`centralPay ${paymentRequestId}`, data);
+    }
 };
 __decorate([
     websockets_1.WebSocketServer(),

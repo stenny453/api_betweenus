@@ -20,11 +20,13 @@ const app_service_1 = require("./app.service");
 const model_auth_guard_1 = require("./users/model/guards/model-auth.guard");
 const user_decorator_1 = require("./decorators/user.decorator");
 const jwt_admin_auth_guard_1 = require("./admin/guards/jwt-admin-auth.guard");
+const app_gateway_1 = require("./app.gateway");
 const path_upload = 'https://betweenus-live.com/uploads/';
 let AppController = class AppController {
-    constructor(appService, configService) {
+    constructor(appService, configService, appGateway) {
         this.appService = appService;
         this.configService = configService;
+        this.appGateway = appGateway;
     }
     getHello() {
         return this.appService.getHello();
@@ -60,6 +62,10 @@ let AppController = class AppController {
         return {
             role: user.role
         };
+    }
+    async responseCentralPay(data) {
+        console.log('Response Central Pay ', data);
+        return await this.appGateway.responseCentralPay(data.object.paymentRequestId, data);
     }
 };
 __decorate([
@@ -115,10 +121,18 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppController.prototype, "verifyAdminToken", null);
+__decorate([
+    common_1.Post('responseCentralPay'),
+    __param(0, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "responseCentralPay", null);
 AppController = __decorate([
     common_1.Controller(),
     __metadata("design:paramtypes", [app_service_1.AppService,
-        config_1.ConfigService])
+        config_1.ConfigService,
+        app_gateway_1.AppGateway])
 ], AppController);
 exports.AppController = AppController;
 //# sourceMappingURL=app.controller.js.map

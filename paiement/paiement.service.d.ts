@@ -1,8 +1,12 @@
+import { HttpService } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { PaiementEntity } from './entities/paiement.entity';
+import { CentralPayDto } from './dto/centralPay.dto';
+import { ClientEntity } from '../users/client/entities/client.entity';
 export declare class PaiementService {
     private paiementRepository;
-    constructor(paiementRepository: Repository<PaiementEntity>);
+    private httpService;
+    constructor(paiementRepository: Repository<PaiementEntity>, httpService: HttpService);
     countPay(): Promise<number>;
     getListPaiement(flux: string, range: number, page: number, filter?: string): Promise<PaiementEntity[]>;
     buyPack(idClient: number, pseudoClient: string, emailClient: string, credit: number): Promise<PaiementEntity[]>;
@@ -24,4 +28,7 @@ export declare class PaiementService {
     }>;
     convertCreditToMoney(credit: number): string;
     getSuiviPay(modelId: number): Promise<PaiementEntity[]>;
+    OpenCentralPay(amount: number, client: ClientEntity): Promise<any>;
+    goToCentralPay(client: ClientEntity, data: CentralPayDto): Promise<void>;
+    listenPaiementCentralPay(data: any): Promise<void>;
 }

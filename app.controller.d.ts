@@ -1,9 +1,11 @@
 import { ConfigService } from '@nestjs/config';
 import { AppService } from './app.service';
+import { AppGateway } from './app.gateway';
 export declare class AppController {
     private readonly appService;
     private configService;
-    constructor(appService: AppService, configService: ConfigService);
+    private appGateway;
+    constructor(appService: AppService, configService: ConfigService, appGateway: AppGateway);
     getHello(): {
         message: string;
     };
@@ -25,4 +27,5 @@ export declare class AppController {
     verifyAdminToken(data: any, user: any): Promise<{
         role: any;
     }>;
+    responseCentralPay(data: any): Promise<void>;
 }

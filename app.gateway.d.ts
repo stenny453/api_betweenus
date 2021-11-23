@@ -183,5 +183,6 @@ export declare class AppGateway implements OnGatewayInit, OnGatewayConnection, O
         designation: string;
         vip: boolean;
     }): Promise<void>;
+    responseCentralPay(paymentRequestId: string, data: any): Promise<void>;
 }
 export {};

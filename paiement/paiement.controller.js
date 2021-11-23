@@ -18,6 +18,7 @@ const user_decorator_1 = require("../decorators/user.decorator");
 const model_auth_guard_1 = require("../users/model/guards/model-auth.guard");
 const paiement_service_1 = require("./paiement.service");
 const client_entity_1 = require("../users/client/entities/client.entity");
+const centralPay_dto_1 = require("./dto/centralPay.dto");
 let PaiementController = class PaiementController {
     constructor(paiementService) {
         this.paiementService = paiementService;
@@ -30,6 +31,15 @@ let PaiementController = class PaiementController {
     async getSuiviPay(client, id) {
         console.log('Id model ', id);
         return await this.paiementService.getSuiviPay(id);
+    }
+    async OpenCentralPay(client, data) {
+        return await this.paiementService.OpenCentralPay(data.amount, client);
+    }
+    async goToCentralPay(client, data) {
+        return await this.paiementService.goToCentralPay(client, data);
+    }
+    async listenPaiementCentralPay(data) {
+        return await this.paiementService.listenPaiementCentralPay(data);
     }
 };
 __decorate([
@@ -50,6 +60,32 @@ __decorate([
     __metadata("design:paramtypes", [client_entity_1.ClientEntity, Object]),
     __metadata("design:returntype", Promise)
 ], PaiementController.prototype, "getSuiviPay", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Post('open-centralPay'),
+    __param(0, user_decorator_1.User()),
+    __param(1, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [client_entity_1.ClientEntity, Object]),
+    __metadata("design:returntype", Promise)
+], PaiementController.prototype, "OpenCentralPay", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Post('goToCentralPay'),
+    __param(0, user_decorator_1.User()),
+    __param(1, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [client_entity_1.ClientEntity,
+        centralPay_dto_1.CentralPayDto]),
+    __metadata("design:returntype", Promise)
+], PaiementController.prototype, "goToCentralPay", null);
+__decorate([
+    common_1.Post('listenPaiementCentralPay'),
+    __param(0, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], PaiementController.prototype, "listenPaiementCentralPay", null);
 PaiementController = __decorate([
     common_1.Controller('paiement'),
     __metadata("design:paramtypes", [paiement_service_1.PaiementService])
