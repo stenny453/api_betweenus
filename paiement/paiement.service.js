@@ -134,9 +134,9 @@ let PaiementService = class PaiementService {
             .getMany();
     }
     async OpenCentralPay(amount, client) {
-        console.log('azo centralPay ', amount, ' => ', client.email);
-        const url = `http://localhost/centralPay/centralPay.php?amount=${amount}&email=${client.email}`;
-        const { data } = await this.httpService.get(url).toPromise();
+        const url = `https://betweenus-live.com/uploads/centralPay/centralPay.php?amount=${amount}&email=${client.email}`;
+        const result = await this.httpService.get(url).toPromise();
+        const { data } = result;
         return data;
     }
     async goToCentralPay(client, data) {

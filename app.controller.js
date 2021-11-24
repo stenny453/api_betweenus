@@ -65,7 +65,8 @@ let AppController = class AppController {
     }
     async responseCentralPay(data) {
         console.log('Response Central Pay ', data);
-        return await this.appGateway.responseCentralPay(data.object.paymentRequestId, data);
+        const paymentRequestId = data.object ? (data.object.paymentRequestId ? data.object.paymentRequestId : '') : '';
+        return await this.appGateway.responseCentralPay(paymentRequestId, data);
     }
 };
 __decorate([
