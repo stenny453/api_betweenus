@@ -37,13 +37,6 @@ let BuyPackService = class BuyPackService {
                     message: 'Votre pack de bienvenue a été utilisé'
                 };
             }
-            const old_card_welcome_pack = await this.buyPackRepository.findOne({ designation: pack_enum_1.PackEnum.BIENVENUE, card: data.card });
-            if (old_card_welcome_pack) {
-                return {
-                    error: true,
-                    message: 'Cette carte a été déjà utilisé pour un pack de bienvenue'
-                };
-            }
         }
         const newBuyPack = await this.buyPackRepository.create();
         newBuyPack.client = old_client;
