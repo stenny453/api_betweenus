@@ -36,6 +36,11 @@ __decorate([
     __metadata("design:type", String)
 ], AddChatDto.prototype, "type_chat", void 0);
 __decorate([
+    class_validator_1.IsOptional(),
+    class_validator_1.IsString(),
+    __metadata("design:type", String)
+], AddChatDto.prototype, "pseudo", void 0);
+__decorate([
     class_validator_1.IsNotEmpty(),
     class_transformer_1.Type(() => Number),
     class_validator_1.IsNumber(),

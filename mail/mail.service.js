@@ -157,6 +157,22 @@ let MailService = class MailService {
             success: true
         };
     }
+    async sendMessage(data) {
+        await this.mailerService.sendMail({
+            to: 'betweenus1006@gmail.com',
+            from: data.email,
+            subject: `BUL - ${data.object}`,
+            template: './fromWebsite',
+            context: {
+                message: data.message,
+                source: data.email,
+                objet: data.object
+            }
+        });
+        return {
+            success: true
+        };
+    }
 };
 MailService = __decorate([
     common_1.Injectable(),

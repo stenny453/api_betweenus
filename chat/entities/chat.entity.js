@@ -45,6 +45,12 @@ __decorate([
     __metadata("design:type", String)
 ], ChatEntity.prototype, "type_chat", void 0);
 __decorate([
+    typeorm_1.Column({
+        default: null
+    }),
+    __metadata("design:type", String)
+], ChatEntity.prototype, "pseudo", void 0);
+__decorate([
     typeorm_1.Column(),
     __metadata("design:type", Number)
 ], ChatEntity.prototype, "id_source", void 0);
