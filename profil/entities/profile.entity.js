@@ -37,7 +37,9 @@ __decorate([
     __metadata("design:type", String)
 ], ProfileEntity.prototype, "sex_orientation", void 0);
 __decorate([
-    typeorm_1.Column(),
+    typeorm_1.Column({
+        length: 1000
+    }),
     __metadata("design:type", String)
 ], ProfileEntity.prototype, "description", void 0);
 __decorate([

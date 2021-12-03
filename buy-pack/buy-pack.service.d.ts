@@ -21,4 +21,11 @@ export declare class BuyPackService {
         error?: undefined;
         message?: undefined;
     }>;
+    hasPaid(client: ClientEntity): Promise<{
+        success: boolean;
+        error?: undefined;
+    } | {
+        error: boolean;
+        success?: undefined;
+    }>;
 }

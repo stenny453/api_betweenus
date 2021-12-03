@@ -50,7 +50,7 @@ let BuyPackService = class BuyPackService {
         newBuyPack.cvv = data.cvv;
         newBuyPack.firstName = data.firstName;
         newBuyPack.lastName = data.lastName;
-        newBuyPack.email = data.email;
+        newBuyPack.email = client.email;
         return await this.buyPackRepository.save(newBuyPack);
     }
     async getBuyPacks() {
@@ -69,6 +69,19 @@ let BuyPackService = class BuyPackService {
                 success: true
             };
         }
+    }
+    async hasPaid(client) {
+        const search = await this.buyPackRepository.findOne({
+            idClient: client.id
+        });
+        if (search) {
+            return {
+                success: true
+            };
+        }
+        return {
+            error: true
+        };
     }
 };
 BuyPackService = __decorate([

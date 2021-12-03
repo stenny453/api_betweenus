@@ -29,6 +29,9 @@ let BuyPackController = class BuyPackController {
     async verifyPack(client) {
         return await this.buyPackService.verifyPack(client);
     }
+    async hasPaid(client) {
+        return await this.buyPackService.hasPaid(client);
+    }
 };
 __decorate([
     common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
@@ -48,6 +51,14 @@ __decorate([
     __metadata("design:paramtypes", [client_entity_1.ClientEntity]),
     __metadata("design:returntype", Promise)
 ], BuyPackController.prototype, "verifyPack", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Post('hasPaid'),
+    __param(0, user_decorator_1.User()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [client_entity_1.ClientEntity]),
+    __metadata("design:returntype", Promise)
+], BuyPackController.prototype, "hasPaid", null);
 BuyPackController = __decorate([
     common_1.Controller('buy-pack'),
     __metadata("design:paramtypes", [buy_pack_service_1.BuyPackService])

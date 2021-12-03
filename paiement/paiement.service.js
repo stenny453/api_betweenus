@@ -141,7 +141,7 @@ let PaiementService = class PaiementService {
     }
     async goToCentralPay(client, data) {
         console.log('Data to central Pay ', data);
-        const url = `http://localhost/centralPay/index.php?holderEmail=${data.holderEmail}
+        const url = `https://betweenus-live.com/uploads/centralPay/centralPay.php?holderEmail=${data.holderEmail}
         &lastname=${data.lastname}&firstname=${data.firstname}
         &number=${data.number}&cvc=${data.cvc}
         &expirationMonth=${data.expirationMonth}
