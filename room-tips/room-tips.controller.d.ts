@@ -14,6 +14,10 @@ export declare class RoomTipsController {
     createRoom(model: ModelEntity, data: CreateRoomTipsDto): Promise<{
         room: number;
     }>;
+    getLastDescriptions(model: ModelEntity): Promise<{
+        tips: string;
+        descriptions: string;
+    }>;
     getRoomModel(id: any): Promise<import("./entities/room-tips.entity").RoomTipsEntity | {
         idRoom: any;
         actif: number;

@@ -1,8 +1,8 @@
+import { ModelEntity } from 'src/users/model/entities/model.entity';
 import { Repository } from 'typeorm';
 import { RoomTipsEntity } from './entities/room-tips.entity';
 import { ClientEntity } from '../users/client/entities/client.entity';
 import { CreditService } from '../credit/credit.service';
-import { ModelEntity } from 'src/users/model/entities/model.entity';
 import { CreateRoomTipsDto } from './dto/create-room-tips.dto';
 import { ProfileService } from '../profil/profile.service';
 import { ModelService } from '../users/model/model.service';
@@ -36,4 +36,8 @@ export declare class RoomTipsService {
     updateGain(idRoom: number, gain: number): Promise<false | RoomTipsEntity>;
     getRoom(id: number): Promise<RoomTipsEntity>;
     get10LastShow(): Promise<RoomTipsEntity[]>;
+    getLastDescriptions(model: ModelEntity): Promise<{
+        tips: string;
+        descriptions: string;
+    }>;
 }

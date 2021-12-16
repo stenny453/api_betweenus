@@ -30,6 +30,9 @@ let RoomTipsController = class RoomTipsController {
     createRoom(model, data) {
         return this.roomTipsService.createRoom(model, data);
     }
+    getLastDescriptions(model) {
+        return this.roomTipsService.getLastDescriptions(model);
+    }
     getRoomModel(id) {
         return this.roomTipsService.getLastRoom(id);
     }
@@ -62,6 +65,14 @@ __decorate([
         create_room_tips_dto_1.CreateRoomTipsDto]),
     __metadata("design:returntype", void 0)
 ], RoomTipsController.prototype, "createRoom", null);
+__decorate([
+    common_1.UseGuards(model_auth_guard_1.ModelAuthGuard),
+    common_1.Get('lastDescriptions'),
+    __param(0, user_decorator_1.User()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [model_entity_1.ModelEntity]),
+    __metadata("design:returntype", void 0)
+], RoomTipsController.prototype, "getLastDescriptions", null);
 __decorate([
     common_1.Get('model/:id'),
     __param(0, common_1.Param('id', common_1.ParseIntPipe)),

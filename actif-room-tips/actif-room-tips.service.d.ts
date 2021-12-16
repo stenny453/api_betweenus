@@ -9,7 +9,7 @@ export declare class ActifRoomTipsService {
     private roomTipsService;
     private clientService;
     constructor(actifRoomTipsRepository: Repository<ActifRoomTipsEntity>, roomTipsService: RoomTipsService, clientService: ClientService);
-    updateActif(user: ClientEntity, data: AddActifTipsDto): Promise<import("typeorm").DeleteResult | ActifRoomTipsEntity>;
+    updateActif(user: ClientEntity, data: AddActifTipsDto): Promise<ActifRoomTipsEntity | import("typeorm").DeleteResult>;
     getAll(): Promise<ActifRoomTipsEntity[]>;
     getActifsRoom(roomId: number): Promise<ActifRoomTipsEntity[]>;
 }

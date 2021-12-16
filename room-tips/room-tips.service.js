@@ -13,12 +13,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RoomTipsService = void 0;
+const model_entity_1 = require("../users/model/entities/model.entity");
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const room_tips_entity_1 = require("./entities/room-tips.entity");
 const credit_service_1 = require("../credit/credit.service");
-const model_entity_1 = require("../users/model/entities/model.entity");
 const profile_service_1 = require("../profil/profile.service");
 const status_model_enum_1 = require("../enums/status-model.enum");
 const model_service_1 = require("../users/model/model.service");
@@ -113,6 +113,18 @@ let RoomTipsService = class RoomTipsService {
             .leftJoinAndSelect('room.clients', 'clients')
             .groupBy('room.id DESC')
             .getMany();
+    }
+    async getLastDescriptions(model) {
+        const result = await this.roomTipsRepository.find({ model });
+        console.log(result);
+        const last = result.length > 0 ? result[result.length - 1] : result[0];
+        console.log('last ', result);
+        const { tips, descriptions } = last;
+        console.log(tips, descriptions);
+        return {
+            tips,
+            descriptions
+        };
     }
 };
 RoomTipsService = __decorate([

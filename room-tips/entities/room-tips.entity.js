@@ -52,7 +52,8 @@ __decorate([
 ], RoomTipsEntity.prototype, "tips", void 0);
 __decorate([
     typeorm_1.Column({
-        default: null
+        default: null,
+        length: 5000
     }),
     __metadata("design:type", String)
 ], RoomTipsEntity.prototype, "descriptions", void 0);
