@@ -74,7 +74,7 @@ let AppGateway = class AppGateway {
         }
     }
     handleMessage(client, data) {
-        this.server.emit(`message ${data.room}`, data.message);
+        this.server.emit(`message ${data.room}`, data);
     }
     async handlePassToPrivate(client, data) {
         this.server.emit(`Pass to private ${data.room}`, data);

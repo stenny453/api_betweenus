@@ -9,6 +9,12 @@ interface ChatSocket {
     role: string;
     id: number;
     message: string;
+    pseudo?: string;
+    idRoom?: any;
+    type_source?: string;
+    id_source?: any;
+    code_couleur?: any;
+    createdAt?: string;
 }
 export declare class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
     private roomService;
