@@ -24,6 +24,7 @@ const room_vip_entity_1 = require("../../../room-vip/entities/room-vip.entity");
 const timer_entity_1 = require("../../../timer/entities/timer.entity");
 const timestamp_entities_1 = require("../../../generics/timestamp.entities");
 const room_tips_entity_1 = require("../../../room-tips/entities/room-tips.entity");
+const commissions_entity_1 = require("../../../commissions/entities/commissions.entity");
 let ModelEntity = class ModelEntity extends timestamp_entities_1.TimestampEntities {
 };
 __decorate([
@@ -182,6 +183,13 @@ __decorate([
     }),
     __metadata("design:type", timer_entity_1.TimerEntity)
 ], ModelEntity.prototype, "timer", void 0);
+__decorate([
+    typeorm_1.OneToMany(type => commissions_entity_1.CommissionsEntity, (commission) => commission.model, {
+        nullable: true,
+        cascade: true
+    }),
+    __metadata("design:type", commissions_entity_1.CommissionsEntity)
+], ModelEntity.prototype, "commissions", void 0);
 ModelEntity = __decorate([
     typeorm_1.Entity('model')
 ], ModelEntity);

@@ -4,7 +4,7 @@ import { AddActifDto } from './dto/add-actif.dto';
 export declare class ActifRoomPrivateController {
     private readonly actifRoomPrivateService;
     constructor(actifRoomPrivateService: ActifRoomPrivateService);
-    updateActif(user: ClientEntity, data: AddActifDto): Promise<import("typeorm").DeleteResult | import("./entities/actif-room-private.entity").ActifRoomPrivateEntity>;
+    updateActif(user: ClientEntity, data: AddActifDto): Promise<import("./entities/actif-room-private.entity").ActifRoomPrivateEntity | import("typeorm").DeleteResult>;
     getActifsRoom(user: ClientEntity, data: {
         roomId: any;
     }): Promise<import("./entities/actif-room-private.entity").ActifRoomPrivateEntity[]>;
