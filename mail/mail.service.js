@@ -22,7 +22,7 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Confirmer votre email',
-            template: './confirmationClient',
+            template: './templates/confirmationClient',
             context: {
                 name: pseudoClient,
                 url,
@@ -39,7 +39,7 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Confirmation',
-            template: './forgot',
+            template: './templates/forgot',
             context: {
                 name: pseudoClient,
                 url,
@@ -56,7 +56,7 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Inscription nouveau modèle',
-            template: './inscriptionModel',
+            template: './templates/inscriptionModel',
             context: {
                 name: pseudoClient
             }
@@ -72,7 +72,7 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Désactivation de compte',
-            template: './desactivationAccount',
+            template: './templates/desactivationAccount',
             context: {
                 name: pseudoClient,
                 url
@@ -88,7 +88,7 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Suppression de compte',
-            template: './suppressionAccount',
+            template: './templates/suppressionAccount',
             context: {
                 name: pseudoClient
             }
@@ -103,7 +103,7 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Création de compte',
-            template: './acceptInscriptionModel',
+            template: './templates/acceptInscriptionModel',
             context: {
                 name: pseudoClient
             }
@@ -118,7 +118,7 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Création de compte',
-            template: './rejectInscriptionModel',
+            template: './templates/rejectInscriptionModel',
             context: {
                 name: pseudoClient,
                 motif
@@ -134,7 +134,7 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Création de compte',
-            template: './acceptRequestModel',
+            template: './templates/acceptRequestModel',
             context: {
                 name: pseudoClient,
                 motif
@@ -150,7 +150,7 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Création de compte',
-            template: './rejectRequestModel',
+            template: './templates/rejectRequestModel',
             context: {
                 name: pseudoClient,
                 motif
@@ -166,7 +166,7 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: email,
             subject: `BetweenUs - ${objet}`,
-            template: './sendMessage',
+            template: './templates/sendMessage',
             context: {
                 message: message,
             }
@@ -182,7 +182,7 @@ let MailService = class MailService {
             to: 'betweenus1006@gmail.com',
             from: data.email,
             subject: `BUL - ${data.object}`,
-            template: './fromWebsite',
+            template: './templates/fromWebsite',
             context: {
                 message: data.message,
                 source: data.email,
