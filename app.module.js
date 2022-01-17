@@ -39,6 +39,7 @@ const subscribe_module_1 = require("./subscribe/subscribe.module");
 const between_shop_module_1 = require("./between-shop/between-shop.module");
 const room_tips_module_1 = require("./room-tips/room-tips.module");
 const actif_room_tips_module_1 = require("./actif-room-tips/actif-room-tips.module");
+const commissions_module_1 = require("./commissions/commissions.module");
 dotenv.config();
 let AppModule = class AppModule {
 };
@@ -86,7 +87,8 @@ AppModule = __decorate([
             subscribe_module_1.SubscribeModule,
             between_shop_module_1.BetweenShopModule,
             room_tips_module_1.RoomTipsModule,
-            actif_room_tips_module_1.ActifRoomTipsModule
+            actif_room_tips_module_1.ActifRoomTipsModule,
+            commissions_module_1.CommissionsModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, app_gateway_1.AppGateway],
