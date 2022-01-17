@@ -27,6 +27,8 @@ let MailService = class MailService {
                 name: pseudoClient,
                 url,
             }
+        }).catch((error) => {
+            console.log(error);
         });
         return {
             success: true
@@ -42,6 +44,8 @@ let MailService = class MailService {
                 name: pseudoClient,
                 url,
             }
+        }).catch((error) => {
+            console.log(error);
         });
         return {
             success: true
@@ -56,6 +60,8 @@ let MailService = class MailService {
             context: {
                 name: pseudoClient
             }
+        }).catch((error) => {
+            console.log(error);
         });
         return {
             success: true
@@ -71,6 +77,8 @@ let MailService = class MailService {
                 name: pseudoClient,
                 url
             }
+        }).catch((error) => {
+            console.log(error);
         });
         return {
             success: true
@@ -84,6 +92,8 @@ let MailService = class MailService {
             context: {
                 name: pseudoClient
             }
+        }).catch((error) => {
+            console.log(error);
         });
         return {
             success: true
@@ -97,6 +107,8 @@ let MailService = class MailService {
             context: {
                 name: pseudoClient
             }
+        }).catch((error) => {
+            console.log(error);
         });
         return {
             success: true
@@ -111,6 +123,8 @@ let MailService = class MailService {
                 name: pseudoClient,
                 motif
             }
+        }).catch((error) => {
+            console.log(error);
         });
         return {
             success: true
@@ -125,6 +139,8 @@ let MailService = class MailService {
                 name: pseudoClient,
                 motif
             }
+        }).catch((error) => {
+            console.log(error);
         });
         return {
             success: true
@@ -139,6 +155,8 @@ let MailService = class MailService {
                 name: pseudoClient,
                 motif
             }
+        }).catch((error) => {
+            console.log(error);
         });
         return {
             success: true
@@ -152,6 +170,8 @@ let MailService = class MailService {
             context: {
                 message: message,
             }
+        }).catch((error) => {
+            console.log(error);
         });
         return {
             success: true
@@ -168,6 +188,8 @@ let MailService = class MailService {
                 source: data.email,
                 objet: data.object
             }
+        }).catch((error) => {
+            console.log(error);
         });
         return {
             success: true
