@@ -8,7 +8,6 @@ import { RoomPrivateEntity } from '../../../room-private/entities/room-private.e
 import { RoomVipEntity } from '../../../room-vip/entities/room-vip.entity';
 import { TimerEntity } from '../../../timer/entities/timer.entity';
 import { TimestampEntities } from '../../../generics/timestamp.entities';
-import { CommissionsEntity } from "src/commissions/entities/commissions.entity";
 export declare class ModelEntity extends TimestampEntities {
     id: number;
     pseudo: string;
@@ -38,5 +37,4 @@ export declare class ModelEntity extends TimestampEntities {
     vipRooms: RoomVipEntity;
     tipsRooms: RoomPrivateEntity;
     timer: TimerEntity;
-    commissions: CommissionsEntity;
 }

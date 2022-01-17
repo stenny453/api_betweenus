@@ -32,14 +32,12 @@ const typeorm_2 = require("typeorm");
 const credit_entity_1 = require("./entities/credit.entity");
 const client_service_1 = require("../users/client/client.service");
 const creditVIP = require("./creditVIP.json");
-const commissions_service_1 = require("../commissions/commissions.service");
 let CreditService = class CreditService {
-    constructor(creditRepository, modelService, clientService, subscribeService, commissionService) {
+    constructor(creditRepository, modelService, clientService, subscribeService) {
         this.creditRepository = creditRepository;
         this.modelService = modelService;
         this.clientService = clientService;
         this.subscribeService = subscribeService;
-        this.commissionService = commissionService;
     }
     async getCreditModel(model) {
         const newModel = await this.modelService.getModel(model.id);
@@ -78,14 +76,10 @@ let CreditService = class CreditService {
         return await this.clientService.updateClient(id, client);
     }
     async updateCredit(id, credit, client) {
-        let newCredit = await this.creditRepository.preload(Object.assign({ id }, credit));
+        const newCredit = await this.creditRepository.preload(Object.assign({ id }, credit));
         if (client.credit.id === newCredit.id) {
             if (!newCredit) {
                 throw new common_1.NotFoundException(`Le credit d'id ${id} n'existe pas`);
-            }
-            if (client.role && client.role === "model") {
-                const commissionCredit = await this.commissionService.isCommission(client.id, newCredit.credit);
-                newCredit.credit = commissionCredit;
             }
             const newP = await this.creditRepository.save(newCredit);
             return newP;
@@ -149,7 +143,6 @@ let CreditService = class CreditService {
         newCreditClient.credit = newCreditClient.credit - credit;
         newCreditClient.credit = newCreditClient.credit < 0 ? 0 : newCreditClient.credit;
         newCreditModel.credit = newCreditModel.credit + credit;
-        newCreditModel.credit = await this.commissionService.isCommission(modelId, newCreditModel.credit);
         await this.creditRepository.save(newCreditClient);
         await this.creditRepository.save(newCreditModel);
         return {
@@ -195,8 +188,7 @@ CreditService = __decorate([
     __metadata("design:paramtypes", [typeorm_2.Repository,
         model_service_1.ModelService,
         client_service_1.ClientService,
-        subscribe_service_1.SubscribeService,
-        commissions_service_1.CommissionsService])
+        subscribe_service_1.SubscribeService])
 ], CreditService);
 exports.CreditService = CreditService;
 //# sourceMappingURL=credit.service.js.map

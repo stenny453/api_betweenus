@@ -27,8 +27,8 @@ let ChatService = class ChatService {
         let newChat = chat;
         const taboos = await this.tabooService.getTaboo();
         taboos.forEach((taboo) => {
-            const word = taboo.word.toLowerCase();
-            const msg = newChat.message.toLowerCase();
+            const word = taboo.word;
+            const msg = newChat.message;
             newChat.message = msg.split(word).join('***');
         });
         return await this.chatRepository.save(newChat);

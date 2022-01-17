@@ -7,14 +7,12 @@ import { CreditDto } from './dto/credit.dto';
 import { ClientService } from '../users/client/client.service';
 import { AddCreditClientDto } from './dto/add-credit-client.dto';
 import { ClientEntity } from '../users/client/entities/client.entity';
-import { CommissionsService } from '../commissions/commissions.service';
 export declare class CreditService {
     private creditRepository;
     private modelService;
     private clientService;
     private subscribeService;
-    private commissionService;
-    constructor(creditRepository: Repository<CreditEntity>, modelService: ModelService, clientService: ClientService, subscribeService: SubscribeService, commissionService: CommissionsService);
+    constructor(creditRepository: Repository<CreditEntity>, modelService: ModelService, clientService: ClientService, subscribeService: SubscribeService);
     getCreditModel(model: ModelEntity): Promise<any>;
     getCreditClient(client: ClientEntity): Promise<any>;
     createCredit(id: number): Promise<any>;

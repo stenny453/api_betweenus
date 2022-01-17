@@ -15,7 +15,6 @@ const credit_service_1 = require("./credit.service");
 const credit_entity_1 = require("./entities/credit.entity");
 const client_module_1 = require("../users/client/client.module");
 const subscribe_module_1 = require("../subscribe/subscribe.module");
-const commissions_module_1 = require("../commissions/commissions.module");
 let CreditModule = class CreditModule {
 };
 CreditModule = __decorate([
@@ -24,8 +23,7 @@ CreditModule = __decorate([
             typeorm_1.TypeOrmModule.forFeature([credit_entity_1.CreditEntity]),
             model_module_1.ModelModule,
             client_module_1.ClientModule,
-            subscribe_module_1.SubscribeModule,
-            commissions_module_1.CommissionsModule
+            subscribe_module_1.SubscribeModule
         ],
         controllers: [credit_controller_1.CreditController],
         providers: [credit_service_1.CreditService],

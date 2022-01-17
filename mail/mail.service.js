@@ -22,13 +22,11 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Confirmer votre email',
-            template: './templates/confirmationClient',
+            template: './confirmationClient',
             context: {
                 name: pseudoClient,
                 url,
             }
-        }).catch((error) => {
-            console.log(error);
         });
         return {
             success: true
@@ -39,13 +37,11 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Confirmation',
-            template: './templates/forgot',
+            template: './forgot',
             context: {
                 name: pseudoClient,
                 url,
             }
-        }).catch((error) => {
-            console.log(error);
         });
         return {
             success: true
@@ -56,12 +52,10 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Inscription nouveau modèle',
-            template: './templates/inscriptionModel',
+            template: './inscriptionModel',
             context: {
                 name: pseudoClient
             }
-        }).catch((error) => {
-            console.log(error);
         });
         return {
             success: true
@@ -72,13 +66,11 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Désactivation de compte',
-            template: './templates/desactivationAccount',
+            template: './desactivationAccount',
             context: {
                 name: pseudoClient,
                 url
             }
-        }).catch((error) => {
-            console.log(error);
         });
         return {
             success: true
@@ -88,12 +80,10 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Suppression de compte',
-            template: './templates/suppressionAccount',
+            template: './suppressionAccount',
             context: {
                 name: pseudoClient
             }
-        }).catch((error) => {
-            console.log(error);
         });
         return {
             success: true
@@ -103,12 +93,10 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Création de compte',
-            template: './templates/acceptInscriptionModel',
+            template: './acceptInscriptionModel',
             context: {
                 name: pseudoClient
             }
-        }).catch((error) => {
-            console.log(error);
         });
         return {
             success: true
@@ -118,13 +106,11 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Création de compte',
-            template: './templates/rejectInscriptionModel',
+            template: './rejectInscriptionModel',
             context: {
                 name: pseudoClient,
                 motif
             }
-        }).catch((error) => {
-            console.log(error);
         });
         return {
             success: true
@@ -134,13 +120,11 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Création de compte',
-            template: './templates/acceptRequestModel',
+            template: './acceptRequestModel',
             context: {
                 name: pseudoClient,
                 motif
             }
-        }).catch((error) => {
-            console.log(error);
         });
         return {
             success: true
@@ -150,13 +134,11 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: emailClient,
             subject: 'BetweenUs - Création de compte',
-            template: './templates/rejectRequestModel',
+            template: './rejectRequestModel',
             context: {
                 name: pseudoClient,
                 motif
             }
-        }).catch((error) => {
-            console.log(error);
         });
         return {
             success: true
@@ -166,12 +148,10 @@ let MailService = class MailService {
         await this.mailerService.sendMail({
             to: email,
             subject: `BetweenUs - ${objet}`,
-            template: './templates/sendMessage',
+            template: './sendMessage',
             context: {
                 message: message,
             }
-        }).catch((error) => {
-            console.log(error);
         });
         return {
             success: true
@@ -182,14 +162,12 @@ let MailService = class MailService {
             to: 'betweenus1006@gmail.com',
             from: data.email,
             subject: `BUL - ${data.object}`,
-            template: './templates/fromWebsite',
+            template: './fromWebsite',
             context: {
                 message: data.message,
                 source: data.email,
                 objet: data.object
             }
-        }).catch((error) => {
-            console.log(error);
         });
         return {
             success: true
